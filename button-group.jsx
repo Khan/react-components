@@ -45,7 +45,7 @@ var ButtonGroup = React.createClass({
                 </button>
             );
 
-        return <div className="perseus-button-group">
+        return <div className="button-group">
             {buttons}
         </div>;
     },
