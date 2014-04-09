@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 /**
  * BackboneMixin - automatic binding and unbinding for react classes mirroring
  * backbone models and views. Example:

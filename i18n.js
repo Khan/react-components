@@ -1,3 +1,5 @@
+var _ = require('underscore');
+
 /**
  * Performs sprintf-like %(name)s replacement on str, and returns an array of
  * the string interleaved with those replacements

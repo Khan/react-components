@@ -1,5 +1,7 @@
 /** @jsx React.DOM */
 
+var _ = require('underscore');
+
 /* ButtonGroup is an aesthetically pleasing group of buttons.
  *
  * The class requires these properties:
