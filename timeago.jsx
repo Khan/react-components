@@ -11,7 +11,7 @@
  *
  * Example:
  *
- *     return <a href={khanAcademy><TimeAgo time={date} /></a>
+ *     return <a href={khanAcademy}><TimeAgo time={date} /></a>
  */
 
 var SetIntervalMixin = require("./setinterval-mixin.js");
