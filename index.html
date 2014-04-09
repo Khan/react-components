@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+    <h1>Khan Academy React Components</h1>
+
+    <ul>
+        <li><a href="#backbone-mixin">Backbone Mixin</a></li>
+        <li><a href="#button-group">Button Group</a></li>
+        <li><a href="#dollar-underscore"><code>$_</code></a></li>
+        <li><a href="#layered-component">Layered Component Mixin</a></li>
+        <li><a href="#set-interval">Set Interval Mixin</a></li>
+        <li><a href="#timeago"><code>TimeAgo</code></a></li>
+    </ul>
+
+    <h2 id="backbone-mixin">Backbone Mixin</h2>
+
+    <p>Update this view every time a backbone model updates:</p>
+
+    <pre><code>
+    var Comment = React.createClass({
+        mixins: [BackboneMixin],
+        getBackboneModels: function() {
+            return [this.props.model];
+        },
+        render: function() { ... }
+    });
+    </code></pre>
+
+    <h2 id="button-group">Button Group</h2>
+
+    <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
+
+    <pre><code>
+    var Options = React.createClass({
+        render: function() {
+            return &lt;div&gt;
+                Options
+                &lt;ButtonGroup value='1'
+                             buttons={[
+                                {value: '1', text: '1'},
+                                {value: '2', text: '2'},
+                                {value: '3', text: '3'}
+                             ]}
+                             onChange={() =&gt; {}} /&gt;
+            &lt;/div&gt;;
+        }
+    });
+    </code></pre>
+
+    <h2 id="dollar-underscore"><code>$_</code></h2>
+
+    <p>A pseudo-component useful for internationalization.</p>
+
+    <pre><code>
+    var translated = &lt;$_ first="Motoko" last="Kusanagi"&gt;
+        Hello, %(first)s %(last)s!
+    &lt;/$_&gt;;
+    </code></pre>
+
+    <h2 id="layered-component">Layered Component Mixin</h2>
+
+    <p>Render another component in a div appended to the page</p>
+
+    <pre><code>
+    var ButtonWithDialog = React.createClass({
+        render: function() {
+            return &lt;button onClick={() =&gt; this.setState({clicked: true})}&gt;
+                Click Me!
+            &lt;/button&gt;;
+        },
+        renderLayer: function() {
+            if (!this.state.clicked) {
+                return null;
+            }
+
+            return &lt;Dialog&gt;
+                clicked!
+            &lt;/Dialog&gt;;
+        }
+        ...
+    });
+    </code></pre>
+
+    <h2 id="set-interval">Set Interval Mixin</h2>
+
+    <p>Like <code>setInterval</code> that calls <code>clearInterval</code> for you.</p>
+
+    <pre><code>
+    var RefreshingComponent = React.createClass({
+        mixins: [SetIntervalMixin],
+        componentDidMount: function() {
+            this.setInterval(this.checkForUpdates, 30*1000);
+        }
+    });
+    </code></pre>
+
+    <h2 id="timeago"><code>TimeAgo</code></h2>
+
+    <p>Human friendly display of how long it's been since an event happened.</p>
+
+    <pre><code>
+    var Comment = React.createClass({
+        render: function() {
+            return &lt;div&gt;
+                &lt;FormatCommentBody body={this.props.body} /&gt;
+
+                &lt;div&gt;
+                    &lt;UserBadge user={this.props.user} /&gt; -
+                    &lt;TimeAgo time={this.props.date} /&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;;
+        }
+    });
+    </code></pre>
+
+</body>
+</html>
