@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+<head>
+</head>
 <body>
 
     <h1>Khan Academy React Components</h1>
@@ -56,6 +58,19 @@
     var translated = &lt;$_ first="Motoko" last="Kusanagi"&gt;
         Hello, %(first)s %(last)s!
     &lt;/$_&gt;;
+    </code></pre>
+
+    <pre><code>
+    var link = &lt;a href="javascript:void 0;" onClick={this._markTooHard}&gt;
+        &lt;$_&gt;Click here&lt;/$_&gt;
+    &lt;/a&gt;;
+
+    return &lt;span&gt;
+        &lt;$_ clickHere={link}&gt;
+            We noticed you had a little trouble with this task.
+            %(clickHere)s to hide it until later.
+        &lt;/$_&gt;
+    &lt;/span&gt;;
     </code></pre>
 
     <h2 id="layered-component">Layered Component Mixin</h2>
