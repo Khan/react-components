@@ -1,0 +1,22 @@
+{
+    "name": "khan-react-components",
+    "version": "0.0.1",
+    "author": "Khan Academy",
+    "description": "React components used by Khan Academy",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/Khan/react-components.git"
+    },
+    "bugs": {
+      "url": "https://github.com/Khan/react-components/issues"
+    },
+    "license": {
+      "type": "MIT",
+      "url": "https://github.com/Khan/react-components/blob/master/LICENSE"
+    },
+    "dependencies": {
+        "browserify": "~3.43.0",
+        "reactify": "~0.11.0",
+        "underscore": "~1.6.0"
+    }
+}

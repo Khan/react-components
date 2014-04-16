@@ -58,4 +58,4 @@ var $_ = function(options, str) {
     return interpolateStringToArray(str, options);
 };
 
-module.exports = $_.
+module.exports = $_;

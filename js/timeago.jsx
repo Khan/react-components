@@ -14,7 +14,7 @@
  *     return <a href={khanAcademy}><TimeAgo time={date} /></a>
  */
 
-var SetIntervalMixin = require("./setinterval-mixin.js");
+var SetIntervalMixin = require("./set-interval-mixin.jsx");
 // TODO(joel) - require moment
 
 // TODO(joel) i18n
