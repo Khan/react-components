@@ -1,4 +1,7 @@
-.PHONY: package
+.PHONY: package install
 
-package:
+package: install
 	./node_modules/.bin/browserify -t [ reactify --es6 ] js/*.jsx -o bundle.js
+
+install:
+	npm install
