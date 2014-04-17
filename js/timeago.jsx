@@ -15,7 +15,7 @@
  */
 
 var SetIntervalMixin = require("./set-interval-mixin.jsx");
-// TODO(joel) - require moment
+var moment = require("moment");
 
 // TODO(joel) i18n
 var TimeAgo = React.createClass({
