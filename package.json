@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "browserify": "~3.43.0",
+        "moment": "~2.6.0",
         "reactify": "~0.11.0",
         "underscore": "~1.6.0"
     }
