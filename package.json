@@ -25,5 +25,8 @@
     "mocha": "~1.18.2",
     "jsdom": "~0.10.5",
     "react-tools": "~0.10.0"
+  },
+  "scripts": {
+    "test": "make test"
   }
 }
