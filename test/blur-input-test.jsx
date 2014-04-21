@@ -27,14 +27,14 @@ describe("BlurInput", function() {
         TestUtils.Simulate.change(this.blurInput.getDOMNode(),
                                   {target: {value: "new value"}});
 
-        assert.equal(this.value, "starting value");
+        assert.strictEqual(this.value, "starting value");
     });
 
     it("calls onChange if there is a `blur`", function() {
         TestUtils.Simulate.change(this.blurInput.getDOMNode(),
                                   {target: {value: "new value"}});
-        TestUtils.Simulate.blur(this.blurInput.getDOMNode(), {});
+        TestUtils.Simulate.blur(this.blurInput.getDOMNode());
 
-        assert.equal(this.value, "new value");
+        assert.strictEqual(this.value, "new value");
     });
 });

@@ -1,5 +1,6 @@
 /** @jsx React.DOM */
 
+var React = require('react');
 var _ = require('underscore');
 
 /* ButtonGroup is an aesthetically pleasing group of buttons.
@@ -44,6 +45,7 @@ var ButtonGroup = React.createClass({
         var buttons = _(this.props.buttons).map((button, i) =>
                 <button title={button.title}
                         id={"" + i}
+                        ref={"button" + i}
                         key={"" + i}
                         className={button.value === value ? "selected" : ""}
                         onClick={this.toggleSelect.bind(this, button.value)}>
