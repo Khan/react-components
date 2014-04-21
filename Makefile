@@ -15,3 +15,6 @@ docs: pydeps
 
 bundle.js: jsdeps
 	./node_modules/.bin/browserify -t [ reactify --es6 ] js/*.jsx -o bundle.js
+
+test: jsdeps
+	mocha --compilers jsx:test/compiler.js test/test-helper.js test/*test.jsx
