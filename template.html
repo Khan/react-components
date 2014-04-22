@@ -1,55 +1,97 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <link href='http://fonts.googleapis.com/css?family=Bitter:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
+    <link href="stylesheets/reset.css" rel="stylesheet">
+    <link href="stylesheets/index.css" rel="stylesheet">
+    <link href="stylesheets/pygments.css" rel="stylesheet">
+    <title>React Components</title>
 </head>
+
 <body>
+    <div id="landing">
+        <h1>React Components</h1>
+        <h2>reusable components by <a href="http://www.khanacademy.org">Khan Academy</a></h2>
+    </div>
 
-    <h1>Khan Academy React Components</h1>
+    <section id="introduction">
+    <div class="inner">
+        <h2>Introduction</h2>
+        <p>This is a collection of some of the most reusable <a href="http://facebook.github.io/react/index.html">React</a> components built at <a href="http://www.khanacademy.org">Khan Academy</a>. In the jQuery ecosystem there's a large collection of plugins that can be used for anything from modals to translation. We're trying to make it just as easy to jumpstart React applications by adapting or recreating the most useful plugins.</p>
+        <p>Important files and info:</p>
+        <ul>
+            <li><a href="https://github.com/Khan/react-components/blob/master/LICENSE">license</a> (MIT)</li>
+            <li><a href="https://github.com/Khan/react-components">git repository</a></li>
+            <li><a href="https://github.com/Khan/react-components/issues">issues</a></li>
+            <li>documentation on all components is below</li>
+        </ul>
+    </div>
+    </section>
 
-    <ul>
-        <li><a href="#backbone-mixin">Backbone Mixin</a></li>
-        <li><a href="#button-group">Button Group</a></li>
-        <li><a href="#dollar-underscore"><code>$_</code></a></li>
-        <li><a href="#layered-component">Layered Component Mixin</a></li>
-        <li><a href="#set-interval">Set Interval Mixin</a></li>
-        <li><a href="#timeago"><code>TimeAgo</code></a></li>
-    </ul>
+    <!-- the black triangle
+    <section id="getting-started">
+    <h2>Getting Started</h2>
+    <p>TODO</p>
+    </section>
+    -->
 
-    <h2 id="backbone-mixin">Backbone Mixin</h2>
+    <!-- the hairball / reference -->
+    <main class="clearfix">
+    <div class="inner">
+        <h2>Components</h2>
 
-    <p>Update this view every time a backbone model updates:</p>
+        <nav>
+            <div class="inner">
+            <ul>
+                <li><a href="#backbone-mixin">Backbone Mixin</a></li>
+                <li><a href="#button-group">Button Group</a></li>
+                <li><a href="#dollar-underscore"><code>$_</code></a></li>
+                <li><a href="#layered-component">Layered Component Mixin</a></li>
+                <li><a href="#set-interval">Set Interval Mixin</a></li>
+                <li><a href="#timeago"><code>TimeAgo</code></a></li>
+            </ul>
+            </div>
+        </nav>
 
-    {% code_example "backbone-mixin.jsx" %}
+        <h3 id="backbone-mixin">Backbone Mixin</h3>
 
-    <h2 id="button-group">Button Group</h2>
+        <p>Update this view every time a backbone model updates:</p>
 
-    <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
+        {% code_example "backbone-mixin.jsx" %}
 
-    {% code_example "button-group.jsx" %}
+        <h3 id="button-group">Button Group</h3>
 
-    <h2 id="dollar-underscore"><code>$_</code></h2>
+        <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
 
-    <p>A pseudo-component useful for internationalization.</p>
+        {% code_example "button-group.jsx" %}
 
-    {% code_example "i18n.jsx" %}
+        <h3 id="dollar-underscore"><code>$_</code></h3>
 
-    <h2 id="layered-component">Layered Component Mixin</h2>
+        <p>A pseudo-component useful for internationalization.</p>
 
-    <p>Render another component in a div appended to the page</p>
+        {% code_example "i18n.jsx" %}
 
-    {% code_example "layered-component-mixin.jsx" %}
+        <h3 id="layered-component">Layered Component Mixin</h3>
 
-    <h2 id="set-interval">Set Interval Mixin</h2>
+        <p>Render another component in a div appended to the page</p>
 
-    <p>Like <code>setInterval</code> that calls <code>clearInterval</code> for you.</p>
+        {% code_example "layered-component-mixin.jsx" %}
 
-    {% code_example "set-interval-mixin.jsx" %}
+        <h3 id="set-interval">Set Interval Mixin</h3>
 
-    <h2 id="timeago"><code>TimeAgo</code></h2>
+        <p>Like <code>setInterval</code> that calls <code>clearInterval</code> for you.</p>
 
-    <p>Human friendly display of how long it's been since an event happened.</p>
+        {% code_example "set-interval-mixin.jsx" %}
 
-    {% code_example "timeago.jsx" %}
+        <h3 id="timeago"><code>TimeAgo</code></h3>
 
+        <p>Human friendly display of how long it's been since an event happened.</p>
+
+        {% code_example "timeago.jsx" %}
+
+    </div>
+    </main>
 </body>
 </html>

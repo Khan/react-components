@@ -11,7 +11,7 @@ jsdeps:
 	npm install
 
 docs: pydeps
-	. $(ENV)/bin/activate && pip install -r requirements.txt  && ./make_template.py
+	. $(ENV)/bin/activate && pip install -r requirements.txt && ./make_template.py
 
 bundle.js: jsdeps
 	./node_modules/.bin/browserify -t [ reactify --es6 ] js/*.jsx -o bundle.js
