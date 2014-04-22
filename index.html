@@ -1,133 +1,173 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="utf-8">
+    <link href='http://fonts.googleapis.com/css?family=Bitter:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
+    <link href="stylesheets/reset.css" rel="stylesheet">
+    <link href="stylesheets/index.css" rel="stylesheet">
+    <link href="stylesheets/pygments.css" rel="stylesheet">
+    <title>React Components</title>
 </head>
+
 <body>
+    <div id="landing">
+        <h1>React Components</h1>
+        <h2>reusable components by <a href="http://www.khanacademy.org">Khan Academy</a></h2>
+    </div>
 
-    <h1>Khan Academy React Components</h1>
+    <section id="introduction">
+    <div class="inner">
+        <h2>Introduction</h2>
+        <p>This is a collection of some of the most reusable <a href="http://facebook.github.io/react/index.html">React</a> components built at <a href="http://www.khanacademy.org">Khan Academy</a>. In the jQuery ecosystem there's a large collection of plugins that can be used for anything from modals to translation. We're trying to make it just as easy to jumpstart React applications by adapting or recreating the most useful plugins.</p>
+        <p>Important files and info:</p>
+        <ul>
+            <li><a href="https://github.com/Khan/react-components/blob/master/LICENSE">license</a> (MIT)</li>
+            <li><a href="https://github.com/Khan/react-components">git repository</a></li>
+            <li><a href="https://github.com/Khan/react-components/issues">issues</a></li>
+            <li>documentation on all components is below</li>
+        </ul>
+    </div>
+    </section>
 
-    <ul>
-        <li><a href="#backbone-mixin">Backbone Mixin</a></li>
-        <li><a href="#button-group">Button Group</a></li>
-        <li><a href="#dollar-underscore"><code>$_</code></a></li>
-        <li><a href="#layered-component">Layered Component Mixin</a></li>
-        <li><a href="#set-interval">Set Interval Mixin</a></li>
-        <li><a href="#timeago"><code>TimeAgo</code></a></li>
-    </ul>
+    <!-- the black triangle
+    <section id="getting-started">
+    <h2>Getting Started</h2>
+    <p>TODO</p>
+    </section>
+    -->
 
-    <h2 id="backbone-mixin">Backbone Mixin</h2>
+    <!-- the hairball / reference -->
+    <main class="clearfix">
+    <div class="inner">
+        <h2>Components</h2>
 
-    <p>Update this view every time a backbone model updates:</p>
+        <nav>
+            <div class="inner">
+            <ul>
+                <li><a href="#backbone-mixin">Backbone Mixin</a></li>
+                <li><a href="#button-group">Button Group</a></li>
+                <li><a href="#dollar-underscore"><code>$_</code></a></li>
+                <li><a href="#layered-component">Layered Component Mixin</a></li>
+                <li><a href="#set-interval">Set Interval Mixin</a></li>
+                <li><a href="#timeago"><code>TimeAgo</code></a></li>
+            </ul>
+            </div>
+        </nav>
 
-    <pre><code>
-    var Comment = React.createClass({
-        mixins: [BackboneMixin],
-        getBackboneModels: function() {
-            return [this.props.model];
-        },
-        render: function() { ... }
-    });
-    </code></pre>
+        <h3 id="backbone-mixin">Backbone Mixin</h3>
 
-    <h2 id="button-group">Button Group</h2>
+        <p>Update this view every time a backbone model updates:</p>
 
-    <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
+        <div class="highlight"><pre><span class="kd">var</span> <span class="nx">Comment</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+    <span class="nx">mixins</span><span class="o">:</span> <span class="p">[</span><span class="nx">BackboneMixin</span><span class="p">],</span>
+    <span class="nx">getBackboneModels</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">model</span><span class="p">];</span>
+    <span class="p">},</span>
+    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="p">...</span> <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
 
-    <pre><code>
-    var Options = React.createClass({
-        render: function() {
-            return &lt;div&gt;
-                Options
-                &lt;ButtonGroup value='1'
-                             buttons={[
-                                {value: '1', text: '1'},
-                                {value: '2', text: '2'},
-                                {value: '3', text: '3'}
-                             ]}
-                             onChange={() =&gt; {}} /&gt;
-            &lt;/div&gt;;
-        }
-    });
-    </code></pre>
 
-    <h2 id="dollar-underscore"><code>$_</code></h2>
+        <h3 id="button-group">Button Group</h3>
 
-    <p>A pseudo-component useful for internationalization.</p>
+        <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
 
-    <pre><code>
-    var translated = &lt;$_ first="Motoko" last="Kusanagi"&gt;
-        Hello, %(first)s %(last)s!
-    &lt;/$_&gt;;
-    </code></pre>
+        <div class="highlight"><pre><span class="kd">var</span> <span class="nx">Options</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+            <span class="nx">Options</span>
+            <span class="o">&lt;</span><span class="nx">ButtonGroup</span> <span class="nx">value</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+                         <span class="nx">buttons</span><span class="o">=</span><span class="p">{[</span>
+                            <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;1&#39;</span><span class="p">},</span>
+                            <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;2&#39;</span><span class="p">},</span>
+                            <span class="p">{</span><span class="nx">value</span><span class="o">:</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="nx">text</span><span class="o">:</span> <span class="s1">&#39;3&#39;</span><span class="p">}</span>
+                         <span class="p">]}</span>
+                         <span class="nx">onChange</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="p">{}}</span> <span class="o">/&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
 
-    <pre><code>
-    var link = &lt;a href="javascript:void 0;" onClick={this._markTooHard}&gt;
-        &lt;$_&gt;Click here&lt;/$_&gt;
-    &lt;/a&gt;;
 
-    return &lt;span&gt;
-        &lt;$_ clickHere={link}&gt;
-            We noticed you had a little trouble with this task.
-            %(clickHere)s to hide it until later.
-        &lt;/$_&gt;
-    &lt;/span&gt;;
-    </code></pre>
+        <h3 id="dollar-underscore"><code>$_</code></h3>
 
-    <h2 id="layered-component">Layered Component Mixin</h2>
+        <p>A pseudo-component useful for internationalization.</p>
 
-    <p>Render another component in a div appended to the page</p>
+        <div class="highlight"><pre><span class="kd">var</span> <span class="nx">translated</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">$_</span> <span class="nx">first</span><span class="o">=</span><span class="s2">&quot;Motoko&quot;</span> <span class="nx">last</span><span class="o">=</span><span class="s2">&quot;Kusanagi&quot;</span><span class="o">&gt;</span>
+    <span class="nx">Hello</span><span class="p">,</span> <span class="o">%</span><span class="p">(</span><span class="nx">first</span><span class="p">)</span><span class="nx">s</span> <span class="o">%</span><span class="p">(</span><span class="nx">last</span><span class="p">)</span><span class="nx">s</span><span class="o">!</span>
+<span class="o">&lt;</span><span class="err">/$_&gt;;</span>
 
-    <pre><code>
-    var ButtonWithDialog = React.createClass({
-        render: function() {
-            return &lt;button onClick={() =&gt; this.setState({clicked: true})}&gt;
-                Click Me!
-            &lt;/button&gt;;
-        },
-        renderLayer: function() {
-            if (!this.state.clicked) {
-                return null;
-            }
+<span class="kd">var</span> <span class="nx">link</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">a</span> <span class="nx">href</span><span class="o">=</span><span class="s2">&quot;javascript:void 0;&quot;</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">_markTooHard</span><span class="p">}</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">$_</span><span class="o">&gt;</span><span class="nx">Click</span> <span class="nx">here</span><span class="o">&lt;</span><span class="err">/$_&gt;</span>
+<span class="o">&lt;</span><span class="err">/a&gt;;</span>
 
-            return &lt;Dialog&gt;
-                clicked!
-            &lt;/Dialog&gt;;
-        }
-        ...
-    });
-    </code></pre>
+<span class="k">return</span> <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">$_</span> <span class="nx">clickHere</span><span class="o">=</span><span class="p">{</span><span class="nx">link</span><span class="p">}</span><span class="o">&gt;</span>
+        <span class="nx">We</span> <span class="nx">noticed</span> <span class="nx">you</span> <span class="nx">had</span> <span class="nx">a</span> <span class="nx">little</span> <span class="nx">trouble</span> <span class="kd">with</span> <span class="k">this</span> <span class="nx">task</span><span class="p">.</span>
+        <span class="o">%</span><span class="p">(</span><span class="nx">clickHere</span><span class="p">)</span><span class="nx">s</span> <span class="nx">to</span> <span class="nx">hide</span> <span class="nx">it</span> <span class="nx">until</span> <span class="nx">later</span><span class="p">.</span>
+    <span class="o">&lt;</span><span class="err">/$_&gt;</span>
+<span class="o">&lt;</span><span class="err">/span&gt;;</span>
+</pre></div>
 
-    <h2 id="set-interval">Set Interval Mixin</h2>
 
-    <p>Like <code>setInterval</code> that calls <code>clearInterval</code> for you.</p>
+        <h3 id="layered-component">Layered Component Mixin</h3>
 
-    <pre><code>
-    var RefreshingComponent = React.createClass({
-        mixins: [SetIntervalMixin],
-        componentDidMount: function() {
-            this.setInterval(this.checkForUpdates, 30*1000);
-        }
-    });
-    </code></pre>
+        <p>Render another component in a div appended to the page</p>
 
-    <h2 id="timeago"><code>TimeAgo</code></h2>
+        <div class="highlight"><pre><span class="kd">var</span> <span class="nx">ButtonWithDialog</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span><span class="nx">clicked</span><span class="o">:</span> <span class="kc">true</span><span class="p">})}</span><span class="o">&gt;</span>
+            <span class="nx">Click</span> <span class="nx">Me</span><span class="o">!</span>
+        <span class="o">&lt;</span><span class="err">/button&gt;;</span>
+    <span class="p">},</span>
+    <span class="nx">renderLayer</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">clicked</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="p">;</span>
+        <span class="p">}</span>
 
-    <p>Human friendly display of how long it's been since an event happened.</p>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">Dialog</span><span class="o">&gt;</span>
+            <span class="nx">clicked</span><span class="o">!</span>
+        <span class="o">&lt;</span><span class="err">/Dialog&gt;;</span>
+    <span class="p">}</span>
+    <span class="p">...</span>
+<span class="p">});</span>
+</pre></div>
 
-    <pre><code>
-    var Comment = React.createClass({
-        render: function() {
-            return &lt;div&gt;
-                &lt;FormatCommentBody body={this.props.body} /&gt;
 
-                &lt;div&gt;
-                    &lt;UserBadge user={this.props.user} /&gt; -
-                    &lt;TimeAgo time={this.props.date} /&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;;
-        }
-    });
-    </code></pre>
+        <h3 id="set-interval">Set Interval Mixin</h3>
 
+        <p>Like <code>setInterval</code> that calls <code>clearInterval</code> for you.</p>
+
+        <div class="highlight"><pre><span class="kd">var</span> <span class="nx">RefreshingComponent</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+    <span class="nx">mixins</span><span class="o">:</span> <span class="p">[</span><span class="nx">SetIntervalMixin</span><span class="p">],</span>
+    <span class="nx">componentDidMount</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">setInterval</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">checkForUpdates</span><span class="p">,</span> <span class="mi">30</span><span class="o">*</span><span class="mi">1000</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+
+        <h3 id="timeago"><code>TimeAgo</code></h3>
+
+        <p>Human friendly display of how long it's been since an event happened.</p>
+
+        <div class="highlight"><pre><span class="kd">var</span> <span class="nx">Comment</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+            <span class="o">&lt;</span><span class="nx">FormatCommentBody</span> <span class="nx">body</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">body</span><span class="p">}</span> <span class="o">/&gt;</span>
+
+            <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+                <span class="o">&lt;</span><span class="nx">UserBadge</span> <span class="nx">user</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">user</span><span class="p">}</span> <span class="o">/&gt;</span> <span class="o">-</span>
+                <span class="o">&lt;</span><span class="nx">TimeAgo</span> <span class="nx">time</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">date</span><span class="p">}</span> <span class="o">/&gt;</span>
+            <span class="o">&lt;</span><span class="err">/div&gt;</span>
+        <span class="o">&lt;</span><span class="err">/div&gt;;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+
+    </div>
+    </main>
 </body>
 </html>
