@@ -1,5 +1,5 @@
 body {
-    background: url(../img/bg3.jpg) no-repeat center center fixed;
+    background: url(../img/bg2.jpg) no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -56,7 +56,7 @@ li {
     font-weight: 700;
     margin: 0 auto;
     padding: 100px 0 10px;
-    width: 62%;
+    width: 838px;
 }
 
 #landing h2 {
@@ -65,7 +65,7 @@ li {
     font-weight: 400;
     margin: 0 auto;
     padding: 20px 0;
-    width: 68%;
+    width: 924px;
 }
 
 #landing h2 a {
