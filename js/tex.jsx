@@ -1,6 +1,6 @@
 /** @jsx React.DOM */
 /**
- * For math rendered using MathJax. Use me like <TeX>2x + 3</TeX>.
+ * For math rendered using KaTex and/or MathJax. Use me like <TeX>2x + 3</TeX>.
  */
 // TODO(joel) - require MathJax / katex so they don't have to be global
 
@@ -56,18 +56,16 @@ var TeX = React.createClass({
         var text = this.props.children;
         var onRender = this.props.onRender;
 
-        if (typeof Exercises === "undefined" || Exercises.useKatex) {
-            try {
-                var katexHolder = this.refs.katex.getDOMNode();
-                katex.process(text, katexHolder);
-                onRender();
-                return;
-            } catch (e) {
-                /* jshint -W103 */
-                if (e.__proto__ !== katex.ParseError.prototype) {
-                /* jshint +W103 */
-                    throw e;
-                }
+        try {
+            var katexHolder = this.refs.katex.getDOMNode();
+            katex.process(text, katexHolder);
+            onRender();
+            return;
+        } catch (e) {
+            /* jshint -W103 */
+            if (e.__proto__ !== katex.ParseError.prototype) {
+            /* jshint +W103 */
+                throw e;
             }
         }
 
@@ -81,24 +79,22 @@ var TeX = React.createClass({
         var onRender = this.props.onRender;
 
         if (oldText !== newText) {
-            if (typeof Exercises === "undefined" || Exercises.useKatex) {
-                try {
-                    var katexHolder = this.refs.katex.getDOMNode();
-                    katex.process(newText, katexHolder);
-                    if (this.script) {
-                        var jax = MathJax.Hub.getJaxFor(this.script);
-                        if (jax) {
-                            jax.Remove();
-                        }
+            try {
+                var katexHolder = this.refs.katex.getDOMNode();
+                katex.process(newText, katexHolder);
+                if (this.script) {
+                    var jax = MathJax.Hub.getJaxFor(this.script);
+                    if (jax) {
+                        jax.Remove();
                     }
-                    onRender();
-                    return;
-                } catch (e) {
-                    /* jshint -W103 */
-                    if (e.__proto__ !== katex.ParseError.prototype) {
-                    /* jshint +W103 */
-                        throw e;
-                    }
+                }
+                onRender();
+                return;
+            } catch (e) {
+                /* jshint -W103 */
+                if (e.__proto__ !== katex.ParseError.prototype) {
+                /* jshint +W103 */
+                    throw e;
                 }
             }
 
