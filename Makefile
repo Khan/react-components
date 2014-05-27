@@ -17,7 +17,7 @@ docs: bundle.js pydeps
 	cp -r docs/* bundle.js index.html docs-output
 	# now switch to the other branch, move everything out of docs, commit, and push
 	git checkout gh-pages
-	rm -rf stylesheets image favicon.ico bundle.js index.html
+	rm -rf stylesheets images favicon.ico bundle.js index.html
 	cp -r docs-output/* .
 	git add .
 	git commit -anm "Automatic commit by $(shell git config --get user.name) ($(shell git config --get user.email))"
