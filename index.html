@@ -57,9 +57,7 @@
         </nav>
 
         <h3 id="backbone-mixin">Backbone Mixin</h3>
-
         <p>Update this view every time a backbone model updates:</p>
-
         <div class="highlight"><pre><span class="kd">var</span> <span class="nx">Comment</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
     <span class="nx">mixins</span><span class="o">:</span> <span class="p">[</span><span class="nx">BackboneMixin</span><span class="p">],</span>
     <span class="nx">getBackboneModels</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -71,9 +69,7 @@
 
 
         <h3 id="button-group">Button Group</h3>
-
         <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
-
         <div class="highlight"><pre><span class="kd">var</span> <span class="nx">Options</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
     <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
@@ -92,9 +88,7 @@
 
 
         <h3 id="dollar-underscore"><code>$_</code></h3>
-
         <p>A pseudo-component useful for internationalization.</p>
-
         <div class="highlight"><pre><span class="kd">var</span> <span class="nx">translated</span> <span class="o">=</span> <span class="o">&lt;</span><span class="nx">$_</span> <span class="nx">first</span><span class="o">=</span><span class="s2">&quot;Motoko&quot;</span> <span class="nx">last</span><span class="o">=</span><span class="s2">&quot;Kusanagi&quot;</span><span class="o">&gt;</span>
     <span class="nx">Hello</span><span class="p">,</span> <span class="o">%</span><span class="p">(</span><span class="nx">first</span><span class="p">)</span><span class="nx">s</span> <span class="o">%</span><span class="p">(</span><span class="nx">last</span><span class="p">)</span><span class="nx">s</span><span class="o">!</span>
 <span class="o">&lt;</span><span class="err">/$_&gt;;</span>
@@ -113,9 +107,7 @@
 
 
         <h3 id="layered-component">Layered Component Mixin</h3>
-
         <p>Render another component in a div appended to the page</p>
-
         <div class="highlight"><pre><span class="kd">var</span> <span class="nx">ButtonWithDialog</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
     <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">onClick</span><span class="o">=</span><span class="p">{()</span> <span class="o">=&gt;</span> <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span><span class="nx">clicked</span><span class="o">:</span> <span class="kc">true</span><span class="p">})}</span><span class="o">&gt;</span>
@@ -137,9 +129,7 @@
 
 
         <h3 id="set-interval">Set Interval Mixin</h3>
-
         <p>Like <code>setInterval</code> that calls <code>clearInterval</code> for you.</p>
-
         <div class="highlight"><pre><span class="kd">var</span> <span class="nx">RefreshingComponent</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
     <span class="nx">mixins</span><span class="o">:</span> <span class="p">[</span><span class="nx">SetIntervalMixin</span><span class="p">],</span>
     <span class="nx">componentDidMount</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
@@ -150,9 +140,7 @@
 
 
         <h3 id="timeago"><code>TimeAgo</code></h3>
-
         <p>Human friendly display of how long it's been since an event happened.</p>
-
         <div class="highlight"><pre><span class="kd">var</span> <span class="nx">Comment</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
     <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
         <span class="k">return</span> <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
@@ -165,6 +153,57 @@
         <span class="o">&lt;</span><span class="err">/div&gt;;</span>
     <span class="p">}</span>
 <span class="p">});</span>
+</pre></div>
+
+
+        <h3 id="blur-input">Blur Input</h3>
+        <p>An input component that notifies its parent of changes when it loses focus</p>
+        <div class="highlight"><pre><span class="kd">var</span> <span class="nx">NumberInput</span> <span class="o">=</span> <span class="nx">React</span><span class="p">.</span><span class="nx">createClass</span><span class="p">({</span>
+    <span class="nx">render</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="o">&lt;</span><span class="nx">BlurInput</span> <span class="nx">value</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;&quot;</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">value</span><span class="p">}</span>
+                          <span class="nx">onChange</span><span class="o">=</span><span class="p">{</span><span class="k">this</span><span class="p">.</span><span class="nx">handleChange</span><span class="p">}</span> <span class="o">/&gt;</span><span class="p">;</span>
+    <span class="p">},</span>
+
+    <span class="nx">handleChange</span><span class="o">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">value</span> <span class="o">=</span> <span class="nx">numericalParse</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="o">||</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">setState</span><span class="p">({</span> <span class="nx">value</span> <span class="p">});</span>
+    <span class="p">},</span>
+
+    <span class="nx">getInitialState</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">{</span> <span class="nx">value</span><span class="o">:</span> <span class="k">this</span><span class="p">.</span><span class="nx">props</span><span class="p">.</span><span class="nx">initialValue</span> <span class="p">};</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</pre></div>
+
+
+        <h3 id="tex">TeX</h3>
+        <p>Easily render LaTeX using MathJax or Khan Academy's <em>fast</em> KaTeX library.</p>
+        <div class="highlight"><pre><span class="o">&lt;</span><span class="nx">TeX</span><span class="o">&gt;-</span><span class="nx">b</span> <span class="err">\</span><span class="nx">pm</span> <span class="err">\</span><span class="nx">sqrt</span><span class="p">{</span><span class="nx">b</span><span class="o">^</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="nx">ac</span><span class="p">}</span> <span class="err">\</span><span class="nx">over</span> <span class="mi">2</span><span class="nx">a</span><span class="o">&lt;</span><span class="err">/TeX&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">TeX</span><span class="o">&gt;</span><span class="err">\</span><span class="nx">nabla</span> <span class="err">\</span><span class="nx">times</span> <span class="err">\</span><span class="nx">vec</span><span class="p">{</span><span class="err">\</span><span class="nx">mathbf</span><span class="p">{</span><span class="nx">B</span><span class="p">}}</span> <span class="o">-</span><span class="err">\</span><span class="p">,</span> <span class="err">\</span><span class="nx">frac1c</span><span class="err">\</span><span class="p">,</span> <span class="err">\</span><span class="nx">frac</span><span class="p">{</span><span class="err">\</span><span class="nx">partial</span><span class="err">\</span><span class="nx">vec</span><span class="p">{</span><span class="err">\</span><span class="nx">mathbf</span><span class="p">{</span><span class="nx">E</span><span class="p">}}}{</span><span class="err">\</span><span class="nx">partial</span> <span class="nx">t</span><span class="p">}</span> <span class="o">=</span> <span class="err">\</span><span class="nx">frac</span><span class="p">{</span><span class="mi">4</span><span class="err">\</span><span class="nx">pi</span><span class="p">}{</span><span class="nx">c</span><span class="p">}</span><span class="err">\</span><span class="nx">vec</span><span class="p">{</span><span class="err">\</span><span class="nx">mathbf</span><span class="p">{</span><span class="nx">j</span><span class="p">}}</span><span class="o">&lt;</span><span class="err">/TeX&gt;</span>
+</pre></div>
+
+
+        <h3 id="tooltip">Tooltip</h3>
+        <p>A better tooltip.</p>
+        <div class="highlight"><pre><span class="o">&lt;</span><span class="nx">Tooltip</span>
+        <span class="nx">className</span><span class="o">=</span><span class="s2">&quot;class-for-tooltip-contents&quot;</span>
+        <span class="nx">horizontalPosition</span><span class="o">=</span><span class="s2">&quot;left&quot;</span>
+        <span class="nx">horizontalAlign</span><span class="o">=</span><span class="s2">&quot;left&quot;</span>
+        <span class="nx">verticalPosition</span><span class="o">=</span><span class="s2">&quot;bottom&quot;</span>
+        <span class="nx">arrowSize</span><span class="o">=</span><span class="p">{</span><span class="mi">10</span><span class="p">}</span>
+        <span class="nx">borderColor</span><span class="o">=</span><span class="s2">&quot;#ccc&quot;</span>
+        <span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">TargetElementOfTheTooltip</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">TooltipContents1</span> <span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="nx">TooltipContents2</span> <span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="err">/Tooltip&gt;</span>
+</pre></div>
+
+
+        <h3 id="info-tip">Info Tip</h3>
+        <p>A very simple tooltip.</p>
+        <div class="highlight"><pre><span class="o">&lt;</span><span class="nx">InfoTip</span><span class="o">&gt;&lt;</span><span class="nx">p</span><span class="o">&gt;</span><span class="nx">shown</span> <span class="nx">when</span> <span class="nx">the</span> <span class="nx">user</span> <span class="nx">hovers</span><span class="o">!&lt;</span><span class="err">/p&gt;&lt;/InfoTip&gt;</span>
 </pre></div>
 
 
