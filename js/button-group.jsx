@@ -1,7 +1,51 @@
 /** @jsx React.DOM */
 
 var React = require('react');
+var RCSS = require('rcss');
 var _ = require('underscore');
+
+var outerStyle = {
+    display: 'inline-block',
+};
+
+var buttonStyle = {
+    backgroundColor: 'white',
+    border: '1px solid #ccc',
+    borderBottom: '1px solid #ccc',
+    borderLeft: '0',
+    cursor: 'pointer',
+    margin: '0',
+    padding: '5px 10px',
+    position: 'relative', // for hover
+
+    ':first-child': {
+        borderLeft: '1px solid #ccc',
+        borderTopLeftRadius: '3px',
+        borderBottomLeftRadius: '3px'
+    },
+
+    ':last-child': {
+        borderRight: '1px solid #ccc',
+        borderTopRightRadius: '3px',
+        borderBottomRightRadius: '3px'
+    },
+
+    ':hover': {
+        backgroundColor: '#ccc'
+    },
+
+    ':focus': {
+        zIndex: '2'
+    }
+};
+
+var selectedStyle = {
+    backgroundColor: '#ddd'
+};
+
+RCSS.createClass(outerStyle);
+RCSS.createClass(buttonStyle);
+RCSS.createClass(selectedStyle);
 
 /* ButtonGroup is an aesthetically pleasing group of buttons.
  *
@@ -42,18 +86,21 @@ var ButtonGroup = React.createClass({
 
     render: function() {
         var value = this.props.value;
-        var buttons = _(this.props.buttons).map((button, i) =>
-                <button title={button.title}
+        var buttons = _(this.props.buttons).map((button, i) => {
+                var maybeSelected = button.value === value ?
+                        selectedStyle.className :
+                        "";
+                return <button title={button.title}
                         id={"" + i}
                         ref={"button" + i}
                         key={"" + i}
-                        className={button.value === value ? "selected" : ""}
+                        className={`${buttonStyle.className} ${maybeSelected}`}
                         onClick={this.toggleSelect.bind(this, button.value)}>
                     {button.text || "" + button.value}
-                </button>
-            );
+                </button>;
+            });
 
-        return <div className="button-group">
+        return <div className={outerStyle.className}>
             {buttons}
         </div>;
     },
