@@ -10,21 +10,21 @@ var colors = {
     white: '#fff'
 };
 
-var infoTip = RCSS.createClass({
+var infoTip = {
     marginLeft: '5px',
     position: 'relative'
-});
+};
 
-var infoTipI = RCSS.createClass({
+var infoTipI = {
     cursor: 'pointer'
-});
+};
 
-var infoTipContainer = RCSS.createClass({
+var infoTipContainer = {
     position: 'absolute',
     'top': '-12px',
     left: '22px',
     zIndex: '1000'
-});
+};
 
 var triangleBeforeAfter = {
     borderBottom: '9px solid transparent',
@@ -37,7 +37,7 @@ var triangleBeforeAfter = {
     width: '0'
 };
 
-var infoTipTriangle = RCSS.createClass({
+var infoTipTriangle = {
     display: 'block',
     height: '10px',
     left: '0',
@@ -55,13 +55,13 @@ var infoTipTriangle = RCSS.createClass({
         borderRight: ("9px solid " + colors.white),
         right: '-1px'
     })
-});
+};
 
-var basicBorder = RCSS.createClass({
+var basicBorder = {
     border: ("1px solid " + colors.basicBorderColor)
-});
+};
 
-var boxShadow = function(str)  {return RCSS.createClass({ boxShadow: str });}
+var boxShadow = function(str)  { return { boxShadow: str }; };
 
 var verticalShadow = RCSS.merge(
     basicBorder,
@@ -73,8 +73,14 @@ var infoTipContentContainer = RCSS.merge(verticalShadow, {
     display: 'block',
     background: colors.white,
     padding: '5px 10px',
-    width: '240px',
+    width: '240px'
 });
+
+RCSS.createClass(infoTip);
+RCSS.createClass(infoTipI);
+RCSS.createClass(infoTipTriangle);
+RCSS.createClass(verticalShadow);
+RCSS.createClass(infoTipContentContainer);
 
 var InfoTip = React.createClass({displayName: 'InfoTip',
     getInitialState: function() {
@@ -84,15 +90,15 @@ var InfoTip = React.createClass({displayName: 'InfoTip',
     },
 
     render: function() {
-        return React.DOM.span( {className:infoTip},
-            React.DOM.i( {className:("icon-question-sign " + infoTipI),
+        return React.DOM.span( {className:infoTip.className}, 
+            React.DOM.i( {className:("icon-question-sign " + infoTipI.className),
                onMouseEnter:this.handleMouseEnter,
                onMouseLeave:this.handleMouseLeave} ),
-            React.DOM.span( {className:infoTipContainer,
-                  style:{display: this.state.hover ? 'block' : 'none'}},
-                React.DOM.span( {className:infoTipTriangle} ),
+            React.DOM.span( {className:infoTipContainer.className,
+                  style:{display: this.state.hover ? 'block' : 'none'}}, 
+                React.DOM.span( {className:infoTipTriangle.className} ),
                 /* keep the classes here - used for selectors on KA */
-                React.DOM.span( {className:infoTipContentContainer},
+                React.DOM.span( {className:infoTipContentContainer.className}, 
                     this.props.children
                 )
             )
