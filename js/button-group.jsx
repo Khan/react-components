@@ -4,11 +4,11 @@ var React = require('react');
 var RCSS = require('rcss');
 var _ = require('underscore');
 
-var outerStyle = RCSS.createClass({
+var outerStyle = {
     display: 'inline-block',
-});
+};
 
-var buttonStyle = RCSS.createClass({
+var buttonStyle = {
     backgroundColor: 'white',
     border: '1px solid #ccc',
     borderBottom: '1px solid #ccc',
@@ -37,11 +37,15 @@ var buttonStyle = RCSS.createClass({
     ':focus': {
         zIndex: '2'
     }
-});
+};
 
-var selectedStyle = RCSS.createClass({
+var selectedStyle = {
     backgroundColor: '#ddd'
-});
+};
+
+RCSS.createClass(outerStyle);
+RCSS.createClass(buttonStyle);
+RCSS.createClass(selectedStyle);
 
 /* ButtonGroup is an aesthetically pleasing group of buttons.
  *
@@ -84,19 +88,19 @@ var ButtonGroup = React.createClass({
         var value = this.props.value;
         var buttons = _(this.props.buttons).map((button, i) => {
                 var maybeSelected = button.value === value ?
-                        selectedStyle :
+                        selectedStyle.className :
                         "";
                 return <button title={button.title}
                         id={"" + i}
                         ref={"button" + i}
                         key={"" + i}
-                        className={`${buttonStyle} ${maybeSelected}`}
+                        className={`${buttonStyle.className} ${maybeSelected}`}
                         onClick={this.toggleSelect.bind(this, button.value)}>
                     {button.text || "" + button.value}
                 </button>;
             });
 
-        return <div className={outerStyle}>
+        return <div className={outerStyle.className}>
             {buttons}
         </div>;
     },
