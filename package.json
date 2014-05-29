@@ -28,7 +28,7 @@
     "jsdom": "~0.10.5",
     "reactify": "~0.11.0",
     "react-tools": "~0.10.0",
-    "jstranform": "~4.0.1"
+    "jstransform": "~4.0.1"
   },
   "scripts": {
     "test": "make test",
