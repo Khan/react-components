@@ -2,7 +2,7 @@
 
 var fs = require('fs');
 var visitors = require('react-tools/vendor/fbtransform/visitors');
-var jstransformer = require('jstransform');
+var jstransform = require('jstransform');
 
 var visitorList = visitors.getAllVisitors();
 
@@ -12,7 +12,7 @@ var files = fs.readdirSync('js');
 for (var i = 0; i < files.length; i++) {
     var filename = files[i];
 
-    var js = fs.readFileSync('js/' + filename);
+    var js = fs.readFileSync('js/' + filename, {encoding: 'utf8'});
     var transformed = jstransform.transform(visitorList, js).code;
 
     fs.writeFileSync(filename, transformed);
