@@ -11,6 +11,7 @@ var colors = {
 };
 
 var infoTip = {
+    dislay: 'inline-block',
     marginLeft: '5px',
     position: 'relative'
 };
@@ -30,7 +31,6 @@ var triangleBeforeAfter = {
     borderBottom: '9px solid transparent',
     borderTop: '9px solid transparent',
     content: ' ',
-    display: 'block',
     height: '0',
     position: 'absolute',
     'top': '0',
@@ -38,7 +38,6 @@ var triangleBeforeAfter = {
 };
 
 var infoTipTriangle = {
-    display: 'block',
     height: '10px',
     left: '0',
     position: 'absolute',
@@ -70,7 +69,6 @@ var verticalShadow = RCSS.merge(
 );
 
 var infoTipContentContainer = RCSS.merge(verticalShadow, {
-    display: 'block',
     background: colors.white,
     padding: '5px 10px',
     width: '240px'
@@ -90,15 +88,16 @@ var InfoTip = React.createClass({displayName: 'InfoTip',
     },
 
     render: function() {
-        return React.DOM.span( {className:infoTip.className}, 
+        var tipContainerStyle = this.state.hover ? {display: 'block'} : {};
+        return React.DOM.div( {className:infoTip.className}, 
             React.DOM.i( {className:("icon-question-sign " + infoTipI.className),
                onMouseEnter:this.handleMouseEnter,
                onMouseLeave:this.handleMouseLeave} ),
-            React.DOM.span( {className:infoTipContainer.className,
-                  style:{display: this.state.hover ? 'block' : 'none'}}, 
-                React.DOM.span( {className:infoTipTriangle.className} ),
+            React.DOM.div( {className:infoTipContainer.className,
+                 style:tipContainerStyle}, 
+                React.DOM.div( {className:infoTipTriangle.className} ),
                 /* keep the classes here - used for selectors on KA */
-                React.DOM.span( {className:infoTipContentContainer.className}, 
+                React.DOM.div( {className:infoTipContentContainer.className}, 
                     this.props.children
                 )
             )

@@ -11,6 +11,7 @@ var colors = {
 };
 
 var infoTip = {
+    dislay: 'inline-block',
     marginLeft: '5px',
     position: 'relative'
 };
@@ -30,7 +31,6 @@ var triangleBeforeAfter = {
     borderBottom: '9px solid transparent',
     borderTop: '9px solid transparent',
     content: ' ',
-    display: 'block',
     height: '0',
     position: 'absolute',
     'top': '0',
@@ -38,7 +38,6 @@ var triangleBeforeAfter = {
 };
 
 var infoTipTriangle = {
-    display: 'block',
     height: '10px',
     left: '0',
     position: 'absolute',
@@ -70,7 +69,6 @@ var verticalShadow = RCSS.merge(
 );
 
 var infoTipContentContainer = RCSS.merge(verticalShadow, {
-    display: 'block',
     background: colors.white,
     padding: '5px 10px',
     width: '240px'
@@ -90,19 +88,20 @@ var InfoTip = React.createClass({
     },
 
     render: function() {
-        return <span className={infoTip.className}>
+        var tipContainerStyle = this.state.hover ? {display: 'block'} : {};
+        return <div className={infoTip.className}>
             <i className={`icon-question-sign ${infoTipI.className}`}
                onMouseEnter={this.handleMouseEnter}
                onMouseLeave={this.handleMouseLeave} />
-            <span className={infoTipContainer.className}
-                  style={{display: this.state.hover ? 'block' : 'none'}}>
-                <span className={infoTipTriangle.className} />
+            <div className={infoTipContainer.className}
+                 style={tipContainerStyle}>
+                <div className={infoTipTriangle.className} />
                 {/* keep the classes here - used for selectors on KA */}
-                <span className={infoTipContentContainer.className}>
+                <div className={infoTipContentContainer.className}>
                     {this.props.children}
-                </span>
-            </span>
-        </span>;
+                </div>
+            </div>
+        </div>;
     },
 
     handleMouseEnter: function() {
