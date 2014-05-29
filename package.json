@@ -14,11 +14,11 @@
     "type": "MIT",
     "url": "https://github.com/Khan/react-components/blob/master/LICENSE"
   },
-  "dependencies": {
+  "peerDependencies": {
+    "browserify": "~3.43.0",
     "react": "~0.10.0"
   },
   "optionalDependencies": {
-    "browserify": "~3.43.0",
     "moment": "~2.6.0",
     "underscore": "~1.6.0",
     "rcss": "chenglou/RCSS#ac24deeb84f5632eb997c8c579b5d587fdf71c85"
