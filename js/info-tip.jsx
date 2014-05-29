@@ -4,6 +4,12 @@ var React = require('react');
 var RCSS = require('rcss');
 var _ = require('underscore');
 
+var colors = {
+    grayLight: '#aaa',
+    basicBorderColor: '#ccc',
+    white: '#fff'
+};
+
 var infoTip = RCSS.createClass({
     marginLeft: '5px',
     position: 'relative'
@@ -50,12 +56,6 @@ var infoTipTriangle = RCSS.createClass({
         right: '-1px'
     })
 });
-
-var colors = {
-    grayLight: '#aaa',
-    basicBorderColor: '#ccc',
-    white: '#fff'
-};
 
 var basicBorder = RCSS.createClass({
     border: `1px solid ${colors.basicBorderColor}`

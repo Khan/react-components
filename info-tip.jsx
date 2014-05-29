@@ -4,6 +4,12 @@ var React = require('react');
 var RCSS = require('rcss');
 var _ = require('underscore');
 
+var colors = {
+    grayLight: '#aaa',
+    basicBorderColor: '#ccc',
+    white: '#fff'
+};
+
 var infoTip = RCSS.createClass({
     marginLeft: '5px',
     position: 'relative'
@@ -51,12 +57,6 @@ var infoTipTriangle = RCSS.createClass({
     })
 });
 
-var colors = {
-    grayLight: '#aaa',
-    basicBorderColor: '#ccc',
-    white: '#fff'
-};
-
 var basicBorder = RCSS.createClass({
     border: ("1px solid " + colors.basicBorderColor)
 });
@@ -84,15 +84,15 @@ var InfoTip = React.createClass({displayName: 'InfoTip',
     },
 
     render: function() {
-        return React.DOM.span( {className:infoTip}, 
+        return React.DOM.span( {className:infoTip},
             React.DOM.i( {className:("icon-question-sign " + infoTipI),
                onMouseEnter:this.handleMouseEnter,
                onMouseLeave:this.handleMouseLeave} ),
             React.DOM.span( {className:infoTipContainer,
-                  style:{display: this.state.hover ? 'block' : 'none'}}, 
+                  style:{display: this.state.hover ? 'block' : 'none'}},
                 React.DOM.span( {className:infoTipTriangle} ),
                 /* keep the classes here - used for selectors on KA */
-                React.DOM.span( {className:infoTipContentContainer}, 
+                React.DOM.span( {className:infoTipContentContainer},
                     this.props.children
                 )
             )
