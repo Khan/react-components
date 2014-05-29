@@ -29,6 +29,6 @@
   },
   "scripts": {
     "test": "make test",
-    "prepublish": "node prepublish.js"
+    "preinstall": "node prepublish.js"
   }
 }
