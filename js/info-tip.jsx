@@ -88,7 +88,7 @@ var InfoTip = React.createClass({
     },
 
     render: function() {
-        var tipContainerStyle = this.state.hover ? {display: 'block'} : {};
+        var tipContainerStyle = {display: this.state.hover ? 'block' : 'none'};
         return <div className={infoTip.className}>
             <i className={`icon-question-sign ${infoTipI.className}`}
                onMouseEnter={this.handleMouseEnter}
