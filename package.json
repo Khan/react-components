@@ -15,7 +15,7 @@
     "url": "https://github.com/Khan/react-components/blob/master/LICENSE"
   },
   "peerDependencies": {
-    "browserify": "~3.4.0"
+    "browserify": ">= 3.4"
   },
   "devDependencies": {
     "mocha": "~1.18.2",
