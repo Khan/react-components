@@ -78,6 +78,7 @@ RCSS.createClass(infoTip);
 RCSS.createClass(infoTipI);
 RCSS.createClass(infoTipTriangle);
 RCSS.createClass(verticalShadow);
+RCSS.createClass(infoTipContainer);
 RCSS.createClass(infoTipContentContainer);
 
 var InfoTip = React.createClass({
