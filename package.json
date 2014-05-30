@@ -15,13 +15,13 @@
     "url": "https://github.com/Khan/react-components/blob/master/LICENSE"
   },
   "peerDependencies": {
-    "browserify": "~3.43.0",
-    "react": "~0.10.0"
+    "browserify": "~3.43.0"
   },
   "optionalDependencies": {
     "moment": "~2.6.0",
     "underscore": "~1.6.0",
-    "rcss": "chenglou/RCSS#ac24deeb84f5632eb997c8c579b5d587fdf71c85"
+    "rcss": "chenglou/RCSS#ac24deeb84f5632eb997c8c579b5d587fdf71c85",
+    "react": "~0.10.0"
   },
   "devDependencies": {
     "mocha": "~1.18.2",
