@@ -307,7 +307,7 @@ var Tooltip = React.createClass({
         return <div style={{
                 position: "relative",
                 height: 0,
-                display: (this.props.show ? "block" : "none"),
+                display: this.props.show ? "block" : "none",
                 }}>
             <div ref="tooltipContainer" className="tooltipContainer" style={{
                         position: "absolute",
