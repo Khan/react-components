@@ -22,8 +22,10 @@
     "mocha": "~1.18.2",
     "jsdom": "~0.10.5",
     "jstransform": "~5.0.0",
+    "react": "~0.10.0",
     "reactify": "~0.11.0",
-    "react-tools": "~0.10.0"
+    "react-tools": "~0.10.0",
+    "underscore": "~1.6.0"
   },
   "scripts": {
     "test": "make test",
