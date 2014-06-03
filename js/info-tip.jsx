@@ -11,7 +11,7 @@ var colors = {
 };
 
 var infoTip = {
-    dislay: 'inline-block',
+    display: 'inline-block',
     marginLeft: '5px',
     position: 'relative'
 };
