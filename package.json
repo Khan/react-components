@@ -21,6 +21,7 @@
     "browserify": ">=3.4",
     "mocha": "~1.18.2",
     "jsdom": "~0.10.5",
+    "jstransform": "~5.0.0",
     "reactify": "~0.11.0",
     "react-tools": "~0.10.0"
   },
