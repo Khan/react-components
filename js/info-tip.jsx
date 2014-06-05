@@ -94,7 +94,7 @@ var InfoTip = React.createClass({
                onMouseEnter={this.handleMouseEnter}
                onMouseLeave={this.handleMouseLeave} />
             <div className={infoTipContainer.className}
-                 style={{display: this.state.hove ? 'block' : 'none'}}>
+                 style={{display: this.state.hover ? 'block' : 'none'}}>
                 <div className={infoTipTriangle.className} />
                 {/* keep the classes here - used for selectors on KA */}
                 <div className={infoTipContentContainer.className}>
