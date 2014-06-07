@@ -1,4 +1,11 @@
 var _ = require('underscore');
+/* WARNING - DEPRECATED
+ *
+ * We recommend that you don't use this mixin. It's not idiomatic react and
+ * leads to inefficient and janky code. It's almost impossible to recover good
+ * performance with this component. It's also invasive - hard to remove after
+ * it's invaded your code.
+ */
 
 /**
  * BackboneMixin - automatic binding and unbinding for react classes mirroring
