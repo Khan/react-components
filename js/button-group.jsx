@@ -70,7 +70,7 @@ var ButtonGroup = React.createClass({
         value: React.PropTypes.any,
         buttons: React.PropTypes.arrayOf(React.PropTypes.shape({
             value: React.PropTypes.any.isRequired,
-            text: React.PropTypes.string,
+            text: React.PropTypes.renderable,
             title: React.PropTypes.string
         })).isRequired,
         onChange: React.PropTypes.func.isRequired,
