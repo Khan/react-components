@@ -48,7 +48,7 @@ var TeX = React.createClass({
     },
 
     render: function() {
-        return <span>
+        return <span style={this.props.style}>
             <span ref="mathjax" />
             <span ref="katex" />
         </span>;
