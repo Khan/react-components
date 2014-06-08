@@ -12,6 +12,9 @@
  *     }
  * });
  */
+
+var React = require('react');
+
 var LayeredComponentMixin = {
     componentDidMount: function() {
         // Appending to the body is easier than managing the z-index of
