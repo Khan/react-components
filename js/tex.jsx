@@ -4,9 +4,11 @@
  */
 // TODO(joel) - require MathJax / katex so they don't have to be global
 
- var pendingScripts = [];
- var needsProcess = false;
- var timeout = null;
+var React = require('react');
+
+var pendingScripts = [];
+var needsProcess = false;
+var timeout = null;
 
 function process(script, callback) {
     pendingScripts.push(script);
