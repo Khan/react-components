@@ -1,11 +1,14 @@
 #!/usr/bin/env python
 import os.path
+import subprocess
+import tempfile
 
 import jinja2
 from jinja2.ext import Extension
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers.web import JavascriptLexer
+
 
 class CodeExampleExtension(Extension):
     """Insert a code example.
@@ -42,18 +45,47 @@ class CodeExampleExtension(Extension):
         lexer = JavascriptLexer()
         path = os.path.join('examples', filename)
 
-        with open(path, 'r') as f:
-            contents = f.read()
+        # prelude - this code sets up the sample, includes react, etc
+        PRELUDE = '// PRELUDE\n'
+        # the meat of the sample - we show this to the reader
+        POSTSCRIPT = '// POSTSCRIPT\n'
+        # postscript - React.renderComponent, etc
 
-        # TODO(joel) get restricted contents?
-        return highlight(contents, lexer, formatter)
+        # find the meat
+        with open(path, 'r') as f:
+            lines = [line for line in f]
+            start = lines.index(PRELUDE)
+            end = lines.index(POSTSCRIPT)
+            fragment = ''.join(lines[start+1 : end])
+
+        self.environment.scripts.append(''.join(lines))
+
+        return highlight(fragment, lexer, formatter)
 
 
 if __name__ == '__main__':
     loader = jinja2.FileSystemLoader('.')
     env = jinja2.Environment(loader=loader, extensions=[CodeExampleExtension])
+    # *tiny* hack here - we're going to need this header at the top of our
+    # final concatenated script
+    env.scripts = ["/** @jsx React.DOM */"]
     template = env.get_template('template.html')
 
     with open('index.html', 'w') as f:
         f.seek(0)
         f.write(template.render())
+
+    with tempfile.NamedTemporaryFile(dir='.') as f:
+        f.write('\n'.join(env.scripts))
+        f.seek(0)
+
+        command = [
+            # bundle the concatenation of all our samples
+            "./node_modules/.bin/browserify", f.name,
+
+            # with the react transform
+            "-t", "[", "reactify", "--es6", "]", "-d",
+
+            "-o", "./docs-output/bundle.js"
+        ]
+        print subprocess.check_output(command, stderr=subprocess.STDOUT)

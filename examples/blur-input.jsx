@@ -1,3 +1,9 @@
+var React = require('react');
+var BlurInput = require('./js/blur-input.jsx');
+
+TODO(joel) - numericalParse
+
+// PRELUDE
 var NumberInput = React.createClass({
     render: function() {
         return <BlurInput value={"" + this.state.value}
@@ -13,3 +19,9 @@ var NumberInput = React.createClass({
         return { value: this.props.initialValue };
     }
 });
+// POSTSCRIPT
+
+React.renderComponent(
+    <NumberInput initialValue={5} />,
+    document.getElementById("blur-input")
+);

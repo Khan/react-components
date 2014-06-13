@@ -1,3 +1,4 @@
+// PRELUDE
 var Comment = React.createClass({
     render: function() {
         return <div>
@@ -10,3 +11,4 @@ var Comment = React.createClass({
         </div>;
     }
 });
+// POSTSCRIPT

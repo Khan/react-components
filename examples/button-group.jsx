@@ -1,3 +1,4 @@
+// PRELUDE
 var Options = React.createClass({
     render: function() {
         return <div>
@@ -12,3 +13,4 @@ var Options = React.createClass({
         </div>;
     }
 });
+// POSTSCRIPT

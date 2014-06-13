@@ -1,3 +1,4 @@
+// PRELUDE
 var ButtonWithDialog = React.createClass({
     render: function() {
         return <button onClick={() => this.setState({clicked: true})}>
@@ -13,5 +14,6 @@ var ButtonWithDialog = React.createClass({
             clicked!
         </Dialog>;
     }
-    ...
+    // ...
 });
+// POSTSCRIPT
