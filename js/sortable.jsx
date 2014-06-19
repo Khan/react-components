@@ -5,6 +5,27 @@ var _     = require('underscore');
 
 var PT    = React.PropTypes;
 
+var sortableDragging = {
+    cursor: ns-resize;
+};
+
+var sortableEnabled = {
+    cursor: pointer;
+}
+
+var userSelect = rhs => {
+    return {
+        "-webkit-user-select": rhs,
+        "-khtml-user-drag": rhs,
+        "-khtml-user-select": rhs,
+        "-moz-user-select": rhs,
+        "-ms-user-select": rhs,
+        userSelect: rhs
+    };
+};
+
+var sortableDisabled = userSelect("none");
+
 // Takes an array of components to sort
 var SortableArea = React.createClass({
     propTypes: {
