@@ -72,6 +72,12 @@
 
         <h3 id="backbone-mixin">Backbone Mixin</h3>
         <p>Update this view every time a backbone model updates:</p>
+        <p>
+        You should know that I highly recommend <em>not</em> using this mixin. It inevitably leads to inefficient code and janky UX. Not at first - only gradually. You won't really notice until it's too late and <code>BackboneMixin</code> runs the interface you just spent three months on.
+        </p>
+        <p>
+            Anyway, you're your own person - do what you think is right.
+        </p>
         {% code_example "backbone-mixin.jsx" %}
 
         <h3 id="button-group">Button Group</h3>

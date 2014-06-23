@@ -30,6 +30,10 @@ p {
     margin: 10px 0;
 }
 
+em {
+    font-style: italic;
+}
+
 a {
     color: rgb(77, 74, 145);
 }
