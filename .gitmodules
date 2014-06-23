@@ -1,0 +1,3 @@
+[submodule "react-live-editor"]
+	path = react-live-editor
+	url = https://github.com/joelburget/react-live-editor.git
