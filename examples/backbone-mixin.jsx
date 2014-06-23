@@ -1,14 +1,24 @@
-// {{{ TODO(joel) - use backbone! }}}
+var SimpleModel = Backbone.Model.extend({
+    defaults: {
+        comment: "This is a comment!"
+    }
+});
 
 var Comment = React.createClass({
     mixins: [BackboneMixin],
     getBackboneModels: function() {
-		return [];
-        // return [this.props.model];
+        return [this.props.model];
     },
     render: function() {
-		return <div>comment!</div>;
-	}
+        return <div>{this.props.model.get("comment")}</div>;
+    }
 });
 
-return <Comment />;
+var myModel = new SimpleModel();
+
+return <div>
+    <Comment model={myModel} />
+    <button onClick={function() {myModel.set("comment", "This is an (edited) comment!");}}>
+        Edit
+    </button>
+</div>;

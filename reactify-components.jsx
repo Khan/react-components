@@ -3,6 +3,9 @@
 var React = require('react');
 var ReactPlayground = require('./react-live-editor/live-editor.jsx');
 
+// BackboneMixin example needs Backbone
+window.Backbone = require('backbone');
+
 // Bring all these into scope
 window.BackboneMixin = require("./js/backbone-mixin.jsx");
 window.BlurInput = require("./js/blur-input.jsx");
