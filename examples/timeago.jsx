@@ -1,4 +1,20 @@
-// PRELUDE
+// {{{
+var FormatCommentBody = React.createClass({
+	render: function() {
+		return <div>
+			{this.props.body}
+		</div>;
+	}
+});
+
+var UserBadge = React.createClass({
+	render: function() {
+		return <div>@{this.props.user}</div>;
+	}
+});
+
+// }}}
+
 var Comment = React.createClass({
     render: function() {
         return <div>
@@ -11,4 +27,5 @@ var Comment = React.createClass({
         </div>;
     }
 });
-// POSTSCRIPT
+
+return <Comment body="such time" user="dinojoel" date={new Date()} />;

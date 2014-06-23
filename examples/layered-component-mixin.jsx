@@ -1,19 +1,29 @@
-// PRELUDE
 var ButtonWithDialog = React.createClass({
+	mixins: [LayeredComponentMixin],
     render: function() {
-        return <button onClick={() => this.setState({clicked: true})}>
+        return <button onClick={this.handleClick}>
             Click Me!
         </button>;
     },
     renderLayer: function() {
-        if (!this.state.clicked) {
-            return null;
-        }
+		var style = {
+			position: 'absolute',
+			top: '50%',
+			bottom: '50%'
+		};
 
-        return <Dialog>
-            clicked!
-        </Dialog>;
-    }
-    // ...
+        return <div style={style}>
+			{this.state.clicked ? "clicked!" : null }
+        </div>;
+    },
+    // {{{
+	handleClick: function() {
+		this.setState({ clicked: !this.state.clicked });
+	},
+	getInitialState: function() {
+		return { clicked: false };
+	}
+	// }}}
 });
-// POSTSCRIPT
+
+return <ButtonWithDialog />;

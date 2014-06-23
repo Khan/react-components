@@ -1,17 +1,17 @@
-var React = require('react');
-var BlurInput = require('./js/blur-input.jsx');
+// {{{ TODO(joel) - numericalParse
 
-TODO(joel) - numericalParse
-
-// PRELUDE
 var NumberInput = React.createClass({
     render: function() {
-        return <BlurInput value={"" + this.state.value}
-                          onChange={this.handleChange} />;
+        return <div>
+            <BlurInput value={"" + this.state.value}
+                       onChange={this.handleChange} />
+            {" -> "}
+            {this.state.value}
+        </div>;
     },
 
     handleChange: function(str) {
-        var value = numericalParse(str) || 0;
+        var value = +str || 0;
         this.setState({ value });
     },
 
@@ -19,9 +19,5 @@ var NumberInput = React.createClass({
         return { value: this.props.initialValue };
     }
 });
-// POSTSCRIPT
 
-React.renderComponent(
-    <NumberInput initialValue={5} />,
-    document.getElementById("blur-input")
-);
+return <NumberInput initialValue={5} />;

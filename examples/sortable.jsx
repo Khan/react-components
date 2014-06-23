@@ -1,21 +1,29 @@
-var React = require("react");
-var _ = require("underscore");
+var Sorter = React.createClass({
+    render: function() {
+        return <Sortable components={this.state.components}
+                         onReorder={this.handleReorder}
+                         className="sidebar-list"
+                         verify={() => true} />;
+    },
+    // {{{
 
-var components = _(items).map(item => {
-    var draggable = canEdit && item.isDraggable();
-    var key = item.cid;
-    var props = {
-        exercise, currentItemId, navigateTo,
-        item, draggable, key
-    };
-    props.onMove = this.handleMoveItems;
+    handleReorder: function(components) {
+        this.setState({ components });
+    },
 
-    return item instanceof AssessmentItem ?
-        ItemName(_.extend(props, {ref: item.id})) :
-        TypeName(_.extend(props, {canEdit: canEdit}));
+    getInitialState: function() {
+        return { components: this.props.components };
+    }
+    // }}}
 });
+// {{{
 
-return <SortableArea components={components}
-                     onReorder={this.handleReorder}
-                     className="sidebar-list"
-                     verify={this.verifyOrder} />;
+var components = [
+    <div draggable={true} key="1">1</div>,
+    <div draggable={true} key="2">2</div>,
+    <div draggable={true} key="3">3</div>,
+    <div draggable={true} key="4">4</div>
+];
+
+return <Sorter components={components} />;
+// }}}

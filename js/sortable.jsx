@@ -6,11 +6,11 @@ var _     = require('underscore');
 var PT    = React.PropTypes;
 
 var sortableDragging = {
-    cursor: ns-resize;
+    cursor: "ns-resize"
 };
 
 var sortableEnabled = {
-    cursor: pointer;
+    cursor: "pointer"
 }
 
 var userSelect = rhs => {

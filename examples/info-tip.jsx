@@ -1,3 +1,6 @@
-// PRELUDE
-var tip = <InfoTip><p>shown when the user hovers!</p></InfoTip>;
-// POSTSCRIPT
+return <div>
+    reticulating splines
+    <InfoTip><p>
+        <a href="http://sims.wikia.com/wiki/Reticulating_splines">meaningless phrase</a>
+    </p></InfoTip>
+</div>;

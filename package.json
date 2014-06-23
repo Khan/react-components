@@ -18,14 +18,15 @@
     "rcss": "khan/RCSS#9e5ec9614e391d28a621297a63bc2d850eae89e8"
   },
   "devDependencies": {
-    "browserify": ">=3.4",
+    "browserify": ">=4",
     "mocha": "~1.18.2",
     "jsdom": "~0.10.5",
     "jstransform": "~5.0.0",
     "react": "~0.10.0",
-    "reactify": "~0.11.0",
+    "reactify": "~0.13.0",
     "react-tools": "~0.10.0",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "moment": "*"
   },
   "scripts": {
     "test": "make test",

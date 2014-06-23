@@ -1,12 +1,14 @@
-var React = require('react');
-var BackboneMixin = require('./js/backbone-mixin.jsx');
+// {{{ TODO(joel) - use backbone! }}}
 
-// PRELUDE
 var Comment = React.createClass({
     mixins: [BackboneMixin],
     getBackboneModels: function() {
-        return [this.props.model];
+		return [];
+        // return [this.props.model];
     },
-    render: function() { }
+    render: function() {
+		return <div>comment!</div>;
+	}
 });
-// POSTSCRIPT
+
+return <Comment />;

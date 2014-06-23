@@ -1,5 +1,8 @@
 /** @jsx React.DOM */
 
+var React = require("react");
+var _ = require("underscore");
+
 // TODO(joel/jack) fix z-index issues https://s3.amazonaws.com/uploads.hipchat.com/6574/29028/yOApjwmgiMhEZYJ/Screen%20Shot%202014-05-30%20at%203.34.18%20PM.png
 // z-index: 3 on perseus-formats-tooltip seemed to work
 
@@ -355,8 +358,7 @@ var Tooltip = React.createClass({
     },
 
     _updateHeight: function() {
-        var $container = $(this.refs.tooltipContainer.getDOMNode());
-        var height = $container.outerHeight();
+        var height = this.refs.tooltipContainer.getDOMNode().offsetHeight;
         if (height !== this.state.height) {
             this.setState({height});
         }
