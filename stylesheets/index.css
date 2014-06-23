@@ -17,8 +17,11 @@ h3 {
     margin: 50px 0 15px;
 }
 
-p, li {
+body {
     font-family: Georgia, serif;
+}
+
+p, li {
     font-size: 1.25rem;
     line-height: 1.6em;
 }
@@ -37,7 +40,7 @@ li {
 
 .inner {
     margin: 0 auto;
-    width: 800px;
+    width: 1000px;
 }
 
 .highlight {
@@ -95,4 +98,17 @@ main {
 
 .clearfix:after {
     clear: both;
+}
+
+.sidebar-list li {
+    list-style-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==);
+    border: 1px solid #ddd;
+    background-color: #fafafa;
+    margin: 8px 0;
+    height: 30px;
+}
+
+.sidebar-list li div {
+    display: inline-block;
+    vertical-align: top;
 }
