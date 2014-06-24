@@ -90,16 +90,6 @@ var InfoTip = React.createClass({
         };
     },
 
-    /* TODO(joel) - being pragmatic here and using a question mark. Figure out
-     * how to do one of the following:
-     * ~ extract icon-question-sign and use a data-uri
-     * ~ bundle fontawesome (sadface)
-     * ~ find an even better icon?
-    <i className={`icon-question-sign ${infoTipI.className}`}
-       onMouseEnter={this.handleMouseEnter}
-       onMouseLeave={this.handleMouseLeave} />
-    */
-
     render: function() {
         return <div className={infoTip.className}>
             <img width={10}
