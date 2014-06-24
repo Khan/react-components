@@ -40,11 +40,11 @@ class CodeExampleExtension(Extension):
     def _insert(self, filename, caller):
         path = os.path.join('examples', filename)
 
-        # find the meat
         with open(path, 'r') as f:
-            lines = [line for line in f]
+            example = f.read()
 
-        return (jinja2.Markup("<div class='example_div'>%s</div>") % ''.join(lines))
+        return (jinja2.Markup("<div class='example_div'>%s</div>") %
+                example.strip())
 
 
 if __name__ == '__main__':
