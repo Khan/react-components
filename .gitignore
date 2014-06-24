@@ -1,4 +1,4 @@
-bundle.js
+*.js
 node_modules
 index.html
 venv
