@@ -72,21 +72,36 @@
 
         <h3 id="backbone-mixin">Backbone Mixin</h3>
         <p>Update this view every time a backbone model updates:</p>
-        <div class='example_div'>// {{{ TODO(joel) - use backbone! }}}
+        <p>
+        You should know that I highly recommend <em>not</em> using this mixin. It inevitably leads to inefficient code and janky UX. Not at first - only gradually. You won't really notice until it's too late and <code>BackboneMixin</code> runs the interface you just spent three months on.
+        </p>
+        <p>
+            Anyway, you're your own person - do what you think is right.
+        </p>
+        <div class='example_div'>var SimpleModel = Backbone.Model.extend({
+    defaults: {
+        comment: &#34;This is a comment!&#34;
+    }
+});
 
 var Comment = React.createClass({
     mixins: [BackboneMixin],
     getBackboneModels: function() {
-		return [];
-        // return [this.props.model];
+        return [this.props.model];
     },
     render: function() {
-		return &lt;div&gt;comment!&lt;/div&gt;;
-	}
+        return &lt;div&gt;{this.props.model.get(&#34;comment&#34;)}&lt;/div&gt;;
+    }
 });
 
-return &lt;Comment /&gt;;
-</div>
+var myModel = new SimpleModel();
+
+return &lt;div&gt;
+    &lt;Comment model={myModel} /&gt;
+    &lt;button onClick={function() {myModel.set(&#34;comment&#34;, &#34;This is an (edited) comment!&#34;);}}&gt;
+        Edit
+    &lt;/button&gt;
+&lt;/div&gt;;</div>
 
         <h3 id="button-group">Button Group</h3>
         <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
@@ -115,8 +130,7 @@ return &lt;Comment /&gt;;
     // }}}
 });
 
-return &lt;Options /&gt;;
-</div>
+return &lt;Options /&gt;;</div>
 
         <h3 id="dollar-underscore"><code>$_</code></h3>
         <p>A pseudo-component useful for internationalization.</p>
@@ -133,8 +147,7 @@ return &lt;span&gt;
         We noticed you had a little trouble with this task.
         %(clickHere)s to hide it until later.
     &lt;/$_&gt;
-&lt;/span&gt;;
-</div>
+&lt;/span&gt;;</div>
 
         <h3 id="layered-component">Layered Component Mixin</h3>
         <p>Render another component in a div appended to the page</p>
@@ -166,8 +179,7 @@ return &lt;span&gt;
 	// }}}
 });
 
-return &lt;ButtonWithDialog /&gt;;
-</div>
+return &lt;ButtonWithDialog /&gt;;</div>
 
         <h3 id="set-interval">Set Interval Mixin</h3>
         <p>Like <code>setInterval</code> that calls <code>clearInterval</code> for you.</p>
@@ -190,8 +202,7 @@ return &lt;ButtonWithDialog /&gt;;
 	// }}}
 });
 
-return &lt;RefreshingComponent /&gt;;
-</div>
+return &lt;RefreshingComponent /&gt;;</div>
 
         <h3 id="timeago"><code>TimeAgo</code></h3>
         <p>Human friendly display of how long it's been since an event happened.</p>
@@ -225,8 +236,7 @@ var Comment = React.createClass({
     }
 });
 
-return &lt;Comment body=&#34;such time&#34; user=&#34;dinojoel&#34; date={new Date()} /&gt;;
-</div>
+return &lt;Comment body=&#34;such time&#34; user=&#34;dinojoel&#34; date={new Date()} /&gt;;</div>
 
         <h3 id="blur-input">Blur Input</h3>
         <p>An input component that notifies its parent of changes when it loses focus</p>
@@ -252,15 +262,13 @@ var NumberInput = React.createClass({
     }
 });
 
-return &lt;NumberInput initialValue={5} /&gt;;
-</div>
+return &lt;NumberInput initialValue={5} /&gt;;</div>
 
         <h3 id="tex">TeX</h3>
         <p>Easily render LaTeX using <a href="http://.mathjax.com">MathJax</a> or Khan Academy's <em>fast</em> <a href="https://github.com/Khan/KaTeX">KaTeX</a> library.</p>
         <div class='example_div'>return &lt;TeX&gt;{&#34;-b \\pm \\sqrt{b^2-4ac} \\over 2a&#34;}&lt;/TeX&gt;;
 
-// &lt;TeX&gt;{&#34;\\nabla \\times \\vec{\\mathbf{B}} -\\, \\frac1c\\, \\frac{\\partial\\vec{\\mathbf{E}}}{\\partial t} = \\frac{4\\pi}{c}\\vec{\\mathbf{j}}&#34;}&lt;/TeX&gt;
-</div>
+// &lt;TeX&gt;{&#34;\\nabla \\times \\vec{\\mathbf{B}} -\\, \\frac1c\\, \\frac{\\partial\\vec{\\mathbf{E}}}{\\partial t} = \\frac{4\\pi}{c}\\vec{\\mathbf{j}}&#34;}&lt;/TeX&gt;</div>
 
         <h3 id="tooltip">Tooltip</h3>
         <p>A better tooltip.</p>
@@ -283,8 +291,7 @@ return &lt;Tooltip className=&#34;class-for-tooltip-contents&#34;
     &lt;p style={pStyle}&gt;
         &lt;a href=&#34;http://sims.wikia.com/wiki/Reticulating_splines&#34;&gt;meaningless phrase&lt;/a&gt;
     &lt;/p&gt;
-&lt;/Tooltip&gt;;
-</div>
+&lt;/Tooltip&gt;;</div>
 
         <h3 id="info-tip">Info Tip</h3>
         <p>A very simple tooltip.</p>
@@ -293,8 +300,7 @@ return &lt;Tooltip className=&#34;class-for-tooltip-contents&#34;
     &lt;InfoTip&gt;&lt;p&gt;
         &lt;a href=&#34;http://sims.wikia.com/wiki/Reticulating_splines&#34;&gt;meaningless phrase&lt;/a&gt;
     &lt;/p&gt;&lt;/InfoTip&gt;
-&lt;/div&gt;;
-</div>
+&lt;/div&gt;;</div>
 
         <h3 id="sortable">Sortable</h3>
         <p>Sort a list</p>
@@ -326,8 +332,7 @@ var components = [
 ];
 
 return &lt;Sorter components={components} /&gt;;
-// }}}
-</div>
+// }}}</div>
 
     </div>
     </main>
