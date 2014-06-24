@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "browserify": ">=4",
+    "backbone": "~1.1.2",
     "mocha": "~1.18.2",
     "jsdom": "~0.10.5",
     "jstransform": "~5.0.0",
