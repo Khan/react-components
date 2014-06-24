@@ -43,7 +43,8 @@ class CodeExampleExtension(Extension):
         with open(path, 'r') as f:
             example = f.read()
 
-        return jinja2.Markup("<div class='example_div'>%s</div>") % example
+        return (jinja2.Markup("<div class='example_div'>%s</div>") %
+                example.strip())
 
 
 if __name__ == '__main__':
