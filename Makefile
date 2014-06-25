@@ -15,8 +15,8 @@ docs: docs/preview-bundle.js docs/index.html
 pages: docs
 	# switch to the other branch, move everything out of docs, commit, and push
 	git checkout gh-pages
-	rm -rf images favicon.ico bundle.js index.html
 	cp -r docs/* .
+	rm -rf docs
 	git add .
 	git commit -anm "Automatic commit by $(shell git config --get user.name) ($(shell git config --get user.email))"
 	git push
