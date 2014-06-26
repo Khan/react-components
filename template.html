@@ -60,25 +60,15 @@
         <nav>
             <div class="inner">
             <ul>
-                <li><a href="#backbone-mixin">Backbone Mixin</a></li>
                 <li><a href="#button-group">Button Group</a></li>
                 <li><a href="#dollar-underscore"><code>$_</code></a></li>
                 <li><a href="#layered-component">Layered Component Mixin</a></li>
                 <li><a href="#set-interval">Set Interval Mixin</a></li>
                 <li><a href="#timeago"><code>TimeAgo</code></a></li>
+                <li><a href="#backbone-mixin">Backbone Mixin</a></li>
             </ul>
             </div>
         </nav>
-
-        <h3 id="backbone-mixin">Backbone Mixin</h3>
-        <p>Update this view every time a backbone model updates:</p>
-        <p>
-        You should know that I highly recommend <em>not</em> using this mixin. It inevitably leads to inefficient code and janky UX. Not at first - only gradually. You won't really notice until it's too late and <code>BackboneMixin</code> runs the interface you just spent three months on.
-        </p>
-        <p>
-            Anyway, you're your own person - do what you think is right.
-        </p>
-        {% code_example "backbone-mixin.jsx" %}
 
         <h3 id="button-group">Button Group</h3>
         <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
@@ -123,6 +113,16 @@
         <h3 id="drag-target">Drag Target</h3>
         <p>Accept dragged content from the browser or the desktop.</p>
         {% code_example "drag-target.jsx" %}
+
+        <h3 id="backbone-mixin">Backbone Mixin <span class="deprecated">deprecated</span></h3>
+        <p>Update this view every time a backbone model updates:</p>
+        <p>
+        You should know that I highly recommend <em>not</em> using this mixin. It inevitably leads to inefficient code and janky UX. Not at first - only gradually. You won't really notice until it's too late and <code>BackboneMixin</code> runs the interface you just spent three months on.
+        </p>
+        <p>
+            Anyway, you're your own person - do what you think is right.
+        </p>
+        {% code_example "backbone-mixin.jsx" %}
 
     </div>
     </main>
