@@ -15,6 +15,7 @@ docs: docs/preview-bundle.js docs/index.html
 pages: docs
 	# switch to the other branch, move everything out of docs, commit, and push
 	git checkout gh-pages
+	git checkout master -- docs
 	cp -r docs/* .
 	rm -rf docs
 	git add .
