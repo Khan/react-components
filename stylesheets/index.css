@@ -116,3 +116,13 @@ main {
     display: inline-block;
     vertical-align: top;
 }
+
+.deprecated {
+    border: 1px solid rgb(218, 193, 193);
+    background-color: rgb(255, 111, 111);
+    color: rgb(247, 247, 247);
+    border-radius: 4px;
+    font-size: 59%;
+    padding: 3px;
+    vertical-align: 23%;
+}
