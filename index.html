@@ -60,48 +60,15 @@
         <nav>
             <div class="inner">
             <ul>
-                <li><a href="#backbone-mixin">Backbone Mixin</a></li>
                 <li><a href="#button-group">Button Group</a></li>
                 <li><a href="#dollar-underscore"><code>$_</code></a></li>
                 <li><a href="#layered-component">Layered Component Mixin</a></li>
                 <li><a href="#set-interval">Set Interval Mixin</a></li>
                 <li><a href="#timeago"><code>TimeAgo</code></a></li>
+                <li><a href="#backbone-mixin">Backbone Mixin</a></li>
             </ul>
             </div>
         </nav>
-
-        <h3 id="backbone-mixin">Backbone Mixin</h3>
-        <p>Update this view every time a backbone model updates:</p>
-        <p>
-        You should know that I highly recommend <em>not</em> using this mixin. It inevitably leads to inefficient code and janky UX. Not at first - only gradually. You won't really notice until it's too late and <code>BackboneMixin</code> runs the interface you just spent three months on.
-        </p>
-        <p>
-            Anyway, you're your own person - do what you think is right.
-        </p>
-        <div class='example_div'>var SimpleModel = Backbone.Model.extend({
-    defaults: {
-        comment: &#34;This is a comment!&#34;
-    }
-});
-
-var Comment = React.createClass({
-    mixins: [BackboneMixin],
-    getBackboneModels: function() {
-        return [this.props.model];
-    },
-    render: function() {
-        return &lt;div&gt;{this.props.model.get(&#34;comment&#34;)}&lt;/div&gt;;
-    }
-});
-
-var myModel = new SimpleModel();
-
-return &lt;div&gt;
-    &lt;Comment model={myModel} /&gt;
-    &lt;button onClick={function() {myModel.set(&#34;comment&#34;, &#34;This is an (edited) comment!&#34;);}}&gt;
-        Edit
-    &lt;/button&gt;
-&lt;/div&gt;;</div>
 
         <h3 id="button-group">Button Group</h3>
         <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
@@ -333,6 +300,61 @@ var components = [
 
 return &lt;Sorter components={components} /&gt;;
 // }}}</div>
+
+        <h3 id="drag-target">Drag Target</h3>
+        <p>Accept dragged content from the browser or the desktop.</p>
+        <div class='example_div'>/** @jsx React.DOM */
+
+var Target = React.createClass({
+    render: function() {
+        return &lt;DragTarget onDrop={this.handleDrop}&gt;
+            {this.state.message}
+        &lt;/DragTarget&gt;;
+    },
+
+    handleDrop: function(event) {
+        this.setState({ message: &#34;delicious. thank you!&#34; });
+    },
+
+    getInitialState: function() {
+        return { message: &#34;I haven&#39;t received any drags&#34; };
+    }
+});
+
+return &lt;Target /&gt;;</div>
+
+        <h3 id="backbone-mixin">Backbone Mixin <span class="deprecated">deprecated</span></h3>
+        <p>Update this view every time a backbone model updates:</p>
+        <p>
+        You should know that I highly recommend <em>not</em> using this mixin. It inevitably leads to inefficient code and janky UX. Not at first - only gradually. You won't really notice until it's too late and <code>BackboneMixin</code> runs the interface you just spent three months on.
+        </p>
+        <p>
+            Anyway, you're your own person - do what you think is right.
+        </p>
+        <div class='example_div'>var SimpleModel = Backbone.Model.extend({
+    defaults: {
+        comment: &#34;This is a comment!&#34;
+    }
+});
+
+var Comment = React.createClass({
+    mixins: [BackboneMixin],
+    getBackboneModels: function() {
+        return [this.props.model];
+    },
+    render: function() {
+        return &lt;div&gt;{this.props.model.get(&#34;comment&#34;)}&lt;/div&gt;;
+    }
+});
+
+var myModel = new SimpleModel();
+
+return &lt;div&gt;
+    &lt;Comment model={myModel} /&gt;
+    &lt;button onClick={function() {myModel.set(&#34;comment&#34;, &#34;This is an (edited) comment!&#34;);}}&gt;
+        Edit
+    &lt;/button&gt;
+&lt;/div&gt;;</div>
 
     </div>
     </main>
