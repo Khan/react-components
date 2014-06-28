@@ -7,13 +7,14 @@ var ButtonWithDialog = React.createClass({
     },
     renderLayer: function() {
 		var style = {
-			position: 'absolute',
+            position: 'fixed',
 			top: '50%',
-			bottom: '50%'
+            left: '50%'
 		};
 
         return <div style={style}>
-			{this.state.clicked ? "clicked!" : null }
+			{this.state.clicked ? "Clicked! (Click again to remove)"
+                                : null }
         </div>;
     },
     // {{{
