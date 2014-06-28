@@ -1,26 +1,33 @@
 var Options = React.createClass({
     render: function() {
+        var labelStyle = {
+            color: this.state.value
+        };
+        var outerStyle = {
+            padding: '5px 0'
+        };
         return <div>
-            Options
-            <ButtonGroup value={this.state.value}
-                         buttons={[
-                            {value: '1', text: '1'},
-                            {value: '2', text: '2'},
-                            {value: '3', text: '3'}
-                         ]}
-                         onChange={this.handleChange} />
+            Options:
+            <div style={outerStyle}>
+                <ButtonGroup value={this.state.value}
+                             buttons={[
+                                {value: 'red', text: 'red'},
+                                {value: 'green', text: 'green'},
+                                {value: 'blue', text: 'blue'}
+                             ]}
+                             onChange={this.handleChange} />
+            </div>
+            <div style={labelStyle}>Your useful text</div>
         </div>;
     },
-    // {{{
 
     getInitialState: function() {
-        return { value: '1' };
+        return { value: 'red' };
     },
 
     handleChange: function(value) {
         this.setState({ value });
     }
-    // }}}
 });
 
 return <Options />;
