@@ -74,27 +74,34 @@
         <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
         <div class='example_div'>var Options = React.createClass({
     render: function() {
+        var labelStyle = {
+            color: this.state.value
+        };
+        var outerStyle = {
+            padding: &#39;5px 0&#39;
+        };
         return &lt;div&gt;
-            Options
-            &lt;ButtonGroup value={this.state.value}
-                         buttons={[
-                            {value: &#39;1&#39;, text: &#39;1&#39;},
-                            {value: &#39;2&#39;, text: &#39;2&#39;},
-                            {value: &#39;3&#39;, text: &#39;3&#39;}
-                         ]}
-                         onChange={this.handleChange} /&gt;
+            Options:
+            &lt;div style={outerStyle}&gt;
+                &lt;ButtonGroup value={this.state.value}
+                             buttons={[
+                                {value: &#39;red&#39;, text: &#39;red&#39;},
+                                {value: &#39;green&#39;, text: &#39;green&#39;},
+                                {value: &#39;blue&#39;, text: &#39;blue&#39;}
+                             ]}
+                             onChange={this.handleChange} /&gt;
+            &lt;/div&gt;
+            &lt;div style={labelStyle}&gt;Your useful text&lt;/div&gt;
         &lt;/div&gt;;
     },
-    // {{{
 
     getInitialState: function() {
-        return { value: &#39;1&#39; };
+        return { value: &#39;red&#39; };
     },
 
     handleChange: function(value) {
         this.setState({ value });
     }
-    // }}}
 });
 
 return &lt;Options /&gt;;</div>
@@ -127,13 +134,14 @@ return &lt;span&gt;
     },
     renderLayer: function() {
 		var style = {
-			position: &#39;absolute&#39;,
+            position: &#39;fixed&#39;,
 			top: &#39;50%&#39;,
-			bottom: &#39;50%&#39;
+            left: &#39;50%&#39;
 		};
 
         return &lt;div style={style}&gt;
-			{this.state.clicked ? &#34;clicked!&#34; : null }
+			{this.state.clicked ? &#34;Clicked! (Click again to remove)&#34;
+                                : null }
         &lt;/div&gt;;
     },
     // {{{
