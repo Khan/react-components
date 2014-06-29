@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var Target = React.createClass({
     render: function() {
         return <DragTarget onDrop={this.handleDrop}>
