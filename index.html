@@ -65,6 +65,12 @@
                 <li><a href="#layered-component">Layered Component Mixin</a></li>
                 <li><a href="#set-interval">Set Interval Mixin</a></li>
                 <li><a href="#timeago"><code>TimeAgo</code></a></li>
+                <li><a href="#blur-input">Blur Input</a></li>
+                <li><a href="#tex">TeX</a></li>
+                <li><a href="#tooltip">Tooltip</a></li>
+                <li><a href="#info-tip">Info-Tip</a></li>
+                <li><a href="#sortable">Sortable</a></li>
+                <li><a href="#drag-target">Drag Target</a></li>
                 <li><a href="#backbone-mixin">Backbone Mixin</a></li>
             </ul>
             </div>
@@ -124,7 +130,7 @@ return &lt;span&gt;
 &lt;/span&gt;;</div>
 
         <h3 id="layered-component">Layered Component Mixin</h3>
-        <p>Render another component in a div appended to the page</p>
+        <p>Render another component in a div appended to the page.</p>
         <div class='example_div'>var ButtonWithDialog = React.createClass({
 	mixins: [LayeredComponentMixin],
     render: function() {
@@ -214,7 +220,7 @@ var Comment = React.createClass({
 return &lt;Comment body=&#34;such time&#34; user=&#34;dinojoel&#34; date={new Date()} /&gt;;</div>
 
         <h3 id="blur-input">Blur Input</h3>
-        <p>An input component that notifies its parent of changes when it loses focus</p>
+        <p>An input component that notifies its parent of changes when it loses focus.</p>
         <div class='example_div'>// {{{ TODO(joel) - numericalParse
 
 var NumberInput = React.createClass({
@@ -268,8 +274,8 @@ return &lt;Tooltip className=&#34;class-for-tooltip-contents&#34;
     &lt;/p&gt;
 &lt;/Tooltip&gt;;</div>
 
-        <h3 id="info-tip">Info Tip</h3>
-        <p>A very simple tooltip.</p>
+        <h3 id="info-tip">Info-Tip</h3>
+        <p>A very simple informational tooltip that displays on hover.</p>
         <div class='example_div'>return &lt;div&gt;
     reticulating splines
     &lt;InfoTip&gt;&lt;p&gt;
@@ -278,7 +284,7 @@ return &lt;Tooltip className=&#34;class-for-tooltip-contents&#34;
 &lt;/div&gt;;</div>
 
         <h3 id="sortable">Sortable</h3>
-        <p>Sort a list</p>
+        <p>Sort a list.</p>
         <div class='example_div'>var Sorter = React.createClass({
     render: function() {
         return &lt;Sortable components={this.state.components}
