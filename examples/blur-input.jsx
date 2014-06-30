@@ -1,6 +1,6 @@
 // {{{ TODO(joel) - numericalParse
 
-var NumberInput = React.createClass({
+var URLInput = React.createClass({
     render: function() {
         // {{{
         var imgStyle = {
@@ -26,4 +26,4 @@ var NumberInput = React.createClass({
     }
 });
 
-return <NumberInput initialUrl={"https://www.kastatic.org/images/khan-logo-vertical-transparent.png"} />;
+return <URLInput initialUrl={"https://www.kastatic.org/images/khan-logo-vertical-transparent.png"} />;
