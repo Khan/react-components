@@ -255,25 +255,31 @@ return &lt;Comment body=&#34;such time&#34; user=&#34;dinojoel&#34; date={new Da
 
 var NumberInput = React.createClass({
     render: function() {
+        // {{{
+        var imgStyle = {
+            paddingTop: 15,
+            display: &#39;block&#39;,
+            margin: &#39;auto&#39;,
+            maxWidth: &#39;100%&#39;
+        };
+        // }}}
         return &lt;div&gt;
-            &lt;BlurInput value={&#34;&#34; + this.state.value}
+            Image URL: &lt;BlurInput value={this.state.url}
                        onChange={this.handleChange} /&gt;
-            {&#34; -&gt; &#34;}
-            {this.state.value}
+            &lt;img style={imgStyle} src={this.state.url} /&gt;
         &lt;/div&gt;;
     },
 
-    handleChange: function(str) {
-        var value = +str || 0;
-        this.setState({ value });
+    handleChange: function(url) {
+        this.setState({ url });
     },
 
     getInitialState: function() {
-        return { value: this.props.initialValue };
+        return { url: this.props.initialUrl };
     }
 });
 
-return &lt;NumberInput initialValue={5} /&gt;;</div>
+return &lt;NumberInput initialUrl={&#34;https://www.kastatic.org/images/khan-logo-vertical-transparent.png&#34;} /&gt;;</div>
 
         <h3 id="tex">TeX</h3>
         <p>Depends on <a href="https://github.com/Khan/KaTeX" class="dep">KaTeX</a> <a href="http://mathjax.com/" class="dep">MathJax<a>.</p>
