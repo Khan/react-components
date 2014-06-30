@@ -80,7 +80,7 @@ li {
     text-decoration: none;
 }
 
-#introduction, main {
+#introduction, #getting-started, main {
     background-color: rgba(255, 255, 255, 0.9);
     color: #444;
     padding: 20px;

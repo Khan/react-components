@@ -20,6 +20,7 @@ window.TeX                   = require("./js/tex.jsx");
 window.TimeAgo               = require("./js/timeago.jsx");
 window.Tooltip               = require("./js/tooltip.jsx");
 
+// Create a <ReactPlayground> for each example.
 var examples = document.querySelectorAll('div.example_div');
 
 for (var i = 0; i < examples.length; i++) {
@@ -28,4 +29,22 @@ for (var i = 0; i < examples.length; i++) {
         ReactPlayground({codeText: elem.textContent}),
         elem
     );
+}
+
+// Highlight all of the other code snippets. Each code snippet is in a textarea
+// (TODO(joel) - don't use a textarea?) with two classes - "code <language>".
+var codes = document.querySelectorAll('textarea.code');
+
+for (var i = 0; i < codes.length; i++) {
+    var code = codes[i];
+    var classes = code.classList;
+
+    // Remove code so the only remaining class is the name of the highlight
+    // language.
+    classes.remove('code');
+
+    CodeMirror.fromTextArea(code, {
+        mode: classes.item(0),
+        lineNumbers: false
+    });
 }

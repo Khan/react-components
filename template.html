@@ -34,7 +34,8 @@
     <section id="introduction">
     <div class="inner">
         <h2>Introduction</h2>
-        <p>This is a collection of some of the most reusable <a href="http://facebook.github.io/react/index.html">React</a> components built at <a href="http://www.khanacademy.org">Khan Academy</a>. In the jQuery ecosystem there's a large collection of plugins that can be used for anything from modals to translation. We're trying to make it just as easy to jumpstart React applications by adapting or recreating the most useful plugins.</p>
+        <p>This is a collection of some of the most reusable <a href="http://facebook.github.io/react/index.html">React</a> components built at <a href="http://www.khanacademy.org">Khan Academy</a>. In the jQuery ecosystem there's a large collection of plugins that can be used for anything from modals to translation. We're trying to make it just as easy to jumpstart React applications with a well-tested, thoughtful, and beautiful library of components.</p>
+        <p>Most of our components are bespoke, so if you're already invested in a UI framework like Bootstrap, Topcoat, or KendoUI, you should check to see if there's an <a href="https://github.com/facebook/react/wiki/Complementary-Tools#ui-components">existing React wrapper</a> for your framework.</p>
         <p>Important files and info:</p>
         <ul>
             <li><a href="https://github.com/Khan/react-components/blob/master/LICENSE">license</a> (MIT)</li>
@@ -45,12 +46,38 @@
     </div>
     </section>
 
-    <!-- the black triangle
+    <!-- the black triangle -->
     <section id="getting-started">
-    <h2>Getting Started</h2>
-    <p>TODO</p>
+    <div class="inner">
+        <h2>Getting Started</h2>
+        <p>React Components uses <a href="http://wiki.commonjs.org/wiki/Modules/1.1">CommonJS-style requires</a>, making them easy to include in a project using Browserify or Webpack.</p>
+        <h3>Use as a Git Submodule (Recommended)</h3>
+        <p>In the author's limited experience it's easiest to clone React Components as a subrepo (assuming Git).</p>
+        <textarea class="code shell">
+git submodule add https://github.com/Khan/react-components.git react-components
+        </textarea>
+
+        <p>Then simply use CommonJS requires pointing to the components within the subrepo.</p>
+        <textarea class="code javascript">
+var TeX = require('react-components/js/tex.jsx');
+React.renderComponent(<TeX>\nabla \cdot E = 4 \pi \rho</TeX>, domNode);
+        </textarea>
+        <h3>External Requirements</h3>
+        <p>Some components require external libraries - <code>TimeAgo</code>, <code>TeX</code>, <code>BackboneMixin</code>, etc. The libraries aren't included with React Components (to keep it lightweight), so you need to provide them as necessary. External requirements need to be available as CommonJS imports, which usually means adding them to your <code>package.json</code>. For example, <code>TimeAgo</code> uses <code>moment</code>:</p>
+        <textarea class="code javascript">
+"dependencies": {
+  "moment": "~2.7.0
+}
+        </textarea>
+        <p>Now we can use <code>TimeAgo</code> just like any of the other components.</p>
+        <textarea class="code javascript">
+React.renderComponents(<TimeAgo time={new Date()} />, domNode);
+        </textarea>
+        <!-- TODO(joel) create react-components-quickstart repo
+        <h3>Installing Through NPM</h3>
+        -->
+    </div>
     </section>
-    -->
 
     <!-- the hairball / reference -->
     <main class="clearfix">
