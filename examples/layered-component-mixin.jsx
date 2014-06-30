@@ -7,14 +7,19 @@ var ButtonWithDialog = React.createClass({
     },
     renderLayer: function() {
 		var style = {
+            // {{{
             position: 'fixed',
 			top: '50%',
-            left: '50%'
+            width: '20%',
+            margin: '0 40%',
+            textAlign: 'center',
+            zIndex: 2,
+            // }}}
+            visibility: this.state.clicked ? 'visible' : 'hidden'
 		};
 
-        return <div style={style}>
-			{this.state.clicked ? "Clicked! (Click again to remove)"
-                                : null }
+        return <div style={style} className="playgroundPreview">
+			Clicked! (Click again to remove)
         </div>;
     },
     // {{{
