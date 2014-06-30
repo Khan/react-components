@@ -52,7 +52,7 @@
         <h2>Getting Started</h2>
         <p>React Components uses <a href="http://wiki.commonjs.org/wiki/Modules/1.1">CommonJS-style requires</a>, making them easy to include in a project using Browserify or Webpack.</p>
         <h3>Use as a Git Submodule (Recommended)</h3>
-        <p>In the author's limited experience it's easiest to clone React Components as a subrepo (assuming Git).</p>
+        <p>In the author's limited experience, it's easiest to clone React Components as a subrepo (assuming Git).</p>
         <textarea class="code shell">
 git submodule add https://github.com/Khan/react-components.git react-components
         </textarea>
@@ -63,7 +63,7 @@ var TeX = require('react-components/js/tex.jsx');
 React.renderComponent(<TeX>\nabla \cdot E = 4 \pi \rho</TeX>, domNode);
         </textarea>
         <h3>External Requirements</h3>
-        <p>Some components require external libraries - <code>TimeAgo</code>, <code>TeX</code>, <code>BackboneMixin</code>, etc. The libraries aren't included with React Components (to keep it lightweight), so you need to provide them as necessary. External requirements need to be available as CommonJS imports, which usually means adding them to your <code>package.json</code>. For example, <code>TimeAgo</code> uses <code>moment</code>:</p>
+        <p>Some components require external libraries - <code>TimeAgo</code>, <code>TeX</code>, <code>BackboneMixin</code>, etc. The libraries aren't included with React Components (to keep it lightweight), so you'll need to provide them as necessary. External requirements need to be available as CommonJS imports, which usually means adding them to your <code>package.json</code>. For example, <code>TimeAgo</code> uses <code>moment</code>:</p>
         <textarea class="code javascript">
 "dependencies": {
   "moment": "~2.7.0
