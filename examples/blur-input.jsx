@@ -2,22 +2,28 @@
 
 var NumberInput = React.createClass({
     render: function() {
+        // {{{
+        var imgStyle = {
+            paddingTop: 15,
+            display: 'block',
+            margin: 'auto',
+            maxWidth: '100%'
+        };
+        // }}}
         return <div>
-            <BlurInput value={"" + this.state.value}
+            Image URL: <BlurInput value={this.state.url}
                        onChange={this.handleChange} />
-            {" -> "}
-            {this.state.value}
+            <img style={imgStyle} src={this.state.url} />
         </div>;
     },
 
-    handleChange: function(str) {
-        var value = +str || 0;
-        this.setState({ value });
+    handleChange: function(url) {
+        this.setState({ url });
     },
 
     getInitialState: function() {
-        return { value: this.props.initialValue };
+        return { url: this.props.initialUrl };
     }
 });
 
-return <NumberInput initialValue={5} />;
+return <NumberInput initialUrl={"https://www.kastatic.org/images/khan-logo-vertical-transparent.png"} />;
