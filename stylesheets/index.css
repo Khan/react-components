@@ -80,7 +80,7 @@ li {
     text-decoration: none;
 }
 
-#introduction, main {
+#introduction, #getting-started, main {
     background-color: rgba(255, 255, 255, 0.9);
     color: #444;
     padding: 20px;
@@ -125,4 +125,16 @@ main {
     font-size: 59%;
     padding: 3px;
     vertical-align: 23%;
+}
+
+a.dep {
+    border: 1px solid rgb(170, 170, 202);
+    background-color: rgb(111, 145, 187);
+    color: rgb(247, 247, 247);
+    border-radius: 4px;
+    font-family: sans-serif;
+    font-size: 90%;
+    font-weight: 100;
+    padding: 3px;
+    text-decoration: none;
 }
