@@ -104,10 +104,12 @@ React.renderComponents(<TimeAgo time={new Date()} />, domNode);
         </nav>
 
         <h3 id="button-group">Button Group</h3>
+        <p>Depends on <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
         <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
         {% code_example "button-group.jsx" %}
 
         <h3 id="dollar-underscore"><code>$_</code></h3>
+        <p>Depends on <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
         <p>A pseudo-component useful for internationalization.</p>
         {% code_example "i18n.jsx" %}
 
@@ -120,6 +122,7 @@ React.renderComponents(<TimeAgo time={new Date()} />, domNode);
         {% code_example "set-interval-mixin.jsx" %}
 
         <h3 id="timeago"><code>TimeAgo</code></h3>
+        <p>Depends on <a href="http://momentjs.com/" class="dep">moment</a>.</p>
         <p>Human friendly display of how long it's been since an event happened.</p>
         {% code_example "timeago.jsx" %}
 
@@ -128,18 +131,22 @@ React.renderComponents(<TimeAgo time={new Date()} />, domNode);
         {% code_example "blur-input.jsx" %}
 
         <h3 id="tex">TeX</h3>
+        <p>Depends on <a href="https://github.com/Khan/KaTeX" class="dep">KaTeX</a> <a href="http://mathjax.com/" class="dep">MathJax<a>.</p>
         <p>Easily render LaTeX using <a href="http://.mathjax.com">MathJax</a> or Khan Academy's <em>fast</em> <a href="https://github.com/Khan/KaTeX">KaTeX</a> library.</p>
         {% code_example "tex.jsx" %}
 
         <h3 id="tooltip">Tooltip</h3>
+        <p>Depends on <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
         <p>A better tooltip.</p>
         {% code_example "tooltip.jsx" %}
 
         <h3 id="info-tip">Info-Tip</h3>
+        <p>Depends on <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
         <p>A very simple informational tooltip that displays on hover.</p>
         {% code_example "info-tip.jsx" %}
 
         <h3 id="sortable">Sortable</h3>
+        <p>Depends on <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
         <p>Sort a list.</p>
         {% code_example "sortable.jsx" %}
 
@@ -148,6 +155,7 @@ React.renderComponents(<TimeAgo time={new Date()} />, domNode);
         {% code_example "drag-target.jsx" %}
 
         <h3 id="backbone-mixin">Backbone Mixin <span class="deprecated">deprecated</span></h3>
+        <p>Depends on <a href="http://backbonejs.org/" class="dep">Backbone.js</a> <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
         <p>Update this view every time a backbone model updates:</p>
         <p>
         You should know that I highly recommend <em>not</em> using this mixin. It inevitably leads to inefficient code and janky UX. Not at first - only gradually. You won't really notice until it's too late and <code>BackboneMixin</code> runs the interface you just spent three months on.
