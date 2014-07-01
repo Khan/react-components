@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,7 +55,7 @@
         <h2>Getting Started</h2>
         <p>React Components uses <a href="http://wiki.commonjs.org/wiki/Modules/1.1">CommonJS-style requires</a>, making them easy to include in a project using Browserify or Webpack.</p>
         <h3>Use as a Git Submodule (Recommended)</h3>
-        <p>In the author's limited experience it's easiest to clone React Components as a subrepo (assuming Git).</p>
+        <p>In the author's limited experience, it's easiest to clone React Components as a subrepo (assuming Git).</p>
         <textarea class="code shell">
 git submodule add https://github.com/Khan/react-components.git react-components
         </textarea>
@@ -63,7 +66,7 @@ var TeX = require('react-components/js/tex.jsx');
 React.renderComponent(<TeX>\nabla \cdot E = 4 \pi \rho</TeX>, domNode);
         </textarea>
         <h3>External Requirements</h3>
-        <p>Some components require external libraries - <code>TimeAgo</code>, <code>TeX</code>, <code>BackboneMixin</code>, etc. The libraries aren't included with React Components (to keep it lightweight), so you need to provide them as necessary. External requirements need to be available as CommonJS imports, which usually means adding them to your <code>package.json</code>. For example, <code>TimeAgo</code> uses <code>moment</code>:</p>
+        <p>Some components require external libraries - <code>TimeAgo</code>, <code>TeX</code>, <code>BackboneMixin</code>, etc. The libraries aren't included with React Components (to keep it lightweight), so you'll need to provide them as necessary. External requirements need to be available as CommonJS imports, which usually means adding them to your <code>package.json</code>. For example, <code>TimeAgo</code> uses <code>moment</code>:</p>
         <textarea class="code javascript">
 "dependencies": {
   "moment": "~2.7.0
@@ -80,6 +83,39 @@ React.renderComponents(<TimeAgo time={new Date()} />, domNode);
     </section>
 
     <!-- the hairball / reference -->
+    <section id="stability">
+    <div class="inner">
+        <h2>Component Stability</h2>
+        <p>
+        We borrow Mozilla's SDK <a href="https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/SDK_API_Lifecycle">stability index</a> (which is in turn borrowed from <a href="http://nodejs.org/api/documentation.html#documentation_stability_index">Node</a>) to indicate how much you can rely on each component.
+        </p>
+
+        <pre class="deprecated">Stability: 0 - Deprecated
+
+This component is known to be problematic, and changes are planned.
+Do not rely on it. Use of the feature may cause warnings. Backwards
+compatibility should not be expected.</pre>
+
+        <pre class="experimental">Stability: 1 - Experimental
+
+This component was introduced recently, and may change or be removed in
+future versions. Please try it out and provide feedback. If it addresses
+a use-case that is important to you, tell the react-components team.</pre>
+
+        <pre class="unstable">Stability: 2 - Unstable
+
+The component is in the process of settling, but has not yet had
+sufficient real-world testing to be considered stable. Backwards-
+compatibility will be maintained if reasonable.</pre>
+
+        <pre class="stable">Stability: 3 - Stable
+
+The component is a fully supported part of react-components. We will
+avoid breaking backwards compatibility unless absolutely necessary.</pre>
+
+    </div>
+    </section>
+
     <main class="clearfix">
     <div class="inner">
         <h2>Components</h2>
@@ -88,10 +124,10 @@ React.renderComponents(<TimeAgo time={new Date()} />, domNode);
             <div class="inner">
             <ul>
                 <li><a href="#button-group">Button Group</a></li>
-                <li><a href="#dollar-underscore"><code>$_</code></a></li>
+                <li><a href="#dollar-underscore">$_</a></li>
                 <li><a href="#layered-component">Layered Component Mixin</a></li>
                 <li><a href="#set-interval">Set Interval Mixin</a></li>
-                <li><a href="#timeago"><code>TimeAgo</code></a></li>
+                <li><a href="#timeago">TimeAgo</a></li>
                 <li><a href="#blur-input">Blur Input</a></li>
                 <li><a href="#tex">TeX</a></li>
                 <li><a href="#tooltip">Tooltip</a></li>
@@ -104,7 +140,12 @@ React.renderComponents(<TimeAgo time={new Date()} />, domNode);
         </nav>
 
         <h3 id="button-group">Button Group</h3>
-        <p>Depends on <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span><a href=http://underscorejs.org/ class="dependency">Underscore</a>
+</div>
         <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
         <div class='example_div'>var Options = React.createClass({
     render: function() {
@@ -141,7 +182,12 @@ React.renderComponents(<TimeAgo time={new Date()} />, domNode);
 return &lt;Options /&gt;;</div>
 
         <h3 id="dollar-underscore"><code>$_</code></h3>
-        <p>Depends on <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span><a href=http://underscorejs.org/ class="dependency">Underscore</a>
+</div>
         <p>A pseudo-component useful for internationalization.</p>
         <div class='example_div'>var translated = &lt;$_ first=&#34;Motoko&#34; last=&#34;Kusanagi&#34;&gt;
     Hello, %(first)s %(last)s!
@@ -159,6 +205,12 @@ return &lt;span&gt;
 &lt;/span&gt;;</div>
 
         <h3 id="layered-component">Layered Component Mixin</h3>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span>
+</div>
         <p>Render another component in a div appended to the page.</p>
         <div class='example_div'>var ButtonWithDialog = React.createClass({
 	mixins: [LayeredComponentMixin],
@@ -169,14 +221,19 @@ return &lt;span&gt;
     },
     renderLayer: function() {
 		var style = {
+            // {{{
             position: &#39;fixed&#39;,
 			top: &#39;50%&#39;,
-            left: &#39;50%&#39;
+            width: &#39;20%&#39;,
+            margin: &#39;0 40%&#39;,
+            textAlign: &#39;center&#39;,
+            zIndex: 2,
+            // }}}
+            visibility: this.state.clicked ? &#39;visible&#39; : &#39;hidden&#39;
 		};
 
-        return &lt;div style={style}&gt;
-			{this.state.clicked ? &#34;Clicked! (Click again to remove)&#34;
-                                : null }
+        return &lt;div style={style} className=&#34;playgroundPreview&#34;&gt;
+			Clicked! (Click again to remove)
         &lt;/div&gt;;
     },
     // {{{
@@ -192,6 +249,12 @@ return &lt;span&gt;
 return &lt;ButtonWithDialog /&gt;;</div>
 
         <h3 id="set-interval">Set Interval Mixin</h3>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span>
+</div>
         <p>Like <code>setInterval</code> that calls <code>clearInterval</code> for you.</p>
         <div class='example_div'>var RefreshingComponent = React.createClass({
     mixins: [SetIntervalMixin],
@@ -215,7 +278,12 @@ return &lt;ButtonWithDialog /&gt;;</div>
 return &lt;RefreshingComponent /&gt;;</div>
 
         <h3 id="timeago"><code>TimeAgo</code></h3>
-        <p>Depends on <a href="http://momentjs.com/" class="dep">moment</a>.</p>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span><a href=http://momentjs.com/ class="dependency">moment</a>
+</div>
         <p>Human friendly display of how long it's been since an event happened.</p>
         <div class='example_div'>// {{{
 var FormatCommentBody = React.createClass({
@@ -250,10 +318,16 @@ var Comment = React.createClass({
 return &lt;Comment body=&#34;such time&#34; user=&#34;dinojoel&#34; date={new Date()} /&gt;;</div>
 
         <h3 id="blur-input">Blur Input</h3>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span>
+</div>
         <p>An input component that notifies its parent of changes when it loses focus.</p>
         <div class='example_div'>// {{{ TODO(joel) - numericalParse
 
-var NumberInput = React.createClass({
+var URLInput = React.createClass({
     render: function() {
         // {{{
         var imgStyle = {
@@ -279,17 +353,27 @@ var NumberInput = React.createClass({
     }
 });
 
-return &lt;NumberInput initialUrl={&#34;https://www.kastatic.org/images/khan-logo-vertical-transparent.png&#34;} /&gt;;</div>
+return &lt;URLInput initialUrl={&#34;https://www.kastatic.org/images/khan-logo-vertical-transparent.png&#34;} /&gt;;</div>
 
         <h3 id="tex">TeX</h3>
-        <p>Depends on <a href="https://github.com/Khan/KaTeX" class="dep">KaTeX</a> <a href="http://mathjax.com/" class="dep">MathJax<a>.</p>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span><a href=https://github.com/Khan/KaTeX class="dependency">KaTeX</a><a href=http://mathjax.com/ class="dependency">MathJax</a>
+</div>
         <p>Easily render LaTeX using <a href="http://.mathjax.com">MathJax</a> or Khan Academy's <em>fast</em> <a href="https://github.com/Khan/KaTeX">KaTeX</a> library.</p>
         <div class='example_div'>// return &lt;TeX&gt;{&#34;\\nabla \\times \\vec{\\mathbf{B}} -\\, \\frac1c\\, \\frac{\\partial\\vec{\\mathbf{E}}}{\\partial t} = \\frac{4\\pi}{c}\\vec{\\mathbf{j}}&#34;}&lt;/TeX&gt;
 
 return &lt;TeX&gt;\nabla \cdot E = 4 \pi \rho&lt;/TeX&gt;;</div>
 
         <h3 id="tooltip">Tooltip</h3>
-        <p>Depends on <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span><a href=http://underscorejs.org/ class="dependency">Underscore</a>
+</div>
         <p>A better tooltip.</p>
         <div class='example_div'>// {{{
 var pStyle = {
@@ -313,7 +397,12 @@ return &lt;Tooltip className=&#34;class-for-tooltip-contents&#34;
 &lt;/Tooltip&gt;;</div>
 
         <h3 id="info-tip">Info-Tip</h3>
-        <p>Depends on <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span><a href=http://underscorejs.org/ class="dependency">Underscore</a>
+</div>
         <p>A very simple informational tooltip that displays on hover.</p>
         <div class='example_div'>return &lt;div&gt;
     reticulating splines
@@ -323,7 +412,12 @@ return &lt;Tooltip className=&#34;class-for-tooltip-contents&#34;
 &lt;/div&gt;;</div>
 
         <h3 id="sortable">Sortable</h3>
-        <p>Depends on <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span><a href=http://underscorejs.org/ class="dependency">Underscore</a>
+</div>
         <p>Sort a list.</p>
         <div class='example_div'>var Sorter = React.createClass({
     render: function() {
@@ -356,6 +450,12 @@ return &lt;Sorter components={components} /&gt;;
 // }}}</div>
 
         <h3 id="drag-target">Drag Target</h3>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span>
+</div>
         <p>Accept dragged content from the browser or the desktop.</p>
         <div class='example_div'>var Target = React.createClass({
     render: function() {
@@ -375,8 +475,13 @@ return &lt;Sorter components={components} /&gt;;
 
 return &lt;Target /&gt;;</div>
 
-        <h3 id="backbone-mixin">Backbone Mixin <span class="deprecated">deprecated</span></h3>
-        <p>Depends on <a href="http://backbonejs.org/" class="dep">Backbone.js</a> <a class="dep" href="http://underscorejs.org/">Underscore</a>.</p>
+        <h3 id="backbone-mixin">Backbone Mixin</h3>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="deprecated">deprecated</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span><a href=http://backbonejs.org/ class="dependency">Backbone.js</a>
+</div>
         <p>Update this view every time a backbone model updates:</p>
         <p>
         You should know that I highly recommend <em>not</em> using this mixin. It inevitably leads to inefficient code and janky UX. Not at first - only gradually. You won't really notice until it's too late and <code>BackboneMixin</code> runs the interface you just spent three months on.
