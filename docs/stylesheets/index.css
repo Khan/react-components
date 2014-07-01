@@ -80,7 +80,7 @@ li {
     text-decoration: none;
 }
 
-#introduction, #getting-started, main {
+main, section {
     background-color: rgba(255, 255, 255, 0.9);
     color: #444;
     padding: 20px;
@@ -117,24 +117,55 @@ main {
     vertical-align: top;
 }
 
-.deprecated {
-    border: 1px solid rgb(218, 193, 193);
-    background-color: rgb(255, 111, 111);
-    color: rgb(247, 247, 247);
-    border-radius: 4px;
-    font-size: 59%;
-    padding: 3px;
-    vertical-align: 23%;
-}
-
-a.dep {
-    border: 1px solid rgb(170, 170, 202);
-    background-color: rgb(111, 145, 187);
-    color: rgb(247, 247, 247);
-    border-radius: 4px;
-    font-family: sans-serif;
+.dependency, .deprecated, .unstable {
+    color: rgb(58, 58, 58);
+    font-family: sans-serif; /* TODO(joel) lock down the sans-serify */
     font-size: 90%;
     font-weight: 100;
+    margin: 2px;
     padding: 3px;
     text-decoration: none;
+}
+
+.deprecated {
+    border-left: 5px solid rgb(206, 51, 51);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.experimental {
+    border-left: 5px solid rgb(236, 83, 21);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.unstable {
+    border-left: 5px solid rgb(186, 194, 0);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.stable {
+    border-left: 5px solid rgb(0, 148, 49);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.dependency {
+    border-left: 5px solid rgb(111, 145, 187);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.stability, .depends {
+    margin: 10px 0;
+}
+
+.meta-info-header {
+    display: inline-block;
+    font-family: sans-serif;
+    width: 80px;
+}
+
+#stability pre {
+    background-color: rgba(255, 255, 255, 0.7);
+    font-family: monospace;
+    font-size: 16px;
+    margin: 10px 0;
+    padding: 10px;
 }
