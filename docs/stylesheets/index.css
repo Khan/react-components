@@ -117,7 +117,7 @@ main {
     vertical-align: top;
 }
 
-.dependency, .deprecated, .unstable {
+.dependency, .deprecated, .experimental, .unstable, .stable {
     color: rgb(58, 58, 58);
     font-family: sans-serif; /* TODO(joel) lock down the sans-serify */
     font-size: 90%;

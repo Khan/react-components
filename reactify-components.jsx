@@ -19,6 +19,7 @@ window.Sortable              = require("./js/sortable.jsx");
 window.TeX                   = require("./js/tex.jsx");
 window.TimeAgo               = require("./js/timeago.jsx");
 window.Tooltip               = require("./js/tooltip.jsx");
+window.WindowDrag            = require("./js/window-drag.jsx");
 
 // Create a <ReactPlayground> for each example.
 var examples = document.querySelectorAll('div.example_div');

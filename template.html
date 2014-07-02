@@ -143,6 +143,7 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
                 <li><a href="#sortable">Sortable</a></li>
                 <li><a href="#drag-target">Drag Target</a></li>
                 <li><a href="#backbone-mixin">Backbone Mixin</a></li>
+                <li><a href="#window-drag">Window Drag</a></li>
             </ul>
             </div>
         </nav>
@@ -213,6 +214,12 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
         {{ depends([]) }}
         <p>Accept dragged content from the browser or the desktop.</p>
         {% code_example "drag-target.jsx" %}
+
+        <h3 id="window-drag">Window Drag</h3>
+        {{ stability("experimental") }}
+        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        <p>Detect drags into and out of the page.</p>
+        {% code_example "window-drag.jsx" %}
 
         <h3 id="backbone-mixin">Backbone Mixin</h3>
         {{ stability("deprecated") }}
