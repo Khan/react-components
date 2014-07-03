@@ -128,26 +128,31 @@ main {
 }
 
 .deprecated {
+    border: 1px solid rgb(206, 51, 51);
     border-left: 5px solid rgb(206, 51, 51);
     background-color: rgba(255, 255, 255, 0.5);
 }
 
 .experimental {
-    border-left: 5px solid rgb(236, 83, 21);
+    border: 1px solid rgb(236, 124, 21);
+    border-left: 5px solid rgb(236, 124, 21);
     background-color: rgba(255, 255, 255, 0.5);
 }
 
 .unstable {
-    border-left: 5px solid rgb(186, 194, 0);
+    border: 1px solid rgb(219, 219, 0);
+    border-left: 5px solid rgb(219, 219, 0);
     background-color: rgba(255, 255, 255, 0.5);
 }
 
 .stable {
+    border: 1px solid rgb(0, 148, 49);
     border-left: 5px solid rgb(0, 148, 49);
     background-color: rgba(255, 255, 255, 0.5);
 }
 
 .dependency {
+    border: 1px solid rgb(111, 145, 187);
     border-left: 5px solid rgb(111, 145, 187);
     background-color: rgba(255, 255, 255, 0.5);
 }
