@@ -6,7 +6,7 @@
 {%- endmacro %}
 {% macro depends(packages) -%}
 <div class="depends">
-    <span class="meta-info-header">Depends</span>{% for package in packages %}<a href={{ package[0] }} class="dependency">{{ package[1] }}</a>{% endfor %}
+    <span class="meta-info-header">Depends</span>{% for package in packages %}<a href={{ package[0] }} class="dependency">{{ package[1] }}</a>{% else %}<a href="#" class="no-dependency">None</a>{% endfor %}
 </div>
 {%- endmacro %}
 <!DOCTYPE html>
