@@ -117,7 +117,7 @@ main {
     vertical-align: top;
 }
 
-.dependency, .deprecated, .experimental, .unstable, .stable {
+.dependency, .no-dependency, .deprecated, .experimental, .unstable, .stable {
     color: rgb(58, 58, 58);
     font-family: sans-serif; /* TODO(joel) lock down the sans-serify */
     font-size: 90%;
@@ -155,6 +155,13 @@ main {
     border: 1px solid rgb(111, 145, 187);
     border-left: 5px solid rgb(111, 145, 187);
     background-color: rgba(255, 255, 255, 0.5);
+}
+
+.no-dependency {
+    border: 1px solid rgb(180, 180, 180);
+    border-left: 5px solid rgb(180, 180, 180);
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgb(180, 180, 180);
 }
 
 .stability, .depends {
