@@ -16,6 +16,12 @@
  * @jsx React.DOM
  */
 
+// TODO(zach): convert to CSSCore
+var $ = require('jquery');
+
+var React = require('react');
+React.addons = require('react-addons');
+
 var ReactTransitionGroup = React.addons.TransitionGroup;
 
 var TICK = 17;

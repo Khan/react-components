@@ -34,6 +34,33 @@
     <script type="text/javascript" src="js/showdown.js"></script>
     <script type="text/javascript" src="js/JSXTransformer.js"></script>
     <title>React Components</title>
+    <style type="text/css">
+        .demo-enter {
+            opacity: 0.01;
+            height: 0px;
+            padding: 0px 10px !important;
+            transition: opacity 500ms ease-out,
+                        padding 500ms ease-out,
+                        height 500ms ease-out;
+        }
+        .demo-enter.demo-enter-active {
+            opacity: 1;
+            height: 16px;
+            padding: 10px !important;
+        }
+        .demo-leave {
+            opacity: 1;
+            height: 16px;
+            transition: opacity 500ms ease-out,
+                        padding 500ms ease-out,
+                        height 500ms ease-out;
+        }
+        .demo-leave.demo-leave-active {
+            opacity: 0;
+            height: 0px;
+            padding: 0px 10px !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -142,6 +169,7 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
                 <li><a href="#info-tip">Info-Tip</a></li>
                 <li><a href="#sortable">Sortable</a></li>
                 <li><a href="#drag-target">Drag Target</a></li>
+                <li><a href="#timeout-transition-group">Timeout Transition Group</a></li>
                 <li><a href="#backbone-mixin">Backbone Mixin</a></li>
                 <li><a href="#window-drag">Window Drag</a></li>
             </ul>
@@ -220,6 +248,12 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
         {{ depends([("http://underscorejs.org/", "Underscore")]) }}
         <p>Detect drags into and out of the page.</p>
         {% code_example "window-drag.jsx" %}
+
+        <h3 id="timeout-transition-group">Timeout Transition Group</h3>
+        {{ stability("unstable") }}
+        {{ depends([("http://jquery.com/", "jQuery"), ("https://www.npmjs.org/package/react-addons", "react-addons")]) }}
+        <p>A wrapper which applies CSS classes to children who are entering or leaving. It is very much like the <code>CSSTransitionGroup</code> provided in the React addons. Unfortunately, <code>CSSTransitionGroup</code> uses the <code>transitionEnd</code> event, which is not fired in a variety of conditions (including the transition not being visible or in another tab). This version of <code>CSSTransitionGroup</code> uses a manually set timeout, instead.</p>
+        {% code_example "timeout-transition-group.jsx" %}
 
         <h3 id="backbone-mixin">Backbone Mixin</h3>
         {{ stability("deprecated") }}
