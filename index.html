@@ -26,6 +26,33 @@
     <script type="text/javascript" src="js/showdown.js"></script>
     <script type="text/javascript" src="js/JSXTransformer.js"></script>
     <title>React Components</title>
+    <style type="text/css">
+        .demo-enter {
+            opacity: 0.01;
+            height: 0px;
+            padding: 0px 10px !important;
+            transition: opacity 500ms ease-out,
+                        padding 500ms ease-out,
+                        height 500ms ease-out;
+        }
+        .demo-enter.demo-enter-active {
+            opacity: 1;
+            height: 16px;
+            padding: 10px !important;
+        }
+        .demo-leave {
+            opacity: 1;
+            height: 16px;
+            transition: opacity 500ms ease-out,
+                        padding 500ms ease-out,
+                        height 500ms ease-out;
+        }
+        .demo-leave.demo-leave-active {
+            opacity: 0;
+            height: 0px;
+            padding: 0px 10px !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -134,6 +161,7 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
                 <li><a href="#info-tip">Info-Tip</a></li>
                 <li><a href="#sortable">Sortable</a></li>
                 <li><a href="#drag-target">Drag Target</a></li>
+                <li><a href="#timeout-transition-group">Timeout Transition Group</a></li>
                 <li><a href="#backbone-mixin">Backbone Mixin</a></li>
                 <li><a href="#window-drag">Window Drag</a></li>
             </ul>
@@ -210,7 +238,7 @@ return &lt;span&gt;
     <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
 </div>
         <div class="depends">
-    <span class="meta-info-header">Depends</span>
+    <span class="meta-info-header">Depends</span><a href="#" class="no-dependency">None</a>
 </div>
         <p>Render another component in a div appended to the page.</p>
         <div class='example_div'>var ButtonWithDialog = React.createClass({
@@ -254,7 +282,7 @@ return &lt;ButtonWithDialog /&gt;;</div>
     <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
 </div>
         <div class="depends">
-    <span class="meta-info-header">Depends</span>
+    <span class="meta-info-header">Depends</span><a href="#" class="no-dependency">None</a>
 </div>
         <p>Like <code>setInterval</code> that calls <code>clearInterval</code> for you.</p>
         <div class='example_div'>var RefreshingComponent = React.createClass({
@@ -323,7 +351,7 @@ return &lt;Comment body=&#34;such time&#34; user=&#34;dinojoel&#34; date={new Da
     <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
 </div>
         <div class="depends">
-    <span class="meta-info-header">Depends</span>
+    <span class="meta-info-header">Depends</span><a href="#" class="no-dependency">None</a>
 </div>
         <p>An input component that notifies its parent of changes when it loses focus.</p>
         <div class='example_div'>// {{{ TODO(joel) - numericalParse
@@ -455,7 +483,7 @@ return &lt;Sorter components={components} /&gt;;
     <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
 </div>
         <div class="depends">
-    <span class="meta-info-header">Depends</span>
+    <span class="meta-info-header">Depends</span><a href="#" class="no-dependency">None</a>
 </div>
         <p>Accept dragged content from the browser or the desktop.</p>
         <div class='example_div'>var Target = React.createClass({
@@ -494,6 +522,109 @@ return &lt;Target /&gt;;</div>
 });
 
 return &lt;Indicator /&gt;;</div>
+
+        <h3 id="timeout-transition-group">Timeout Transition Group</h3>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span><a href=http://jquery.com/ class="dependency">jQuery</a><a href=https://www.npmjs.org/package/react-addons class="dependency">react-addons</a>
+</div>
+        <p>A wrapper which applies CSS classes to children who are entering or leaving. It is very much like the <code>CSSTransitionGroup</code> provided in the React addons. Unfortunately, <code>CSSTransitionGroup</code> uses the <code>transitionEnd</code> event, which is not fired in a variety of conditions (including the transition not being visible or in another tab). This version of <code>CSSTransitionGroup</code> uses a manually set timeout, instead.</p>
+        <div class='example_div'>// {{{
+var itemStyle = {
+    padding: 10,
+    borderColor: &#34;black&#34;,
+    borderWidth: 1,
+    borderStyle: &#34;solid&#34;,
+    overflow: &#34;hidden&#34;,
+    cursor: &#34;pointer&#34;
+};
+// }}}
+
+/**
+ * Already in the stylesheet of the page:
+ *
+ * .demo-enter {
+ *     opacity: 0.01;
+ *     height: 0px;
+ *     padding: 0px 10px !important;
+ *     transition: opacity 500ms ease-out,
+ *                 padding 500ms ease-out,
+ *                 height 500ms ease-out;
+ * }
+ * .demo-enter.demo-enter-active {
+ *     opacity: 1;
+ *     height: 16px;
+ *     padding: 10px !important;
+ * }
+ * .demo-leave {
+ *     opacity: 1;
+ *     height: 16px;
+ *     transition: opacity 500ms ease-out,
+ *                 padding 500ms ease-out,
+ *                 height 500ms ease-out;
+ * }
+ * .demo-leave.demo-leave-active {
+ *     opacity: 0;
+ *     height: 0px;
+ *     padding: 0px 10px !important;
+ * }
+ */
+
+var List = React.createClass({
+    getInitialState: function() {
+        return {
+            items: [0, 1, 2, 3]
+        };
+    },
+
+    removeThenReadd: function(item) {
+        // {{{
+        var items = this.state.items.slice(0);
+        var found = false;
+        for(var i = 0; i &lt; items.length; i++) {
+            if (items[i] === item) {
+                items.splice(i, 1);
+                found = true;
+                break;
+            }
+        }
+
+        this.setState({items: items}, function() {
+            if (found) {
+                setTimeout(function() {
+                    var items = this.state.items.slice(0);
+                    items.push(item);
+                    this.setState({items: items});
+                }.bind(this), 5000);
+
+            }
+        }.bind(this));
+        // }}}
+    },
+
+    _makeDiv: function(index) {
+        // {{{
+        return &lt;div onClick={this.removeThenReadd.bind(null, index)}
+                    style={itemStyle}
+                    key={index}&gt;
+            {&#34;Item &#34; + index}
+        &lt;/div&gt;;
+        // }}}
+    },
+
+    render: function() {
+        var items = this.state.items.map(this._makeDiv);
+        return &lt;TimeoutTransitionGroup enterTimeout={500}
+                                       leaveTimeout={500}
+                                       transitionName=&#34;demo&#34;&gt;
+            {items}
+        &lt;/TimeoutTransitionGroup&gt;;
+    }
+});
+
+return &lt;List /&gt;;</div>
 
         <h3 id="backbone-mixin">Backbone Mixin</h3>
         <div class="stability">
