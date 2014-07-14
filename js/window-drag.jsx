@@ -21,7 +21,7 @@ var WindowDrag = React.createClass({
                 {this.props.children}
             </div>;
         } else {
-            return <span />;
+            return <div />;
         }
     },
 
