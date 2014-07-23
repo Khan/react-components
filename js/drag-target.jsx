@@ -28,7 +28,7 @@ var React = require('react');
 var DragTarget = React.createClass({
     propTypes: {
         onDrop: React.PropTypes.func.isRequired,
-        component: React.PropTypes.component,
+        component: React.PropTypes.func,  // component type
         shouldDragHighlight: React.PropTypes.func
     },
     render: function() {
