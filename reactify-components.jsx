@@ -11,6 +11,7 @@ window.$_                     = require("./js/i18n.jsx");
 window.BackboneMixin          = require("./js/backbone-mixin.jsx");
 window.BlurInput              = require("./js/blur-input.jsx");
 window.ButtonGroup            = require("./js/button-group.jsx");
+window.MultiButtonGroup       = require("./js/multi-button-group.jsx");
 window.DragTarget             = require("./js/drag-target.jsx");
 window.InfoTip                = require("./js/info-tip.jsx");
 window.LayeredComponentMixin  = require("./js/layered-component-mixin.jsx");

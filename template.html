@@ -159,6 +159,7 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
             <div class="inner">
             <ul>
                 <li><a href="#button-group">Button Group</a></li>
+                <li><a href="#multi-button-group">Multi Button Group</a></li>
                 <li><a href="#dollar-underscore">$_</a></li>
                 <li><a href="#layered-component">Layered Component Mixin</a></li>
                 <li><a href="#set-interval">Set Interval Mixin</a></li>
@@ -181,6 +182,12 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
         {{ depends([("http://underscorejs.org/", "Underscore")]) }}
         <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
         {% code_example "button-group.jsx" %}
+
+        <h3 id="multi-button-group">Multi Button Group</h3>
+        {{ stability("unstable") }}
+        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        <p>Like Button Group, but with multi-select (like checkboxes).</p>
+        {% code_example "multi-button-group.jsx" %}
 
         <h3 id="dollar-underscore"><code>$_</code></h3>
         {{ stability("unstable") }}
