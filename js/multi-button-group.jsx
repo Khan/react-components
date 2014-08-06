@@ -54,6 +54,7 @@ var MultiButtonGroup = React.createClass({
             var maybeSelected = _.contains(values, button.value) ?
                 selectedStyle.className : "";
             return <button title={button.title}
+                    type="button"
                     id={"" + i}
                     key = {"" + i}
                     ref={"button" + i}

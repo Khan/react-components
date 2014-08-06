@@ -56,6 +56,7 @@ var ButtonGroup = React.createClass({
                         selectedStyle.className :
                         "";
                 return <button title={button.title}
+                        type="button"
                         id={"" + i}
                         ref={"button" + i}
                         key={"" + i}
