@@ -11,7 +11,7 @@ var sortableDragging = {
 
 var sortableEnabled = {
     cursor: "pointer"
-}
+};
 
 var userSelect = rhs => {
     return {
