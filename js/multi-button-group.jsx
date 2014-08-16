@@ -3,7 +3,7 @@
 var React = require('react');
 var RCSS = require('rcss');
 var _ = require('underscore');
-var styles = require('./styles');
+var styles = require('./styles.js');
 
 var buttonStyle = styles.button.buttonStyle;
 var selectedStyle = styles.button.selectedStyle;
