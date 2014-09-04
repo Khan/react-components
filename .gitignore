@@ -1,5 +1,6 @@
 *.js
 !/js/*.js
+!/test/*.js
 node_modules
 index.html
 venv
