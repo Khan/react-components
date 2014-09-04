@@ -39,7 +39,7 @@ var SortableArea = React.createClass({
                 index={index}
                 component={component}
                 area={this}
-                key={component.key}
+                key={component.props.key}
                 draggable={component.props.draggable}
                 dragging={index === this.state.dragging} />
         );
