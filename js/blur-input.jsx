@@ -23,11 +23,12 @@ var BlurInput = React.createClass({
         return { value: this.props.value };
     },
     render: function() {
-        return this.transferPropsTo(<input
+        return <input
+            {...this.props}
             type="text"
             value={this.state.value}
             onChange={this.handleChange}
-            onBlur={this.handleBlur} />);
+            onBlur={this.handleBlur} />;
     },
     componentWillReceiveProps: function(nextProps) {
         this.setState({ value: nextProps.value });

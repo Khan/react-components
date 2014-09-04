@@ -330,12 +330,12 @@ var Tooltip = React.createClass({
                         ref="tooltipContent"
                         style={{
                             position: "relative",
-                            "top": settings["top"],
-                            "left": settings.tooltipLeft,
+                            top: settings["top"],
+                            left: settings.tooltipLeft,
                             border: "1px solid " + this.props.borderColor,
-                            "-webkit-box-shadow": "0 1px 3px " +
+                            WebkitBoxShadow: "0 1px 3px " +
                                     this.props.borderColor,
-                            "-moz-box-shadow": "0 1px 3px " +
+                            MozBoxShadow: "0 1px 3px " +
                                     this.props.borderColor,
                             boxShadow: "0 1px 3px " +
                                     this.props.borderColor,

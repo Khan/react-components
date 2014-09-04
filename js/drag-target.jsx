@@ -35,15 +35,15 @@ var DragTarget = React.createClass({
         var opacity = this.state.dragHover ? { "opacity": 0.3 } : {};
         var component = this.props.component;
 
-        return this.transferPropsTo(
-            <component style={opacity}
-                       onDrop={this.handleDrop}
-                       onDragEnd={this.handleDragEnd}
-                       onDragOver={this.handleDragOver}
-                       onDragEnter={this.handleDragEnter}
-                       onDragLeave={this.handleDragLeave}>
-                {this.props.children}
-            </component>
+        return (
+            <component
+                {...this.props}
+                style={opacity}
+                onDrop={this.handleDrop}
+                onDragEnd={this.handleDragEnd}
+                onDragOver={this.handleDragOver}
+                onDragEnter={this.handleDragEnter}
+                onDragLeave={this.handleDragLeave} />
         );
     },
     getInitialState: function() {
