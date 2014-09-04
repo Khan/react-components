@@ -1,8 +1,10 @@
 {
   "name": "react-components",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "author": "Khan Academy",
   "description": "React components used by Khan Academy",
+  "homepage": "http://khan.github.io/react-components/",
+  "keywords": ["react", "widgets", "react-ui", "react-component", "khan"],
   "repository": {
     "type": "git",
     "url": "https://github.com/Khan/react-components.git"
