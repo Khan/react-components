@@ -163,6 +163,7 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
                 <li><a href="#dollar-underscore">$_</a></li>
                 <li><a href="#layered-component">Layered Component Mixin</a></li>
                 <li><a href="#set-interval">Set Interval Mixin</a></li>
+                <li><a href="#state-from-store">State-from-Store Mixin</a></li>
                 <li><a href="#timeago">TimeAgo</a></li>
                 <li><a href="#blur-input">Blur Input</a></li>
                 <li><a href="#tex">TeX</a></li>
@@ -206,6 +207,13 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
         {{ depends([]) }}
         <p>Like <code>setInterval</code> that calls <code>clearInterval</code> for you.</p>
         {% code_example "set-interval-mixin.jsx" %}
+
+        <h3 id="state-from-store">State-from-Store Mixin</h3>
+        {{ stability("unstable") }}
+        {{ depends([("https://facebook.github.io/flux/", "Flux"),
+                    ("http://underscorejs.org/", "Underscore")]) }}
+        <p>Wires change listeners to get updates from a flux store.</p>
+        {% code_example "state-from-store-mixin.jsx" %}
 
         <h3 id="timeago"><code>TimeAgo</code></h3>
         {{ stability("unstable") }}
