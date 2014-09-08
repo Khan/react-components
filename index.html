@@ -151,9 +151,11 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
             <div class="inner">
             <ul>
                 <li><a href="#button-group">Button Group</a></li>
+                <li><a href="#multi-button-group">Multi Button Group</a></li>
                 <li><a href="#dollar-underscore">$_</a></li>
                 <li><a href="#layered-component">Layered Component Mixin</a></li>
                 <li><a href="#set-interval">Set Interval Mixin</a></li>
+                <li><a href="#state-from-store">State-from-Store Mixin</a></li>
                 <li><a href="#timeago">TimeAgo</a></li>
                 <li><a href="#blur-input">Blur Input</a></li>
                 <li><a href="#tex">TeX</a></li>
@@ -179,23 +181,19 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
         <div class='example_div'>var Options = React.createClass({
     render: function() {
         var labelStyle = {
-            color: this.state.value
+            color: this.state.value,
+            padding: &#39;0 10px&#39;
         };
-        var outerStyle = {
-            padding: &#39;5px 0&#39;
-        };
+
         return &lt;div&gt;
-            Options:
-            &lt;div style={outerStyle}&gt;
-                &lt;ButtonGroup value={this.state.value}
-                             buttons={[
-                                {value: &#39;red&#39;, text: &#39;red&#39;},
-                                {value: &#39;green&#39;, text: &#39;green&#39;},
-                                {value: &#39;blue&#39;, text: &#39;blue&#39;}
-                             ]}
-                             onChange={this.handleChange} /&gt;
-            &lt;/div&gt;
-            &lt;div style={labelStyle}&gt;Your useful text&lt;/div&gt;
+            &lt;ButtonGroup value={this.state.value}
+                    buttons={[
+                        {value: &#39;red&#39;, content: &#39;red&#39;},
+                        {value: &#39;green&#39;, content: &#39;green&#39;},
+                        {value: &#39;blue&#39;, content: &#39;blue&#39;}
+                    ]}
+                    onChange={this.handleChange} /&gt;
+            &lt;span style={labelStyle}&gt;Your useful text&lt;/span&gt;
         &lt;/div&gt;;
     },
 
@@ -205,6 +203,82 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
 
     handleChange: function(value) {
         this.setState({ value });
+    }
+});
+
+return &lt;Options /&gt;;</div>
+
+        <h3 id="multi-button-group">Multi Button Group</h3>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span><a href=http://underscorejs.org/ class="dependency">Underscore</a>
+</div>
+        <p>Like Button Group, but with multi-select (like checkboxes).</p>
+        <div class='example_div'>var Options = React.createClass({
+    render: function() {
+        // {{{
+        // Returns a small, colored div
+        var paint = function (color) {
+            var style = {
+                backgroundColor: color,
+                border: (color === &#39;white&#39;) ? &#39;1px solid&#39; : null,
+                height: 15,
+                width: 15,
+                display: &#39;inline-block&#39;
+            };
+            return &lt;div style={style} /&gt;;
+        };
+
+        var outerStyle = {
+            padding: &#39;0 10px&#39;,
+            display: &#39;inline-block&#39;
+        };
+        // }}}
+
+        return &lt;div&gt;
+            Mixing Colors:
+            &lt;div style={outerStyle}&gt;
+                &lt;MultiButtonGroup values={this.state.values}
+                        buttons={[
+                            {value: &#39;red&#39;, content: paint(&#39;red&#39;)},
+                            {value: &#39;green&#39;, content: paint(&#39;green&#39;)},
+                            {value: &#39;blue&#39;, content: paint(&#39;blue&#39;)}
+                        ]}
+                        onChange={this.handleChange} /&gt;
+            &lt;/div&gt;
+            {paint(this.mixColors(this.state.values))}
+        &lt;/div&gt;;
+    },
+
+    getInitialState: function() {
+        return { values: [&#39;red&#39;, &#39;blue&#39;] };
+    },
+
+    // {{{
+    mixColors: function(colors) {
+        var containsRed = colors.indexOf(&#39;red&#39;) &gt; -1;
+        var containsBlue = colors.indexOf(&#39;blue&#39;) &gt; -1;
+        var containsGreen = colors.indexOf(&#39;green&#39;) &gt; -1;
+
+        if (containsRed &amp;&amp; containsGreen &amp;&amp; containsBlue) {
+            return &#39;white&#39;;
+        } else if (containsRed &amp;&amp; containsGreen) {
+            return &#39;yellow&#39;;
+        } else if (containsRed &amp;&amp; containsBlue) {
+            return &#39;purple&#39;;
+        } else if (containsGreen &amp;&amp; containsBlue) {
+            return &#39;cyan&#39;;
+        } else if (colors.length &gt; 0) {
+            return colors[0];
+        }
+        return &#39;black&#39;;
+    },
+    // }}}
+
+    handleChange: function(values) {
+        this.setState({ values });
     }
 });
 
@@ -305,6 +379,18 @@ return &lt;ButtonWithDialog /&gt;;</div>
 });
 
 return &lt;RefreshingComponent /&gt;;</div>
+
+        <h3 id="state-from-store">State-from-Store Mixin</h3>
+        <div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="unstable">unstable</a>
+</div>
+        <div class="depends">
+    <span class="meta-info-header">Depends</span><a href=https://facebook.github.io/flux/ class="dependency">Flux</a><a href=http://underscorejs.org/ class="dependency">Underscore</a>
+</div>
+        <p>Wires change listeners to get updates from a flux store.</p>
+        <div class='example_div'>return &lt;div&gt;
+    example needed!
+&lt;/div&gt;;</div>
 
         <h3 id="timeago"><code>TimeAgo</code></h3>
         <div class="stability">
