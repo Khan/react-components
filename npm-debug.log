@@ -1,0 +1,109 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@2.0.0
+3 info using node@v0.10.32
+4 verbose node symlink /usr/local/bin/node
+5 verbose readDependencies using package.json deps
+6 verbose install where, deps [ '/Users/joel/khan/webapp/third_party/javascript-khansrc/react-components',
+6 verbose install   [ 'rcss',
+6 verbose install     'browserify',
+6 verbose install     'backbone',
+6 verbose install     'mocha',
+6 verbose install     'jquery',
+6 verbose install     'jsdom',
+6 verbose install     'jstransform',
+6 verbose install     'react',
+6 verbose install     'react-addons',
+6 verbose install     'reactify',
+6 verbose install     'react-tools',
+6 verbose install     'underscore',
+6 verbose install     'moment' ] ]
+7 info preinstall react-components@0.1.2
+8 verbose readDependencies using package.json deps
+9 verbose already installed skipping jquery@~2.1.1 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+10 verbose already installed skipping jsdom@~0.10.5 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+11 verbose already installed skipping jstransform@~6.1.0 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+12 verbose already installed skipping react@~0.10.0 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+13 verbose already installed skipping react-addons@~0.9.0 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+14 verbose already installed skipping reactify@~0.14.0 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+15 verbose already installed skipping react-tools@~0.11.1 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+16 verbose already installed skipping underscore@~1.6.0 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+17 verbose already installed skipping moment@* /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+18 verbose already installed skipping rcss@git+https://github.com/khan/RCSS#9e5ec9614e391d28a621297a63bc2d850eae89e8 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+19 verbose already installed skipping browserify@>=4 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+20 verbose already installed skipping backbone@~1.1.2 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+21 verbose already installed skipping mocha@~1.18.2 /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+22 silly resolved []
+23 info build /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+24 verbose linkStuff [ false,
+24 verbose linkStuff   false,
+24 verbose linkStuff   false,
+24 verbose linkStuff   '/Users/joel/khan/webapp/third_party/javascript-khansrc' ]
+25 info linkStuff react-components@0.1.2
+26 verbose linkBins react-components@0.1.2
+27 verbose linkMans react-components@0.1.2
+28 verbose rebuildBundles react-components@0.1.2
+29 verbose rebuildBundles [ '.bin',
+29 verbose rebuildBundles   'backbone',
+29 verbose rebuildBundles   'browserify',
+29 verbose rebuildBundles   'envify',
+29 verbose rebuildBundles   'jquery',
+29 verbose rebuildBundles   'jsdom',
+29 verbose rebuildBundles   'jstransform',
+29 verbose rebuildBundles   'mocha',
+29 verbose rebuildBundles   'moment',
+29 verbose rebuildBundles   'rcss',
+29 verbose rebuildBundles   'react',
+29 verbose rebuildBundles   'react-addons',
+29 verbose rebuildBundles   'react-tools',
+29 verbose rebuildBundles   'reactify',
+29 verbose rebuildBundles   'underscore' ]
+30 verbose rebuild bundle /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components/node_modules/envify
+31 info build /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components/node_modules/envify
+32 info preinstall envify@1.2.1
+33 verbose linkStuff [ false,
+33 verbose linkStuff   false,
+33 verbose linkStuff   false,
+33 verbose linkStuff   '/Users/joel/khan/webapp/third_party/javascript-khansrc/react-components/node_modules' ]
+34 info linkStuff envify@1.2.1
+35 verbose linkBins envify@1.2.1
+36 verbose link bins [ { envify: 'bin/envify' },
+36 verbose link bins   '/Users/joel/khan/webapp/third_party/javascript-khansrc/react-components/node_modules/.bin',
+36 verbose link bins   false ]
+37 verbose linkMans envify@1.2.1
+38 verbose rebuildBundles envify@1.2.1
+39 verbose rebuildBundles [ '.bin', 'esprima-fb', 'jstransform', 'through', 'xtend' ]
+40 verbose gentlyRm vacuuming /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components/node_modules/.bin/envify
+41 silly gentlyRm purging /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components/node_modules/.bin/envify
+42 silly gentlyRm quitting because other entries in /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components/node_modules/.bin
+43 info install envify@1.2.1
+44 info postinstall envify@1.2.1
+45 info install react-components@0.1.2
+46 info postinstall react-components@0.1.2
+47 info prepublish react-components@0.1.2
+48 verbose unsafe-perm in lifecycle true
+49 info react-components@0.1.2 Failed to exec prepublish script
+50 verbose stack Error: react-components@0.1.2 prepublish: `node prepublish.js`
+50 verbose stack Exit status 8
+50 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:212:16)
+50 verbose stack     at ChildProcess.emit (events.js:98:17)
+50 verbose stack     at maybeClose (child_process.js:756:16)
+50 verbose stack     at Process.ChildProcess._handle.onexit (child_process.js:823:5)
+51 verbose pkgid react-components@0.1.2
+52 verbose cwd /Users/joel/khan/webapp/third_party/javascript-khansrc/react-components
+53 error Darwin 14.0.0
+54 error argv "node" "/usr/local/bin/npm" "install"
+55 error node v0.10.32
+56 error npm  v2.0.0
+57 error code ELIFECYCLE
+58 error react-components@0.1.2 prepublish: `node prepublish.js`
+58 error Exit status 8
+59 error Failed at the react-components@0.1.2 prepublish script.
+59 error This is most likely a problem with the react-components package,
+59 error not with npm itself.
+59 error Tell the author that this fails on your system:
+59 error     node prepublish.js
+59 error You can get their info via:
+59 error     npm owner ls react-components
+59 error There is likely additional logging output above.
+60 verbose exit [ 1, true ]
