@@ -15,6 +15,7 @@ window.MultiButtonGroup       = require("./js/multi-button-group.jsx");
 window.DragTarget             = require("./js/drag-target.jsx");
 window.InfoTip                = require("./js/info-tip.jsx");
 window.LayeredComponentMixin  = require("./js/layered-component-mixin.jsx");
+window.Modal                  = require("./js/modal.jsx");
 window.SetIntervalMixin       = require("./js/set-interval-mixin.jsx");
 window.Sortable               = require("./js/sortable.jsx");
 window.TeX                    = require("./js/tex.jsx");
