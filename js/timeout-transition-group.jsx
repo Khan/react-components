@@ -12,15 +12,12 @@
  *
  * This is adapted from Facebook's CSSTransitionGroup which is in the React
  * addons and under the Apache 2.0 License.
- *
- * @jsx React.DOM
  */
 
 // TODO(zach): convert to CSSCore
 var $ = require('jquery');
 
-var React = require('react');
-React.addons = require('react-addons');
+var React = require('react/addons');
 
 var ReactTransitionGroup = React.addons.TransitionGroup;
 
@@ -186,23 +183,23 @@ var TimeoutTransitionGroup = React.createClass({
     },
 
     _wrapChild: function(child) {
-        return TimeoutTransitionGroupChild(
-            {
-                enterTimeout: this.props.enterTimeout,
-                leaveTimeout: this.props.leaveTimeout,
-                name: this.props.transitionName,
-                enter: this.props.transitionEnter,
-                leave: this.props.transitionLeave
-            },
-            child
+        return (
+            <TimeoutTransitionGroupChild
+                    enterTimeout={this.props.enterTimeout}
+                    leaveTimeout={this.props.leaveTimeout}
+                    name={this.props.transitionName}
+                    enter={this.props.transitionEnter}
+                    leave={this.props.transitionLeave}>
+                {child}
+            </TimeoutTransitionGroupChild>
         );
     },
 
     render: function() {
-        return this.transferPropsTo(
-            <ReactTransitionGroup childFactory={this._wrapChild}>
-                {this.props.children}
-            </ReactTransitionGroup>
+        return (
+            <ReactTransitionGroup
+                {...this.props}
+                childFactory={this._wrapChild} />
         );
     }
 });

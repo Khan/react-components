@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require("react");
 var _ = require("underscore");
 
@@ -212,7 +210,7 @@ var Tooltip = React.createClass({
             _.keys(HORIZONTAL_ALIGNMNENTS)
         ),
         children: React.PropTypes.arrayOf(
-            React.PropTypes.component
+            React.PropTypes.element
         ).isRequired
     },
 

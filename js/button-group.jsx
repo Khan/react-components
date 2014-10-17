@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var RCSS = require('rcss');
 var _ = require('underscore');
@@ -35,7 +33,7 @@ var ButtonGroup = React.createClass({
         value: React.PropTypes.any,
         buttons: React.PropTypes.arrayOf(React.PropTypes.shape({
             value: React.PropTypes.any.isRequired,
-            content: React.PropTypes.renderable,
+            content: React.PropTypes.node,
             title: React.PropTypes.string
         })).isRequired,
         onChange: React.PropTypes.func.isRequired,

@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var assert = require("assert");
 var _ = require("underscore");
 

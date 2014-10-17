@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var ReactPlayground = require('./react-live-editor/live-editor.jsx');
 
@@ -29,8 +27,8 @@ var examples = document.querySelectorAll('div.example_div');
 
 for (var i = 0; i < examples.length; i++) {
     var elem = examples[i];
-    React.renderComponent(
-        ReactPlayground({codeText: elem.textContent}),
+    React.render(
+        <ReactPlayground codeText={elem.textContent} />,
         elem
     );
 }

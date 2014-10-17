@@ -33,61 +33,6 @@
     <script type="text/javascript" src="js/javascript.js"></script>
     <script type="text/javascript" src="js/showdown.js"></script>
     <script type="text/javascript" src="js/JSXTransformer.js"></script>
-    <script>
-// HACK(joel) include this in a principled way
-/**
- * Copyright 2014 Facebook, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @providesModule Object.es6
- * @polyfill
- */
-
-// https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign
-
-if (!Object.assign) {
-  Object.assign = function(target, sources) {
-    if (target == null) {
-      throw new TypeError('Object.assign target cannot be null or undefined');
-    }
-
-    var to = Object(target);
-    var hasOwnProperty = Object.prototype.hasOwnProperty;
-
-    for (var nextIndex = 1; nextIndex < arguments.length; nextIndex++) {
-      var nextSource = arguments[nextIndex];
-      if (nextSource == null) {
-        continue;
-      }
-
-      var from = Object(nextSource);
-
-      // We don't currently support accessors nor proxies. Therefore this
-      // copy cannot throw. If we ever supported this then we must handle
-      // exceptions and side-effects.
-
-      for (var key in from) {
-        if (hasOwnProperty.call(from, key)) {
-          to[key] = from[key];
-        }
-      }
-    }
-
-    return to;
-  };
-}
-    </script>
     <title>React Components</title>
 </head>
 
@@ -126,7 +71,7 @@ git submodule add https://github.com/Khan/react-components.git react-components
         <p>Then simply use CommonJS requires pointing to the components within the subrepo.</p>
         <textarea class="code javascript">
 var TeX = require('react-components/js/tex.jsx');
-React.renderComponent(<TeX>\nabla \cdot E = 4 \pi \rho</TeX>, domNode);
+React.render(<TeX>\nabla \cdot E = 4 \pi \rho</TeX>, domNode);
         </textarea>
         <h3>External Requirements</h3>
         <p>Some components require external libraries - <code>TimeAgo</code>, <code>TeX</code>, <code>BackboneMixin</code>, etc. The libraries aren't included with React Components (to keep it lightweight), so you'll need to provide them as necessary. External requirements need to be available as CommonJS imports, which usually means adding them to your <code>package.json</code>. For example, <code>TimeAgo</code> uses <code>moment</code>:</p>
@@ -137,7 +82,7 @@ React.renderComponent(<TeX>\nabla \cdot E = 4 \pi \rho</TeX>, domNode);
         </textarea>
         <p>Now we can use <code>TimeAgo</code> just like any of the other components.</p>
         <textarea class="code javascript">
-React.renderComponents(<TimeAgo time={new Date()} />, domNode);
+React.render(<TimeAgo time={new Date()} />, domNode);
         </textarea>
         <!-- TODO(joel) create react-components-quickstart repo
         <h3>Installing Through NPM</h3>
@@ -301,7 +246,7 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
 
         <h3 id="timeout-transition-group">Timeout Transition Group</h3>
         {{ stability("unstable") }}
-        {{ depends([("http://jquery.com/", "jQuery"), ("https://www.npmjs.org/package/react-addons", "react-addons")]) }}
+        {{ depends([("http://jquery.com/", "jQuery")]) }}
         <p>A wrapper which applies CSS classes to children who are entering or leaving. It is very much like the <code>CSSTransitionGroup</code> provided in the React addons. Unfortunately, <code>CSSTransitionGroup</code> uses the <code>transitionEnd</code> event, which is not fired in a variety of conditions (including the transition not being visible or in another tab). This version of <code>CSSTransitionGroup</code> uses a manually set timeout, instead.</p>
         {% code_example "timeout-transition-group.jsx" %}
 

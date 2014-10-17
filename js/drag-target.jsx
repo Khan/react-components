@@ -1,6 +1,5 @@
-/** @jsx React.DOM */
-
 var React = require('react');
+var _ = require('underscore');
 
 /* This component makes its children a drag target. Example:
  *
@@ -28,17 +27,17 @@ var React = require('react');
 var DragTarget = React.createClass({
     propTypes: {
         onDrop: React.PropTypes.func.isRequired,
-        component: React.PropTypes.func,  // component type
+        component: React.PropTypes.any,  // component type
         shouldDragHighlight: React.PropTypes.func
     },
     render: function() {
         var opacity = this.state.dragHover ? { "opacity": 0.3 } : {};
-        var component = this.props.component;
+        var Component = this.props.component;
 
         return (
-            <component
+            <Component
                 {...this.props}
-                style={opacity}
+                style={_.extend({}, this.props.style, opacity)}
                 onDrop={this.handleDrop}
                 onDragEnd={this.handleDragEnd}
                 onDragOver={this.handleDragOver}
@@ -51,7 +50,7 @@ var DragTarget = React.createClass({
     },
     getDefaultProps: function() {
         return {
-            component: React.DOM.div,
+            component: "div",
             shouldDragHighlight: () => true
         };
     },

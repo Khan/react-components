@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var jsdom = require("jsdom");
 var assert = require("assert");
 var React = require("react/addons");

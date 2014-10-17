@@ -39,7 +39,7 @@ var LayeredComponentMixin = {
         // componentDidUpdate(), you're effectively creating a "wormhole" that
         // funnels React's hierarchical updates through to a DOM node on an
         // entirely different part of the page.
-        React.renderComponent(this.renderLayer(), this._layer);
+        React.render(this.renderLayer(), this._layer);
 
         if (this.layerDidMount) {
             this.layerDidMount(this._layer);

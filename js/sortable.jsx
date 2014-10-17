@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var _     = require('underscore');
 
@@ -29,7 +27,7 @@ var sortableDisabled = userSelect("none");
 // Takes an array of components to sort
 var SortableArea = React.createClass({
     propTypes: {
-        components: PT.arrayOf(PT.renderable).isRequired,
+        components: PT.arrayOf(PT.node).isRequired,
         onReorder: PT.func.isRequired,
         verify: PT.func
     },
@@ -39,7 +37,7 @@ var SortableArea = React.createClass({
                 index={index}
                 component={component}
                 area={this}
-                key={component.props.key}
+                key={component.key}
                 draggable={component.props.draggable}
                 dragging={index === this.state.dragging} />
         );
