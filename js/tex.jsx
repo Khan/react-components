@@ -62,7 +62,7 @@ var TeX = React.createClass({
 
         try {
             var katexHolder = this.refs.katex.getDOMNode();
-            katex.process(text, katexHolder);
+            katex.render(text, katexHolder);
             onRender();
             return;
         } catch (e) {
@@ -85,7 +85,7 @@ var TeX = React.createClass({
         if (oldText !== newText) {
             try {
                 var katexHolder = this.refs.katex.getDOMNode();
-                katex.process(newText, katexHolder);
+                katex.render(newText, katexHolder);
                 if (this.script) {
                     var jax = MathJax.Hub.getJaxFor(this.script);
                     if (jax) {
