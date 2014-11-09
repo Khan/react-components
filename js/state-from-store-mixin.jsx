@@ -109,7 +109,9 @@ var StateFromStore = function(stateDescriptors) {
     var addChangeListeners = function(component) {
         var changeListeners = component[storageKey].changeListeners;
         _.each(stateDescriptors, function(stateDescriptor, stateKey) {
-            var handleChange = () => fetchForUpdate(component, stateKey);
+            var handleChange = function() {
+              return fetchForUpdate(component, stateKey)
+            };
             changeListeners[stateKey] = handleChange;
             stateDescriptor.store.addChangeListener(handleChange);
         });
