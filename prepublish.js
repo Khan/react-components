@@ -21,6 +21,7 @@ for (var i = 0; i < files.length; i++) {
 
     var js = fs.readFileSync(src, {encoding: 'utf8'});
     var transformed = jstransform.transform(visitorList, js).code;
+    transformed = transformed.replace('.jsx', '.js');
 
     fs.writeFileSync(dest, transformed);
 }
