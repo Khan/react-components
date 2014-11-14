@@ -246,7 +246,7 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
 
         <h3 id="timeout-transition-group">Timeout Transition Group</h3>
         {{ stability("unstable") }}
-        {{ depends([("http://jquery.com/", "jQuery")]) }}
+        {{ depends([]) }}
         <p>A wrapper which applies CSS classes to children who are entering or leaving. It is very much like the <code>CSSTransitionGroup</code> provided in the React addons. Unfortunately, <code>CSSTransitionGroup</code> uses the <code>transitionEnd</code> event, which is not fired in a variety of conditions (including the transition not being visible or in another tab). This version of <code>CSSTransitionGroup</code> uses a manually set timeout, instead.</p>
         {% code_example "timeout-transition-group.jsx" %}
 
