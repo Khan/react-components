@@ -39,7 +39,17 @@ var LayeredComponentMixin = {
         // componentDidUpdate(), you're effectively creating a "wormhole" that
         // funnels React's hierarchical updates through to a DOM node on an
         // entirely different part of the page.
-        React.render(this.renderLayer(), this._layer);
+
+        var layerElement = this.renderLayer();
+        // Renders can return null, but React.render() doesn't like being asked
+        // to render null. If we get null back from renderLayer(), just render
+        // a noscript element, like React does when an element's render returns
+        // null.
+        if (layerElement === null) {
+            React.render(<noscript />, this._layer);
+        } else {
+            React.render(layerElement, this._layer);
+        }
 
         if (this.layerDidMount) {
             this.layerDidMount(this._layer);
