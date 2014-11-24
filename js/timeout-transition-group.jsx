@@ -49,6 +49,10 @@ var EVENT_NAME_MAP = {
 var endEvents = [];
 
 (function detectEvents() {
+    if (typeof window === "undefined") {
+        return;
+    }
+
     var testEl = document.createElement('div');
     var style = testEl.style;
 
