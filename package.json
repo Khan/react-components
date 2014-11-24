@@ -4,6 +4,7 @@
   "author": "Khan Academy",
   "description": "React components used by Khan Academy",
   "homepage": "http://khan.github.io/react-components/",
+  "browserify": {"transform": ["reactify"]},
   "keywords": ["react", "widgets", "react-ui", "react-component", "khan"],
   "repository": {
     "type": "git",
