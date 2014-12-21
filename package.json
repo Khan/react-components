@@ -35,6 +35,9 @@
   },
   "scripts": {
     "test": "make test",
-    "prepublish": "node prepublish.js"
+    "clean": "rm *.js",
+    "transpile:jsx": "./node_modules/.bin/jsx --harmony --extension jsx js .",
+    "transpile:js": "./node_modules/.bin/jsx --harmony --extension js js .",
+    "prepublish": "npm run clean && npm run transpile:jsx && npm run transpile:js"
   }
 }
