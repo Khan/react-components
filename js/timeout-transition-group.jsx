@@ -14,12 +14,9 @@
  * addons and under the Apache 2.0 License.
  */
 
-// TODO(zach): convert to CSSCore
-var $ = require('jquery');
-
-var React = require('react/addons');
-
-var ReactTransitionGroup = React.addons.TransitionGroup;
+var React = require('react');
+var ReactTransitionGroup = require('react/lib/ReactTransitionGroup');
+var CSSCore = require('react/lib/CSSCore');
 
 var TICK = 17;
 
@@ -94,8 +91,8 @@ var TimeoutTransitionGroupChild = React.createClass({
         var activeClassName = className + '-active';
 
         var endListener = function() {
-            $(node).removeClass(className);
-            $(node).removeClass(activeClassName);
+            CSSCore.removeClass(node, className);
+            CSSCore.removeClass(node, activeClassName);
 
             // Usually this optional callback is used for informing an owner of
             // a leave animation and telling it to remove the child.
@@ -114,7 +111,7 @@ var TimeoutTransitionGroupChild = React.createClass({
             }
         }
 
-        $(node).addClass(className);
+        CSSCore.addClass(node, className);
 
         // Need to do this to actually trigger a transition.
         this.queueClass(activeClassName);
@@ -130,7 +127,9 @@ var TimeoutTransitionGroupChild = React.createClass({
 
     flushClassNameQueue: function() {
         if (this.isMounted()) {
-            $(this.getDOMNode()).addClass(this.classNameQueue.join(" "));
+            this.classNameQueue.forEach(name => {
+                CSSCore.addClass(this.getDOMNode(), name);
+            });
         }
         this.classNameQueue.length = 0;
         this.timeout = null;
