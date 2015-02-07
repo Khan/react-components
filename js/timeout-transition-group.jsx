@@ -14,9 +14,6 @@
  * addons and under the Apache 2.0 License.
  */
 
-// TODO(zach): convert to CSSCore
-var $ = require('jquery');
-
 var React = require('react/addons');
 
 var ReactTransitionGroup = React.addons.TransitionGroup;
@@ -87,6 +84,40 @@ function animationSupported() {
     return endEvents.length !== 0;
 }
 
+/**
+ * Functions for element class management to replace dependency on jQuery
+ * addClass, removeClass and hasClass
+ */
+function addClass(element, className) {
+    if (element.classList) {
+        element.classList.add(className);
+    } else if (!hasClass(element, className)) {
+        element.className = element.className + ' ' + className;
+    }
+    return element;
+}
+function removeClass(element, className) {
+    if (hasClass(className)) {
+        if (element.classList) {
+            element.classList.remove(className);
+        } else {
+            element.className = element.className
+                .replace(className, '')
+                .replace(new RegExp('/(^|\\s)' + className + '($|\\s)/'), ' ')
+                .trim();
+        }
+    }
+    return element;
+}
+function hasClass(element, className) {
+    if (element.classList) {
+        return element.classList.contains(className);
+    } else {
+        var hasClassNameRegExp = new RegExp('(^|\\s)' + className + '($|\\s)');
+        return hasClassNameRegExp.test(className);
+    }
+}
+
 var TimeoutTransitionGroupChild = React.createClass({
     transition: function(animationType, finishCallback) {
         var node = this.getDOMNode();
@@ -94,8 +125,8 @@ var TimeoutTransitionGroupChild = React.createClass({
         var activeClassName = className + '-active';
 
         var endListener = function() {
-            $(node).removeClass(className);
-            $(node).removeClass(activeClassName);
+            removeClass(node, className);
+            removeClass(node, activeClassName);
 
             // Usually this optional callback is used for informing an owner of
             // a leave animation and telling it to remove the child.
@@ -114,7 +145,7 @@ var TimeoutTransitionGroupChild = React.createClass({
             }
         }
 
-        $(node).addClass(className);
+        addClass(node, className);
 
         // Need to do this to actually trigger a transition.
         this.queueClass(activeClassName);
@@ -130,7 +161,9 @@ var TimeoutTransitionGroupChild = React.createClass({
 
     flushClassNameQueue: function() {
         if (this.isMounted()) {
-            $(this.getDOMNode()).addClass(this.classNameQueue.join(" "));
+            this.classNameQueue.forEach(function(name) {
+                addClass(this.getDOMNode(), name);
+            }.bind(this));
         }
         this.classNameQueue.length = 0;
         this.timeout = null;
