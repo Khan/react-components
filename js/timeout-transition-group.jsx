@@ -101,10 +101,8 @@ function removeClass(element, className) {
         if (element.classList) {
             element.classList.remove(className);
         } else {
-            element.className = element.className
-                .replace(className, '')
-                .replace(new RegExp('/(^|\\s)' + className + '($|\\s)/'), ' ')
-                .trim();
+            element.className = (' ' + element.className + ' ')
+                .replace(' ' + className + ' ', ' ').trim();
         }
     }
     return element;
@@ -113,8 +111,7 @@ function hasClass(element, className) {
     if (element.classList) {
         return element.classList.contains(className);
     } else {
-        var hasClassNameRegExp = new RegExp('(^|\\s)' + className + '($|\\s)');
-        return hasClassNameRegExp.test(className);
+        return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
     }
 }
 
