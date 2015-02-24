@@ -1,1 +1,3 @@
-docs/js/katex.js
+docs/
+examples/
+react-live-editor/
