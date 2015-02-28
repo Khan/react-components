@@ -1,27 +1,54 @@
+var React = require('react');
 var _ = require('underscore');
 
+var interpolationMarker = /%\(([\w_]+)\)s/g;
 /**
- * Performs sprintf-like %(name)s replacement on str, and returns an array of
- * the string interleaved with those replacements
+ * Performs sprintf-like %(name)s replacement on str, and returns a React
+ * fragment of the string interleaved with those replacements. The replacements
+ * can be any valid React node including strings and numbers.
  *
  * For example:
- *  interpolateStringToArray("test", {}) -> ["test"]
- *  interpolateStringToArray("test %(num)s", {num: 5}) -> ["test ", 5, ""]
+ *  interpolateStringToFragment("test", {}) ->
+ *      test
+ *  interpolateStringToFragment("test %(num)s", {num: 5}) ->
+ *      test 5
+ *  interpolateStringToFragment("test %(num)s", {num: <Count />}) ->
+ *      test <Count />
  */
-var interpolateStringToArray = function(str, options) {
+var interpolateStringToFragment = function(str, options) {
     options = options || {};
 
     // Split the string into its language fragments and substitutions
-    var split = str.split(/%\(([\w_]+)\)s/g);
+    var split = str.split(interpolationMarker);
+
+    var result = {"text_0": split[0]};
 
     // Replace the substitutions with the appropriate option
     for (var i = 1; i < split.length; i += 2) {
-        var replaceWith = options[split[i]];
-        split[i] = _.isUndefined(replaceWith) ?
-            "%(" + split[i] + ")s" :
-            replaceWith;
+        var key = split[i];
+        var replaceWith = options[key];
+        if (replaceWith === undefined) {
+            replaceWith = "%(" + key + ")s";
+        }
+
+        // We prefix each substitution key with a number that increments each
+        // time it's used, so "test %(num)s %(fruit)s and %(num)s again" turns
+        // into an object with keys:
+        // [text_0, 0_num, text_2, 0_fruit, text_4, 1_num, text_6]
+        // This is better than just using the array index in the case that we
+        // switch between two translated strings with the same variables.
+        // Admittedly, an edge case.
+        var j = 0;
+        while (_.has(result, j + "_" + key)) {
+            j++;
+        }
+        result[j + "_" + key] = replaceWith;
+        // Because the regex has one capturing group, the `split` array always
+        // has an odd number of elements, so this always stays in bounds.
+        result["text_" + (i + 1)] = split[i + 1];
     }
-    return split;
+
+    return React.addons.createFragment(result);
 };
 
 /**
@@ -55,7 +82,7 @@ var $_ = function(options, str) {
     if (arguments.length !== 2 || !_.isString(str)) {
         return "<$_> must have exactly one child, which must be a string";
     }
-    return interpolateStringToArray(str, options);
+    return interpolateStringToFragment(str, options);
 };
 
 module.exports = $_;
