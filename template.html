@@ -26,7 +26,20 @@
     <script type="text/javascript" src="js/es5-shim.min.js"></script>
     <script type="text/javascript" src="js/es5-sham.min.js"></script>
     <![endif]-->
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured"></script>
+    <script type="text/javascript">
+      MathJax.Hub.Config({
+          messageStyle: "none",
+          "HTML-CSS": {
+              showMathMenu: false
+          },
+          TeX: {
+              extensions: ["AMSmath.js", "AMSsymbols.js", "noErrors.js", "noUndefined.js"]
+          },
+          skipStartupTypeset: true
+      });
+      MathJax.Hub.Configured();
+    </script>
     <script type="text/javascript" src="js/katex.js"></script>
     <script type="text/javascript" src="js/codemirror.js"></script>
     <script type="text/javascript" src="js/foldcode.js"></script>
@@ -64,24 +77,24 @@
         <p>React Components uses <a href="http://wiki.commonjs.org/wiki/Modules/1.1">CommonJS-style requires</a>, making them easy to include in a project using Browserify or Webpack.</p>
         <h3>Use as a Git Submodule (Recommended)</h3>
         <p>In the author's limited experience, it's easiest to clone React Components as a subrepo (assuming Git).</p>
-        <textarea class="code shell">
+        <textarea class="code shell" readonly>
 git submodule add https://github.com/Khan/react-components.git react-components
         </textarea>
 
         <p>Then simply use CommonJS requires pointing to the components within the subrepo.</p>
-        <textarea class="code javascript">
+        <textarea class="code javascript" readonly>
 var TeX = require('react-components/js/tex.jsx');
 React.render(<TeX>\nabla \cdot E = 4 \pi \rho</TeX>, domNode);
         </textarea>
         <h3>External Requirements</h3>
         <p>Some components require external libraries - <code>TimeAgo</code>, <code>TeX</code>, <code>BackboneMixin</code>, etc. The libraries aren't included with React Components (to keep it lightweight), so you'll need to provide them as necessary. External requirements need to be available as CommonJS imports, which usually means adding them to your <code>package.json</code>. For example, <code>TimeAgo</code> uses <code>moment</code>:</p>
-        <textarea class="code javascript">
+        <textarea class="code javascript" readonly>
 "dependencies": {
   "moment": "~2.7.0
 }
         </textarea>
         <p>Now we can use <code>TimeAgo</code> just like any of the other components.</p>
-        <textarea class="code javascript">
+        <textarea class="code javascript" readonly>
 React.render(<TimeAgo time={new Date()} />, domNode);
         </textarea>
         <!-- TODO(joel) create react-components-quickstart repo
@@ -210,8 +223,8 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
         <h3 id="tex">TeX</h3>
         {{ stability("unstable") }}
         {{ depends([("https://github.com/Khan/KaTeX", "KaTeX"),
-                    ("http://mathjax.com/", "MathJax")]) }}
-        <p>Easily render LaTeX using <a href="http://.mathjax.com">MathJax</a> or Khan Academy's <em>fast</em> <a href="https://github.com/Khan/KaTeX">KaTeX</a> library.</p>
+                    ("http://www.mathjax.org/", "MathJax")]) }}
+        <p>Easily render LaTeX using <a href="http://www.mathjax.org/">MathJax</a> or Khan Academy's <em>fast</em> <a href="https://github.com/Khan/KaTeX">KaTeX</a> library.</p>
         {% code_example "tex.jsx" %}
 
         <h3 id="tooltip">Tooltip</h3>

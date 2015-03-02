@@ -47,6 +47,7 @@ for (var i = 0; i < codes.length; i++) {
 
     CodeMirror.fromTextArea(code, {
         mode: classes.item(0),
-        lineNumbers: false
+        lineNumbers: false,
+        readOnly: code.getAttribute("readonly") != null
     });
 }
