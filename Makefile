@@ -1,11 +1,9 @@
 .PHONY: all docs pydeps jsdeps
 
-ENV = venv
-
 all: bundle.js docs
 
 pydeps:
-	test -d $(ENV) || virtualenv $(ENV)
+	pip install -r requirements.txt
 
 jsdeps:
 	npm install
@@ -27,7 +25,7 @@ bundle.js: jsdeps
 	./node_modules/.bin/browserify -t [ reactify --es6 ] js/*.jsx -o bundle.js
 
 docs/index.html: pydeps
-	. $(ENV)/bin/activate && pip install -r requirements.txt && ./make_template.py
+	./make_template.py
 
 docs/preview-bundle.js: jsdeps
 	./node_modules/.bin/browserify -d -t [ reactify --es6 ] js/*.jsx reactify-components.jsx -o docs/preview-bundle.js
