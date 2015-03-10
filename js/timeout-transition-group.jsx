@@ -118,12 +118,22 @@ function hasClass(element, className) {
 var TimeoutTransitionGroupChild = React.createClass({
     transition: function(animationType, finishCallback) {
         var node = this.getDOMNode();
+        var self = this;
         var className = this.props.name + '-' + animationType;
         var activeClassName = className + '-active';
+        var leaveTimeout = (this.props.leaveDelay || 0) + this.props.leaveTimeout;
+        var enterTimeout = (this.props.enterDelay || 0) + this.props.enterTimeout;
 
         var endListener = function() {
             removeClass(node, className);
             removeClass(node, activeClassName);
+
+            // Handle any hooks before the animation is cleaned up
+            if (animationType === "enter" && self.props.afterTransitionEnter) {
+                self.props.afterTransitionEnter(node);
+            } else if (animationType === "leave" && self.props.afterTransitionLeave) {
+                self.props.afterTransitionLeave(node);
+            }
 
             // Usually this optional callback is used for informing an owner of
             // a leave animation and telling it to remove the child.
@@ -134,18 +144,26 @@ var TimeoutTransitionGroupChild = React.createClass({
             endListener();
         } else {
             if (animationType === "enter") {
-                this.animationTimeout = setTimeout(endListener,
-                                                   this.props.enterTimeout);
+                this.animationTimeout = setTimeout(endListener, enterTimeout);
             } else if (animationType === "leave") {
-                this.animationTimeout = setTimeout(endListener,
-                                                   this.props.leaveTimeout);
+                this.animationTimeout = setTimeout(endListener, leaveTimeout);
             }
         }
 
         addClass(node, className);
 
-        // Need to do this to actually trigger a transition.
-        this.queueClass(activeClassName);
+        // Need to do this to actually trigger a (delayed) transition
+        if (animationType === "enter" && this.props.enterDelay) {
+            this.transitionEnterTimeout = setTimeout(function() {
+                self.queueClass(activeClassName);
+            }, this.props.enterDelay);
+        } else if (animationType === "leave" && this.props.leaveDelay) {
+            this.transitionLeaveTimeout = setTimeout(function(){
+                self.queueClass(activeClassName);
+            }, this.props.leaveDelay);
+        } else {
+            this.queueClass(activeClassName);
+        }
     },
 
     queueClass: function(className) {
@@ -177,6 +195,12 @@ var TimeoutTransitionGroupChild = React.createClass({
         if (this.animationTimeout) {
             clearTimeout(this.animationTimeout);
         }
+        if (this.transitionEnterTimeout) {
+            clearTimeout(this.transitionEnterTimeout);
+        }
+        if (this.transitionLeaveTimeout) {
+            clearTimeout(this.transitionLeaveTimeout);
+        }
     },
 
     componentWillEnter: function(done) {
@@ -202,11 +226,21 @@ var TimeoutTransitionGroupChild = React.createClass({
 
 var TimeoutTransitionGroup = React.createClass({
     propTypes: {
+        // SLA for the transition
         enterTimeout: React.PropTypes.number.isRequired,
         leaveTimeout: React.PropTypes.number.isRequired,
+
+        // Delay before starting the transition (Still applies the non-active class)
+        enterDelay: React.PropTypes.number,
+        leaveDelay: React.PropTypes.number,
+
+        // Hook to run after transition has completed, but before cleanup
+        afterTransitionEnter: React.PropTypes.func,
+        afterTransitionLeave: React.PropTypes.func,
+
         transitionName: React.PropTypes.string.isRequired,
         transitionEnter: React.PropTypes.bool,
-        transitionLeave: React.PropTypes.bool,
+        transitionLeave: React.PropTypes.bool
     },
 
     getDefaultProps: function() {
@@ -221,6 +255,10 @@ var TimeoutTransitionGroup = React.createClass({
             <TimeoutTransitionGroupChild
                     enterTimeout={this.props.enterTimeout}
                     leaveTimeout={this.props.leaveTimeout}
+                    afterTransitionEnter={this.props.afterTransitionEnter}
+                    afterTransitionLeave={this.props.afterTransitionLeave}
+                    enterDelay={this.props.enterDelay}
+                    leaveDelay={this.props.leaveDelay}
                     name={this.props.transitionName}
                     enter={this.props.transitionEnter}
                     leave={this.props.transitionLeave}>
