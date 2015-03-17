@@ -4,15 +4,14 @@
  * transitioning node not being painted or in an unfocused tab.
  *
  * This TimeoutTransitionGroup instead uses a user-defined timeout to determine
- * when it is a good time to remove the component. Currently there is only one
- * timeout specified, but in the future it would be nice to be able to specify
- * separate timeouts for enter and leave, in case the timeouts for those
- * animations differ. Even nicer would be some sort of inspection of the CSS to
- * automatically determine the duration of the animation or transition.
+ * when it is a good time to remove the component. If available, the
+ * TimeoutTransitionGroup now determines the timeouts from css.
  *
  * This is adapted from Facebook's CSSTransitionGroup which is in the React
  * addons and under the Apache 2.0 License.
  */
+
+'use strict';
 
 var React = require('react/addons');
 
@@ -84,93 +83,79 @@ function animationSupported() {
     return endEvents.length !== 0;
 }
 
-/**
- * Functions for element class management to replace dependency on jQuery
- * addClass, removeClass and hasClass
- */
-function addClass(element, className) {
-    if (element.classList) {
-        element.classList.add(className);
-    } else if (!hasClass(element, className)) {
-        element.className = element.className + ' ' + className;
-    }
-    return element;
-}
-function removeClass(element, className) {
-    if (hasClass(className)) {
-        if (element.classList) {
-            element.classList.remove(className);
-        } else {
-            element.className = (' ' + element.className + ' ')
-                .replace(' ' + className + ' ', ' ').trim();
-        }
-    }
-    return element;
-}
-function hasClass(element, className) {
-    if (element.classList) {
-        return element.classList.contains(className);
-    } else {
-        return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
-    }
-}
-
 var TimeoutTransitionGroupChild = React.createClass({
-    transition: function(animationType, finishCallback) {
-        var node = this.getDOMNode();
+    transition: function (animationType, finishCallback) {
+        var $node = $(this.getDOMNode());
         var className = this.props.name + '-' + animationType;
         var activeClassName = className + '-active';
-
-        var endListener = function() {
-            removeClass(node, className);
-            removeClass(node, activeClassName);
-
+        
+        var endListener = function () {
+            $node.removeClass(className);
+            $node.removeClass(activeClassName);
+            
             // Usually this optional callback is used for informing an owner of
             // a leave animation and telling it to remove the child.
             finishCallback && finishCallback();
-        };
-
+            
+            if (animationType === 'leave' && this.props.leftCallback) {
+                this.props.leftCallback();
+            }
+        }.bind(this);
+        
         if (!animationSupported()) {
             endListener();
-        } else {
+            } else {
             if (animationType === "enter") {
                 this.animationTimeout = setTimeout(endListener,
-                                                   this.props.enterTimeout);
-            } else if (animationType === "leave") {
+                this.props.enterTimeout);
+                } else if (animationType === "leave") {
                 this.animationTimeout = setTimeout(endListener,
-                                                   this.props.leaveTimeout);
+                this.props.leaveTimeout);
             }
         }
-
-        addClass(node, className);
-
+        
+        $node.addClass(className);
+        
+        // fast forward the animation
+        $node.css({
+            'transitionDuration': '0s',
+            'transitionDelay': '0s'
+        });
+        
         // Need to do this to actually trigger a transition.
         this.queueClass(activeClassName);
     },
-
-    queueClass: function(className) {
+    
+    queueClass: function (className) {
         this.classNameQueue.push(className);
-
+        
         if (!this.timeout) {
             this.timeout = setTimeout(this.flushClassNameQueue, TICK);
         }
     },
-
-    flushClassNameQueue: function() {
+    
+    flushClassNameQueue: function () {
         if (this.isMounted()) {
-            this.classNameQueue.forEach(function(name) {
-                addClass(this.getDOMNode(), name);
+            var $node = $(this.getDOMNode());
+            // clear styles so animation will run
+            $node.css({
+                'transitionDuration': '',
+                'transitionDelay': ''
+            });
+            // trigger animation
+            this.classNameQueue.forEach(function (name) {
+                $node.addClass(name);
             }.bind(this));
         }
         this.classNameQueue.length = 0;
         this.timeout = null;
     },
-
-    componentWillMount: function() {
+    
+    componentWillMount: function () {
         this.classNameQueue = [];
     },
-
-    componentWillUnmount: function() {
+    
+    componentWillUnmount: function () {
         if (this.timeout) {
             clearTimeout(this.timeout);
         }
@@ -178,62 +163,106 @@ var TimeoutTransitionGroupChild = React.createClass({
             clearTimeout(this.animationTimeout);
         }
     },
-
-    componentWillEnter: function(done) {
+    
+    componentWillEnter: function (done) {
         if (this.props.enter) {
             this.transition('enter', done);
-        } else {
+            } else {
             done();
         }
     },
-
-    componentWillLeave: function(done) {
+    
+    componentWillLeave: function (done) {
         if (this.props.leave) {
             this.transition('leave', done);
-        } else {
+            } else {
             done();
         }
     },
-
-    render: function() {
+    
+    render: function () {
         return React.Children.only(this.props.children);
     }
 });
 
+var knownCssTimings = {};
+
 var TimeoutTransitionGroup = React.createClass({
     propTypes: {
-        enterTimeout: React.PropTypes.number.isRequired,
-        leaveTimeout: React.PropTypes.number.isRequired,
+        enterTimeout: React.PropTypes.number,
+        leaveTimeout: React.PropTypes.number,
         transitionName: React.PropTypes.string.isRequired,
         transitionEnter: React.PropTypes.bool,
         transitionLeave: React.PropTypes.bool,
+        leftCallback: React.PropTypes.func
     },
-
-    getDefaultProps: function() {
+    
+    getDefaultProps: function () {
         return {
+            enterTimeout: 600,
+            leaveTimeout: 600,
             transitionEnter: true,
             transitionLeave: true
         };
     },
-
-    _wrapChild: function(child) {
+    
+    componentDidMount: function () {
+        if (!knownCssTimings[this.props.transitionName]) {
+            var $this = $(this.getDOMNode());
+            var $base = $('<div class="' + this.props.transitionName + '" />').appendTo($this);
+            var $enter = $('<div class="' + this.props.transitionName + '-enter" />').appendTo($this);
+            var $leave = $('<div class="' + this.props.transitionName + '-leave" />').appendTo($this);
+            var enterDuration = $enter.css('transitionDuration');
+            var enterDelay = $enter.css('transitionDelay');
+            var leaveDuration = $leave.css('transitionDuration');
+            var leaveDelay = $leave.css('transitionDelay');
+            var cssTimings = {
+                baseDuration: $base.css('transitionDuration'),
+                baseDelay: $base.css('transitionDelay')
+            };
+            cssTimings.enterDuration = enterDuration === "0s" ? cssTimings.baseDuration : enterDuration;
+            cssTimings.enterDelay = enterDelay === "0s" ? cssTimings.baseDelay : enterDelay;
+            cssTimings.enterTimeout = (parseFloat(cssTimings.enterDuration) + parseFloat(cssTimings.enterDelay)) * 1000;
+            
+            cssTimings.leaveDuration = leaveDuration === "0s" ? cssTimings.baseDuration : leaveDuration;
+            cssTimings.leaveDelay = leaveDelay === "0s" ? cssTimings.baseDelay : leaveDelay;
+            cssTimings.leaveTimeout = (parseFloat(cssTimings.leaveDuration) + parseFloat(cssTimings.leaveDelay)) * 1000;
+            
+            knownCssTimings[this.props.transitionName] = cssTimings;
+            
+            $base.remove();
+            $enter.remove();
+            $leave.remove();
+        }
+    },
+    
+    _wrapChild: function (child) {
+        var enterTimeout = this.props.enterTimeout;
+        var leaveTimeout = this.props.leaveTimeout;
+        
+        if (knownCssTimings[this.props.transitionName]) {
+            enterTimeout = knownCssTimings[this.props.transitionName].enterTimeout;
+            leaveTimeout = knownCssTimings[this.props.transitionName].leaveTimeout;
+        }
+        
         return (
-            <TimeoutTransitionGroupChild
-                    enterTimeout={this.props.enterTimeout}
-                    leaveTimeout={this.props.leaveTimeout}
-                    name={this.props.transitionName}
-                    enter={this.props.transitionEnter}
-                    leave={this.props.transitionLeave}>
-                {child}
-            </TimeoutTransitionGroupChild>
+        <TimeoutTransitionGroupChild
+        enterTimeout={enterTimeout}
+        leaveTimeout={leaveTimeout}
+        name={this.props.transitionName}
+        enter={this.props.transitionEnter}
+        leave={this.props.transitionLeave}
+        leftCallback={this.props.leftCallback}>
+        {child}
+        </TimeoutTransitionGroupChild>
         );
     },
-
-    render: function() {
+    
+    render: function () {
         return (
-            <ReactTransitionGroup
-                {...this.props}
-                childFactory={this._wrapChild} />
+        <ReactTransitionGroup
+        {...this.props}
+        childFactory={this._wrapChild}/>
         );
     }
 });
