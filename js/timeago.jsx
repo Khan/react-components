@@ -23,8 +23,11 @@ var TimeAgo = React.createClass({
         return <span>{moment(this.props.time).fromNow()}</span>;
     },
     componentDidMount: function() {
-        var interval = this.props.time || 60000;
-        // TODO(joel) why did I have to bind forceUpdate?
+        var interval = this.props.refreshMillis || 60000;
+        // We bind `this` to forceUpdate so that when the setInterval function 
+        // runs, it uses the TimeAgo instance as `this`. This is equivalent to:
+        //   _this = this;
+        //   this.setInterval(function () { _this.forceUpdate() }, interval);
         this.setInterval(this.forceUpdate.bind(this), interval);
     }
 });
