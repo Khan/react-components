@@ -1,6 +1,5 @@
 var RCSS = require('rcss');
 var React = require("react");
-var $ = require("jquery");
 
 var modalStyle = {
     position: "fixed",
