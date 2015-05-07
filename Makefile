@@ -28,7 +28,7 @@ docs/index.html: pydeps
 	./make_template.py
 
 docs/preview-bundle.js: jsdeps
-	./node_modules/.bin/browserify -d -t [ reactify --es6 ] js/*.jsx reactify-components.jsx -o docs/preview-bundle.js
+	./node_modules/.bin/browserify -d -t [ reactify --es6 ] reactify-components.jsx -o docs/preview-bundle.js
 
 test: jsdeps
 	mocha --reporter spec --compilers jsx:test/compiler.js test/test-helper.js test/*test.jsx

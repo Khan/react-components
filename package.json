@@ -21,7 +21,7 @@
     "rcss": "khan/RCSS#9e5ec9614e391d28a621297a63bc2d850eae89e8"
   },
   "devDependencies": {
-    "browserify": ">=4",
+    "browserify": "^10.0.0",
     "backbone": "~1.1.2",
     "mocha": "~1.18.2",
     "jquery": "~2.1.1",
