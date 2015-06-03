@@ -68,11 +68,12 @@ var Modal = React.createClass({
 
     render: function() {
         var className = [modalStyle.className, this.props.className].join(" ");
-        var modal = this.transferPropsTo(
-            <div tabIndex="-1" className={className + " modal"}>
-                {this.props.children}
-            </div>
-        );
+        var modal = <div
+                {...this.props}
+                tabIndex="-1"
+                className={className + " modal"}>
+            {this.props.children}
+        </div>;
 
         var backdrop = <div className={modalBackdropStyle.className} />;
         return <div>
