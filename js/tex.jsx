@@ -5,6 +5,8 @@
 
 var React = require('react');
 
+var katexA11y = require('./katex-a11y');
+
 var pendingScripts = [];
 var needsProcess = false;
 var timeout = null;
@@ -38,6 +40,19 @@ function doProcess(callback) {
     });
 }
 
+// Make content only visible to screen readers.
+// Both collegeboard.org and Bootstrap 3 use this exact implementation.
+var srOnly = {
+    border: 0,
+    clip: "rect(0,0,0,0)",
+    height: "1px",
+    margin: "-1px",
+    overflow: "hidden",
+    padding: 0,
+    position: "absolute",
+    width: "1px"
+};
+
 var TeX = React.createClass({
     getDefaultProps: function() {
         return {
@@ -53,16 +68,33 @@ var TeX = React.createClass({
                 onClick={this.props.onClick}>
             <span ref="mathjax" />
             <span ref="katex" />
+            <span ref="katexA11y" style={srOnly} />
         </span>;
     },
 
     componentDidMount: function() {
         var text = this.props.children;
         var onRender = this.props.onRender;
+        var katexHolder = this.refs.katex.getDOMNode();
+
+        katexHolder.removeAttribute("aria-hidden");
 
         try {
-            var katexHolder = this.refs.katex.getDOMNode();
             katex.render(text, katexHolder);
+
+            try {
+                var katexA11yHolder = this.refs.katexA11y.getDOMNode();
+                katexA11y.render(text, katexA11yHolder);
+
+                katexHolder.setAttribute("aria-hidden", "true");
+            } catch(e) {
+                console.error(e);
+                // NOTE: If an exception is thrown from the katex-a11y logic
+                // then we assume that it doesn't know how to render the result
+                // thus we remove any a11y text and don't show it to the user.
+                this.emptyNode(katexA11yHolder);
+            }
+
             onRender();
             return;
         } catch (e) {
@@ -83,9 +115,25 @@ var TeX = React.createClass({
         var onRender = this.props.onRender;
 
         if (oldText !== newText) {
+            var katexHolder = this.refs.katex.getDOMNode();
+            katexHolder.removeAttribute("aria-hidden");
+
             try {
-                var katexHolder = this.refs.katex.getDOMNode();
                 katex.render(newText, katexHolder);
+
+                try {
+                    var katexA11yHolder = this.refs.katexA11y.getDOMNode();
+                    katexA11y.render(text, katexA11yHolder);
+
+                    katexHolder.setAttribute("aria-hidden", "true");
+                } catch(e) {
+                    // NOTE: If an exception is thrown from the katex-a11y logic
+                    // then we assume that it doesn't know how to render the
+                    // result thus we remove any a11y text and don't show it to
+                    // the user.
+                    this.emptyNode(katexA11yHolder);
+                }
+
                 if (this.script) {
                     var jax = MathJax.Hub.getJaxFor(this.script);
                     if (jax) {
@@ -102,7 +150,8 @@ var TeX = React.createClass({
                 }
             }
 
-            $(this.refs.katex.getDOMNode()).empty();
+            this.emptyNode(this.refs.katex.getDOMNode());
+            this.emptyNode(this.refs.katexA11y.getDOMNode());
 
             if (this.script) {
                 var component = this;
@@ -142,6 +191,12 @@ var TeX = React.createClass({
             if (jax) {
                 jax.Remove();
             }
+        }
+    },
+
+    emptyNode: function(node) {
+        while (node.firstChild) {
+            node.removeChild(node.firstChild);
         }
     }
 });

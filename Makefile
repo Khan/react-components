@@ -30,5 +30,8 @@ docs/index.html: pydeps
 docs/preview-bundle.js: jsdeps
 	./node_modules/.bin/browserify -d -t [ reactify --es6 ] reactify-components.jsx -o docs/preview-bundle.js
 
+watch-preview: jsdeps
+	./node_modules/.bin/watchify -d -t [ reactify --es6 ] js/*.jsx reactify-components.jsx -o docs/preview-bundle.js
+
 test: jsdeps
 	mocha --reporter spec --compilers jsx:test/compiler.js test/test-helper.js test/*test.jsx

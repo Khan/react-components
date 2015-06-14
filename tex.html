@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KaTeX Sample</title>
+    <link rel="stylesheet" href="docs/stylesheets/katex.css"/>
+    <script src="docs/js/katex.js"></script>
+    <script src="js/katex-a11y.js"></script>
+    <script>
+    var tests = {
+        "Accents": "\\vec{A}\\vec{x}\\vec x^2\\vec{x}_2^2\\vec{A}^2\\vec{xA}^2",
+        "Baseline": "a+b-c\\cdot d/e",
+        "BasicTest": "a",
+        "BinomTest": "\\dbinom{a}{b}\\tbinom{a}{b}^{\\binom{a}{b}+17}",
+        "Colors": "\\blue{a}\\color{#0f0}{b}\\color{red}{c}",
+        "DeepFontSizing": "a^{\\big| x^{\\big(}}_{\\Big\\uparrow} + i^{i^{\\Huge x}_y}_{\\Huge z} + \\dfrac{\\Huge x}{y}",
+        "DelimiterSizing": "\\bigl\\uparrow\\Bigl\\downarrow\\biggl\\updownarrow\\Biggl\\Uparrow\\Biggr\\Downarrow\\biggr\\langle\\Bigr\\}\\bigr\\rfloor",
+        "DisplayMode": "\\sum_{i=0}^\\infty \\frac{1}{i}",
+        "DisplayStyle": "{\\displaystyle\\sqrt{x}}{\\sqrt{x}}{\\displaystyle \\frac12}{\\frac12}{\\displaystyle x^1_2}{x^1_2}",
+        "Exponents": "a^{a^a_a}_{a^a_a}",
+        "FractionTest": "\\dfrac{a}{b}\\frac{a}{b}\\tfrac{a}{b}",
+        "Functions": "\\sin\\cos\\tan\\ln\\log",
+        "GreekLetters": "\\alpha\\beta\\gamma\\omega",
+        "KaTeX": "\\KaTeX",
+        "Lap": "ab\\llap{f}cd\\rlap{g}h",
+        "LeftRight": "\\left( x^2 \\right) \\left\\{ x^{x^{x^{x^x}}} \\right.",
+        "LeftRightListStyling": "a+\\left(x+y\\right)-x",
+        "LeftRightStyleSizing": "+\\left\\{\\rule{0.1em}{1em}\\right.x^{+\\left\\{\\rule{0.1em}{1em}\\right.x^{+\\left\\{\\rule{0.1em}{1em}\\right.}}",
+        "NestedFractions": "\\dfrac{\\frac{a}{b}}{\\frac{c}{d}}\\dfrac{\\dfrac{a}{b}}{\\dfrac{c}{d}}\\frac{\\frac{a}{b}}{\\frac{c}{d}}",
+        "NullDelimiterInteraction": "a \\bigl. + 2 \\quad \\left. + a \\right)",
+        "OpLimits": "{\\sin_2^2 \\lim_2^2 \\int_2^2 \\sum_2^2}{\\displaystyle \\lim_2^2 \\int_2^2 \\intop_2^2 \\sum_2^2}",
+        "Overline": "\\overline{x}\\overline{x}\\overline{x^{x^{x^x}}} \\blue{\\overline{y}}",
+        "Phantom": "\\dfrac{1+\\phantom{x^{\\blue{2}}} = x}{1+x^{\\blue{2}} = x}",
+        "PrimeSpacing": "f'+f_2'+f^{f'}",
+        "RlapBug": "\\frac{\\rlap{x}}{2}",
+        "Rule": "\\rule{1em}{0.5em}\\rule{1ex}{2ex}\\rule{1em}{1ex}\\rule{1em}{0.431ex}",
+        "SizingBaseline": "{\\tiny a+b}a+b{\\Huge a+b}",
+        "Sizing": "{\\Huge x}{\\LARGE y}{\\normalsize z}{\\scriptsize w}",
+        "Spacing": "^3+[-1][1-1]1=1(=1)\\lvert a\\rvert~b",
+        "Sqrt": "\\sqrt{\\sqrt{\\sqrt{x}}}_{\\sqrt{\\sqrt{x}}}^{\\sqrt{\\sqrt{\\sqrt{x}}}^{\\sqrt{\\sqrt{\\sqrt{x}}}}}",
+        "SqrtRoot": "1+\\sqrt[3]{2}+\\sqrt[1923^234]{2^{2^{2^{2^{2^{2^{2^{2^{2^{2^{2^2}}}}}}}}}}}",
+        "SupSubCharacterBox": "a_2f_2{f}_2{aa}_2{af}_2",
+        "SupSubHorizSpacing": "x^{x^{x}}\\Big|x_{x_{x_{x_{x}}}}\\bigg|x^{x^{x_{x_{x_{x_{x}}}}}}\\bigg|",
+        "SupSubOffsets": "\\displaystyle \\int_{2+3}x f^{2+3}+3\\lim_{2+3+4+5}f",
+        "Text": "\\frac{a}{b}\\text{c~ {ab} \\ e}+fg",
+        "VerticalSpacing": "x^{\\Huge y}z"
+    };
+
+    window.onload = function() {
+        var testOutput = document.getElementById("test-output");
+
+        for (var testName in tests) {
+            var test = tests[testName];
+
+            var testLine = document.createElement("li");
+            testLine.appendChild(document.createTextNode(testName));
+            testOutput.appendChild(testLine);
+
+            try {
+                var tmpOutput = document.createElement("span");
+                katexA11yRender(test, tmpOutput);
+                testLine.appendChild(tmpOutput);
+
+            } catch(e) {
+                testLine.appendChild(
+                    document.createTextNode("ERROR: " + e));
+            }
+        }
+
+        var math = document.getElementById("math");
+        var katexOutput = document.getElementById("katex-output");
+        var a11yOutput = document.getElementById("a11y-output");
+        var value = "";
+
+        setInterval(function() {
+            var newValue = math.value;
+
+            if (newValue !== value) {
+                value = newValue;
+
+                katexOutput.innerHTML = "";
+                katex.render(newValue, katexOutput);
+
+                a11yOutput.innerHTML = "";
+                katexA11yRender(newValue, a11yOutput);
+            }
+        }, 100);
+    };
+    </script>
+</head>
+<body>
+    <h1>Edit Tex</h1>
+    <textarea id="math" style="width:100%;height:200px;font-size:18px;">4+x=y</textarea>
+    <h2>Sample Output</h2>
+    <div id="katex-output" aria-hidden="true"></div>
+    <div id="a11y-output"></div>
+    <ul id="test-output"></ul>
+</body>
+</html>
