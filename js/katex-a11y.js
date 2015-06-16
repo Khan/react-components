@@ -13,6 +13,10 @@ var stringMap = {
     "\\downarrow": "down arrow",
     "\\Downarrow": "down arrow",
     "\\updownarrow": "up down arrow",
+    "\\leftarrow": "left arrow",
+    "\\Leftarrow": "left arrow",
+    "\\rightarrow": "right arrow",
+    "\\Rightarrow": "right arrow",
     "\\langle": "open angle",
     "\\rangle": "close angle",
     "\\lfloor": "open floor",
@@ -25,29 +29,45 @@ var stringMap = {
     "\\sin": "sine",
     "\\cos": "cosine",
     "\\tan": "tangent",
+    "\\cot": "cotangent",
     "\\sum": "sum",
     "/": "slash",
     ",": "comma",
     ".": "point",
     "-": "negative",
+    "+": "plus",
     "~": "tilde",
+    ":": "colon",
+    "?": "question mark",
+    "'": "apostrophe",
+    "\\%": "percent",
     " ": "space",
     "\\ ": "space",
     "\\$": "dollar sign",
     "\\angle": "angle",
     "\\degree": "degree",
-    "\\circ": "degree",
+    "\\circ": "circle",
     "\\vec": "vector",
+    "\\triangle": "triangle",
     "\\pi": "pi",
     "\\prime": "prime",
     "\\infty": "infinity",
     "\\alpha": "alpha",
     "\\beta": "beta",
     "\\gamma": "gamma",
-    "\\omega": "omega"
+    "\\omega": "omega",
+    "\\theta": "theta",
+    "\\sigma": "sigma",
+    "\\lambda": "lambda",
+    "\\tau": "tau",
+    "\\Delta": "delta",
+    "\\delta": "delta",
+    "\\mu": "mu",
+    "\\ell": "ell",
+    "\\ldots": "dots"
 };
 
-var noPower = ["\\prime", "\\degree"];
+var noPower = ["\\prime", "\\degree", "\\circ"];
 
 var openMap = {
     "|": "open vertical bar",
@@ -62,19 +82,32 @@ var closeMap = {
 var binMap = {
     "+": "plus",
     "-": "minus",
+    "\\pm": "plus minus",
     "\\cdot": "dot product",
     "*": "times",
     "/": "divided by",
     "\\times": "times",
-    "\\div": "divided by"
+    "\\div": "divided by",
+    "\\circ": "circle",
+    "\\bullet": "bullet"
 };
 
 var relMap = {
     "=": "equals",
+    "\\approx": "approximately",
+    "\\neq": "does not equal",
+    "\\ne": "does not equal",
     "\\geq": "greater than or equal to",
+    "\\ge": "greater than or equal to",
     "\\leq": "less than or equal to",
+    "\\le": "less than or equal to",
     ">": "greather than",
-    "<": "less than"
+    "<": "less than",
+    "\\leftarrow": "left arrow",
+    "\\Leftarrow": "left arrow",
+    "\\rightarrow": "right arrow",
+    "\\Rightarrow": "right arrow",
+    ":": "colon"
 };
 
 var buildString = function(str, type, a11yStrings) {
@@ -101,7 +134,7 @@ var buildString = function(str, type, a11yStrings) {
     // If nothing was found and it's not a plain string or number
     if (ret === str && !/^\w+$/.test(str)) {
         // This is likely a case that we'll need to handle
-        throw "KaTeX a11y string not found: " + str;
+        throw "KaTeX a11y " + type + " string not found: " + str;
     }
 
     // If the text to add is a number and there is already a string
@@ -281,7 +314,7 @@ var typeHandlers = {
             // There are some cases that just read better if we don't have
             // the extra start/end baggage, so we skip the extra text
             var hidePower = (noPower.indexOf(tree.value.sup) >= 0 ||
-                tree.value.sup.value &&
+                tree.value.sup.value && tree.value.sup.value[0] &&
                 noPower.indexOf(tree.value.sup.value[0].value) >= 0);
 
             buildRegion(a11yStrings, function(a11yStrings) {
@@ -337,17 +370,19 @@ var buildA11yStrings = function(tree, a11yStrings) {
 };
 
 var renderStrings = function(a11yStrings, a11yNode) {
+    var doc = a11yNode.ownerDocument;
+
     for (var i = 0; i < a11yStrings.length; i++) {
         var a11yString = a11yStrings[i];
 
         if (i > 0) {
-            a11yNode.appendChild(document.createTextNode(", "));
+            a11yNode.appendChild(doc.createTextNode(", "));
         }
 
         if (typeof a11yString === "string") {
-            a11yNode.appendChild(document.createTextNode(a11yString));
+            a11yNode.appendChild(doc.createTextNode(a11yString));
         } else {
-            var newBaseNode = document.createElement("span");
+            var newBaseNode = doc.createElement("span");
             //newBaseNode.tabIndex = 0;
             a11yNode.appendChild(newBaseNode);
             renderStrings(a11yString, newBaseNode);
@@ -355,9 +390,38 @@ var renderStrings = function(a11yStrings, a11yNode) {
     }
 };
 
-var render = function(text, a11yNode) {
+var flattenStrings = function(a11yStrings, results) {
+    if (!results) {
+        results = [];
+    }
+
+    for (var i = 0; i < a11yStrings.length; i++) {
+        var a11yString = a11yStrings[i];
+
+        if (typeof a11yString === "string") {
+            results.push(a11yString);
+        } else {
+            flattenStrings(a11yString, results);
+        }
+    }
+
+    return results;
+};
+
+var parseMath = function(text) {
+    var katex;
+
+    if (typeof katex === "undefined" && typeof require !== "undefined") {
+        // NOTE(jeresig): This is mad hacky and mostly used for testing
+        katex = require("../docs/js/katex");
+    }
+
     // NOTE: `katex` is a global, should be included using require
-    var tree = katex.__parse(text);
+    return katex.__parse(text);
+};
+
+var render = function(text, a11yNode) {
+    var tree = parseMath(text);
 
     //console.log(JSON.stringify(tree, null, "    "));
 
@@ -365,9 +429,17 @@ var render = function(text, a11yNode) {
     renderStrings(a11yStrings, a11yNode);
 };
 
+var renderString = function(text) {
+    var tree = parseMath(text);
+    var a11yStrings = buildA11yStrings(tree);
+    return flattenStrings(a11yStrings).join(", ");
+};
+
 if (typeof module !== "undefined") {
     module.exports = {
-        render: render
+        render: render,
+        renderString: renderString,
+        parseMath: parseMath
     };
 } else {
     this.katexA11yRender = render;
