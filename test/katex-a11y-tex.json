@@ -146,5 +146,9 @@
     {
         "input": "4^\\circ",
         "output": "4, degree"
+    },
+    {
+        "input": "4 \\geq 3",
+        "output": "4, is greater than or equal to, 3"
     }
 ]
