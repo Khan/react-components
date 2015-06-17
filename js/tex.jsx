@@ -88,7 +88,6 @@ var TeX = React.createClass({
 
                 katexHolder.setAttribute("aria-hidden", "true");
             } catch(e) {
-                console.error(e);
                 // NOTE: If an exception is thrown from the katex-a11y logic
                 // then we assume that it doesn't know how to render the result
                 // thus we remove any a11y text and don't show it to the user.
