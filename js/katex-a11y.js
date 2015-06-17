@@ -1,3 +1,17 @@
+/**
+ * KaTeX A11y
+ * A library for converting KaTeX math into readable strings.
+ */
+var _ = require("underscore");
+
+if (typeof katex === "undefined" && typeof require !== "undefined") {
+    // NOTE(jeresig): This is mad hacky and used for testing
+    // We want katex to exist in the mocha environment, but we don't
+    // want it to be included in normal builds.
+    var tmp = require;
+    katex = tmp("../docs/js/katex");
+}
+
 var stringMap = {
     "(": "left parenthesis",
     ")": "right parenthesis",
@@ -63,6 +77,8 @@ var stringMap = {
     "\\Delta": "delta",
     "\\delta": "delta",
     "\\mu": "mu",
+    "\\rho": "rho",
+    "\\nabla": "del",
     "\\ell": "ell",
     "\\ldots": "dots"
 };
@@ -83,7 +99,7 @@ var binMap = {
     "+": "plus",
     "-": "minus",
     "\\pm": "plus minus",
-    "\\cdot": "dot product",
+    "\\cdot": "dot",
     "*": "times",
     "/": "divided by",
     "\\times": "times",
@@ -409,22 +425,12 @@ var flattenStrings = function(a11yStrings, results) {
 };
 
 var parseMath = function(text) {
-    var katex;
-
-    if (typeof katex === "undefined" && typeof require !== "undefined") {
-        // NOTE(jeresig): This is mad hacky and mostly used for testing
-        katex = require("../docs/js/katex");
-    }
-
     // NOTE: `katex` is a global, should be included using require
     return katex.__parse(text);
 };
 
 var render = function(text, a11yNode) {
     var tree = parseMath(text);
-
-    //console.log(JSON.stringify(tree, null, "    "));
-
     var a11yStrings = buildA11yStrings(tree);
     renderStrings(a11yStrings, a11yNode);
 };
@@ -432,7 +438,7 @@ var render = function(text, a11yNode) {
 var renderString = function(text) {
     var tree = parseMath(text);
     var a11yStrings = buildA11yStrings(tree);
-    return flattenStrings(a11yStrings).join(", ");
+    return _.flatten(a11yStrings).join(", ");
 };
 
 if (typeof module !== "undefined") {
