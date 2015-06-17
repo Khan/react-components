@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "browserify": "^10.0.0",
-    "watchify": "^3.2.2"
+    "watchify": "^3.2.2",
     "backbone": "~1.1.2",
     "mocha": "~1.18.2",
     "jquery": "~2.1.1",
