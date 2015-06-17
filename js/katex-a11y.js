@@ -420,6 +420,10 @@ var renderStrings = function(a11yStrings, a11yNode) {
         var a11yString = a11yStrings[i];
 
         if (i > 0) {
+            // Note: We insert commas in (not just spaces) to provide
+            // screen readers with some "breathing room". When inserting the
+            // commas the screen reader knows to pause slightly and it provides
+            // an overall better listening experience.
             a11yNode.appendChild(doc.createTextNode(", "));
         }
 
