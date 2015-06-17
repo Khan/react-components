@@ -83,7 +83,11 @@ var stringMap = {
     "\\ldots": "dots"
 };
 
-var noPower = ["\\prime", "\\degree", "\\circ"];
+var powerMap = {
+    "\\prime": "prime",
+    "\\degree": "degree",
+    "\\circ": "degree"
+};
 
 var openMap = {
     "|": "open vertical bar",
@@ -200,7 +204,7 @@ var typeHandlers = {
     },
 
     delimsizing: function(tree, a11yStrings) {
-        if (tree.value.value) {
+        if (tree.value.value && tree.value.value !== ".") {
             buildString(tree.value.value, "normal", a11yStrings);
         }
     },
@@ -307,6 +311,13 @@ var typeHandlers = {
 
     sqrt: function(tree, a11yStrings) {
         buildRegion(a11yStrings, function(a11yStrings) {
+            if (tree.value.index) {
+                a11yStrings.push("square root");
+                a11yStrings.push("start index");
+                buildA11yStrings(tree.value.index, a11yStrings);
+                a11yStrings.push("end index");
+            }
+
             a11yStrings.push("square root of");
             buildA11yStrings(tree.value.body, a11yStrings);
             a11yStrings.push("end square root");
@@ -329,20 +340,21 @@ var typeHandlers = {
         if (tree.value.sup) {
             // There are some cases that just read better if we don't have
             // the extra start/end baggage, so we skip the extra text
-            var hidePower = (noPower.indexOf(tree.value.sup) >= 0 ||
+            var newPower = (powerMap[tree.value.sup] ||
                 tree.value.sup.value && tree.value.sup.value[0] &&
-                noPower.indexOf(tree.value.sup.value[0].value) >= 0);
+                powerMap[tree.value.sup.value[0].value] ||
+                tree.value.sup.value &&
+                powerMap[tree.value.sup.value]);
 
             buildRegion(a11yStrings, function(a11yStrings) {
-                if (!hidePower) {
-                    a11yStrings.push("start superscript");
+                if (newPower) {
+                    a11yStrings.push(newPower);
+                    return;
                 }
 
+                a11yStrings.push("start superscript");
                 buildA11yStrings(tree.value.sup, a11yStrings);
-
-                if (!hidePower) {
-                    a11yStrings.push("end superscript");
-                }
+                a11yStrings.push("end superscript");
             });
         }
     },

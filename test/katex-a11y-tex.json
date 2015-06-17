@@ -5,7 +5,7 @@
     },
     {
         "input": "a+b-c\\cdot d/e",
-        "output": "a, plus, b, minus, c, dot product, d, slash, e"
+        "output": "a, plus, b, minus, c, dot, d, slash, e"
     },
     {
         "input": "a",
@@ -77,7 +77,7 @@
     },
     {
         "input": "a \\bigl. + 2 \\quad \\left. + a \\right)",
-        "output": "a, point, plus, 2, space, plus, a, right parenthesis"
+        "output": "a, plus, 2, space, plus, a, right parenthesis"
     },
     {
         "input": "{\\sin_2^2 \\lim_2^2 \\int_2^2 \\sum_2^2}{\\displaystyle \\lim_2^2 \\int_2^2 \\intop_2^2 \\sum_2^2}",
@@ -121,7 +121,7 @@
     },
     {
         "input": "1+\\sqrt[3]{2}+\\sqrt[1923^234]{2^{2^{2^{2^{2^{2^{2^{2^{2^{2^{2^2}}}}}}}}}}}",
-        "output": "1, plus, square root of, 2, end square root, plus, square root of, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end square root"
+        "output": "1, plus, square root, start index, 3, end index, square root of, 2, end square root, plus, square root, start index, 1923, start superscript, 2, end superscript, 34, end index, square root of, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end square root"
     },
     {
         "input": "a_2f_2{f}_2{aa}_2{af}_2",
@@ -142,5 +142,9 @@
     {
         "input": "x^{\\Huge y}z",
         "output": "x, start superscript, y, end superscript, z"
+    },
+    {
+        "input": "4^\\circ",
+        "output": "4, degree"
     }
 ]
