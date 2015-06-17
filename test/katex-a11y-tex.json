@@ -121,7 +121,7 @@
     },
     {
         "input": "1+\\sqrt[3]{2}+\\sqrt[1923^234]{2^{2^{2^{2^{2^{2^{2^{2^{2^{2^{2^2}}}}}}}}}}}",
-        "output": "1, plus, square root, start index, 3, end index, square root of, 2, end square root, plus, square root, start index, 1923, start superscript, 2, end superscript, 34, end index, square root of, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end square root"
+        "output": "1, plus, root, start index, 3, end index, square root of, 2, end square root, plus, root, start index, 1923, start superscript, 2, end superscript, 34, end index, square root of, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end square root"
     },
     {
         "input": "a_2f_2{f}_2{aa}_2{af}_2",

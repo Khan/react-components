@@ -312,7 +312,7 @@ var typeHandlers = {
     sqrt: function(tree, a11yStrings) {
         buildRegion(a11yStrings, function(a11yStrings) {
             if (tree.value.index) {
-                a11yStrings.push("square root");
+                a11yStrings.push("root");
                 a11yStrings.push("start index");
                 buildA11yStrings(tree.value.index, a11yStrings);
                 a11yStrings.push("end index");
@@ -337,14 +337,30 @@ var typeHandlers = {
             });
         }
 
-        if (tree.value.sup) {
+        var sup = tree.value.sup;
+
+        if (sup) {
             // There are some cases that just read better if we don't have
             // the extra start/end baggage, so we skip the extra text
-            var newPower = (powerMap[tree.value.sup] ||
-                tree.value.sup.value && tree.value.sup.value[0] &&
-                powerMap[tree.value.sup.value[0].value] ||
-                tree.value.sup.value &&
-                powerMap[tree.value.sup.value]);
+            var newPower = powerMap[sup];
+            var supValue = sup.value;
+
+            // The value stored inside the sup property is not always
+            // consistent. It could be a string (handled above), an object
+            // with a string property in value, or an array of objects that
+            // have a value property.
+            if (!newPower && supValue) {
+                // If supValue is an object and it has a length of 1 we assume
+                // it's an array that has only a single item in it. This is the
+                // case that we care about and we only check that one value.
+                if (typeof supValue === "object" && supValue.length === 1) {
+                    newPower = powerMap[supValue[0].value];
+
+                // This is the case where it's a string in the value property
+                } else {
+                    newPower = powerMap[supValue];
+                }
+            }
 
             buildRegion(a11yStrings, function(a11yStrings) {
                 if (newPower) {
@@ -411,7 +427,8 @@ var renderStrings = function(a11yStrings, a11yNode) {
             a11yNode.appendChild(doc.createTextNode(a11yString));
         } else {
             var newBaseNode = doc.createElement("span");
-            //newBaseNode.tabIndex = 0;
+            // NOTE(jeresig): We may want to add in a tabIndex property
+            // to the node here, in order to support keyboard navigation.
             a11yNode.appendChild(newBaseNode);
             renderStrings(a11yString, newBaseNode);
         }
