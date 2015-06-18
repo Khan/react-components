@@ -141,8 +141,6 @@ var buildString = function(str, type, a11yStrings) {
         ret = (str in openMap ? openMap[str] : stringMap[str] || str);
     } else if (type === "close") {
         ret = (str in closeMap ? closeMap[str] : stringMap[str] || str);
-    } else if (type === "math") {
-        ret = mathMap[str] || str;
     } else if (type === "bin") {
         ret = binMap[str] || str;
     } else if (type === "rel") {
