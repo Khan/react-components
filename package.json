@@ -4,8 +4,18 @@
   "author": "Khan Academy",
   "description": "React components used by Khan Academy",
   "homepage": "http://khan.github.io/react-components/",
-  "browserify": {"transform": ["reactify"]},
-  "keywords": ["react", "widgets", "react-ui", "react-component", "khan"],
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  },
+  "keywords": [
+    "react",
+    "widgets",
+    "react-ui",
+    "react-component",
+    "khan"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Khan/react-components.git"
@@ -22,6 +32,7 @@
   },
   "devDependencies": {
     "browserify": "^10.0.0",
+    "watchify": "^3.2.2",
     "backbone": "~1.1.2",
     "mocha": "~1.18.2",
     "jquery": "~2.1.1",

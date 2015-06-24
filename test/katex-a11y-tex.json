@@ -1,0 +1,154 @@
+[
+    {
+        "input": "\\vec{A}\\vec{x}\\vec x^2\\vec{x}_2^2\\vec{A}^2\\vec{xA}^2",
+        "output": "A, with, vector, on top, x, with, vector, on top, x, with, vector, on top, start superscript, 2, end superscript, x, with, vector, on top, start subscript, 2, end subscript, start superscript, 2, end superscript, A, with, vector, on top, start superscript, 2, end superscript, x, A, with, vector, on top, start superscript, 2, end superscript"
+    },
+    {
+        "input": "a+b-c\\cdot d/e",
+        "output": "a, plus, b, minus, c, dot, d, slash, e"
+    },
+    {
+        "input": "a",
+        "output": "a"
+    },
+    {
+        "input": "\\dbinom{a}{b}\\tbinom{a}{b}^{\\binom{a}{b}+17}",
+        "output": "start binomial, left parenthesis, a, over, b, right parenthesis, end binomial, start binomial, left parenthesis, a, over, b, right parenthesis, end binomial, start superscript, start binomial, left parenthesis, a, over, b, right parenthesis, end binomial, plus, 17, end superscript"
+    },
+    {
+        "input": "\\blue{a}\\color{#0f0}{b}\\color{red}{c}",
+        "output": "start color blue, a, end color blue, start color #0f0, b, end color #0f0, start color red, c, end color red"
+    },
+    {
+        "input": "a^{\\big| x^{\\big(}}_{\\Big\\uparrow} + i^{i^{\\Huge x}_y}_{\\Huge z} + \\dfrac{\\Huge x}{y}",
+        "output": "a, start subscript, up arrow, end subscript, start superscript, vertical bar, x, start superscript, left parenthesis, end superscript, end superscript, plus, i, start subscript, z, end subscript, start superscript, i, start subscript, y, end subscript, start superscript, x, end superscript, end superscript, plus, start fraction, x, divided by, y, end fraction"
+    },
+    {
+        "input": "\\bigl\\uparrow\\Bigl\\downarrow\\biggl\\updownarrow\\Biggl\\Uparrow\\Biggr\\Downarrow\\biggr\\langle\\Bigr\\}\\bigr\\rfloor",
+        "output": "up arrow, down arrow, up down arrow, up arrow, down arrow, open angle, right brace, close floor"
+    },
+    {
+        "input": "\\sum_{i=0}^\\infty \\frac{1}{i}",
+        "output": "sum, start subscript, i, equals, 0, end subscript, start superscript, infinity, end superscript, start fraction, 1, divided by, i, end fraction"
+    },
+    {
+        "input": "{\\displaystyle\\sqrt{x}}{\\sqrt{x}}{\\displaystyle \\frac12}{\\frac12}{\\displaystyle x^1_2}{x^1_2}",
+        "output": "square root of, x, end square root, square root of, x, end square root, start fraction, 1, divided by, 2, end fraction, start fraction, 1, divided by, 2, end fraction, x, start subscript, 2, end subscript, start superscript, 1, end superscript, x, start subscript, 2, end subscript, start superscript, 1, end superscript"
+    },
+    {
+        "input": "a^{a^a_a}_{a^a_a}",
+        "output": "a, start subscript, a, start subscript, a, end subscript, start superscript, a, end superscript, end subscript, start superscript, a, start subscript, a, end subscript, start superscript, a, end superscript, end superscript"
+    },
+    {
+        "input": "\\dfrac{a}{b}\\frac{a}{b}\\tfrac{a}{b}",
+        "output": "start fraction, a, divided by, b, end fraction, start fraction, a, divided by, b, end fraction, start fraction, a, divided by, b, end fraction"
+    },
+    {
+        "input": "\\sin\\cos\\tan\\ln\\log",
+        "output": "sine, cosine, tangent, natural log, log"
+    },
+    {
+        "input": "\\alpha\\beta\\gamma\\omega",
+        "output": "alpha, beta, gamma, omega"
+    },
+    {
+        "input": "\\KaTeX",
+        "output": "KaTeX"
+    },
+    {
+        "input": "ab\\llap{f}cd\\rlap{g}h",
+        "output": "a, b, f, c, d, g, h"
+    },
+    {
+        "input": "\\left( x^2 \\right) \\left\\{ x^{x^{x^{x^x}}} \\right.",
+        "output": "left parenthesis, x, start superscript, 2, end superscript, right parenthesis, left brace, x, start superscript, x, start superscript, x, start superscript, x, start superscript, x, end superscript, end superscript, end superscript, end superscript"
+    },
+    {
+        "input": "a+\\left(x+y\\right)-x",
+        "output": "a, plus, left parenthesis, x, plus, y, right parenthesis, minus, x"
+    },
+    {
+        "input": "+\\left\\{\\rule{0.1em}{1em}\\right.x^{+\\left\\{\\rule{0.1em}{1em}\\right.x^{+\\left\\{\\rule{0.1em}{1em}\\right.}}",
+        "output": "plus, left brace, rule, x, start superscript, plus, left brace, rule, x, start superscript, plus, left brace, rule, end superscript, end superscript"
+    },
+    {
+        "input": "\\dfrac{\\frac{a}{b}}{\\frac{c}{d}}\\dfrac{\\dfrac{a}{b}}{\\dfrac{c}{d}}\\frac{\\frac{a}{b}}{\\frac{c}{d}}",
+        "output": "start fraction, start fraction, a, divided by, b, end fraction, divided by, start fraction, c, divided by, d, end fraction, end fraction, start fraction, start fraction, a, divided by, b, end fraction, divided by, start fraction, c, divided by, d, end fraction, end fraction, start fraction, start fraction, a, divided by, b, end fraction, divided by, start fraction, c, divided by, d, end fraction, end fraction"
+    },
+    {
+        "input": "a \\bigl. + 2 \\quad \\left. + a \\right)",
+        "output": "a, plus, 2, space, plus, a, right parenthesis"
+    },
+    {
+        "input": "{\\sin_2^2 \\lim_2^2 \\int_2^2 \\sum_2^2}{\\displaystyle \\lim_2^2 \\int_2^2 \\intop_2^2 \\sum_2^2}",
+        "output": "sine, start subscript, 2, end subscript, start superscript, 2, end superscript, limit, start subscript, 2, end subscript, start superscript, 2, end superscript, integral, start subscript, 2, end subscript, start superscript, 2, end superscript, sum, start subscript, 2, end subscript, start superscript, 2, end superscript, limit, start subscript, 2, end subscript, start superscript, 2, end superscript, integral, start subscript, 2, end subscript, start superscript, 2, end superscript, integral, start subscript, 2, end subscript, start superscript, 2, end superscript, sum, start subscript, 2, end subscript, start superscript, 2, end superscript"
+    },
+    {
+        "input": "\\overline{x}\\overline{x}\\overline{x^{x^{x^x}}} \\blue{\\overline{y}}",
+        "output": "start overline, x, end overline, start overline, x, end overline, start overline, x, start superscript, x, start superscript, x, start superscript, x, end superscript, end superscript, end superscript, end overline, start color blue, start overline, y, end overline, end color blue"
+    },
+    {
+        "input": "\\dfrac{1+\\phantom{x^{\\blue{2}}} = x}{1+x^{\\blue{2}} = x}",
+        "output": "start fraction, 1, plus, empty space, equals, x, divided by, 1, plus, x, start superscript, start color blue, 2, end color blue, end superscript, equals, x, end fraction"
+    },
+    {
+        "input": "f'+f_2'+f^{f'}",
+        "output": "f, prime, plus, f, start subscript, 2, end subscript, prime, plus, f, start superscript, f, prime, end superscript"
+    },
+    {
+        "input": "\\frac{\\rlap{x}}{2}",
+        "output": "start fraction, x, divided by, 2, end fraction"
+    },
+    {
+        "input": "\\rule{1em}{0.5em}\\rule{1ex}{2ex}\\rule{1em}{1ex}\\rule{1em}{0.431ex}",
+        "output": "rule, rule, rule, rule"
+    },
+    {
+        "input": "{\\tiny a+b}a+b{\\Huge a+b}",
+        "output": "a, plus, b, a, plus, b, a, plus, b"
+    },
+    {
+        "input": "{\\Huge x}{\\LARGE y}{\\normalsize z}{\\scriptsize w}",
+        "output": "x, y, z, w"
+    },
+    {
+        "input": "^3+[-1][1-1]1=1(=1)\\lvert a\\rvert~b",
+        "output": "start superscript, 3, end superscript, plus, open bracket, minus, 1, close bracket, open bracket, 1, minus, 1, close bracket, 1, equals, 1, left parenthesis, equals, 1, right parenthesis, open vertical bar, a, close vertical bar, space, b"
+    },
+    {
+        "input": "\\sqrt{\\sqrt{\\sqrt{x}}}_{\\sqrt{\\sqrt{x}}}^{\\sqrt{\\sqrt{\\sqrt{x}}}^{\\sqrt{\\sqrt{\\sqrt{x}}}}}",
+        "output": "square root of, square root of, square root of, x, end square root, end square root, end square root, start subscript, square root of, square root of, x, end square root, end square root, end subscript, start superscript, square root of, square root of, square root of, x, end square root, end square root, end square root, start superscript, square root of, square root of, square root of, x, end square root, end square root, end square root, end superscript, end superscript"
+    },
+    {
+        "input": "1+\\sqrt[3]{2}+\\sqrt[1923^234]{2^{2^{2^{2^{2^{2^{2^{2^{2^{2^{2^2}}}}}}}}}}}",
+        "output": "1, plus, root, start index, 3, end index, square root of, 2, end square root, plus, root, start index, 1923, start superscript, 2, end superscript, 34, end index, square root of, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, start superscript, 2, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end superscript, end square root"
+    },
+    {
+        "input": "a_2f_2{f}_2{aa}_2{af}_2",
+        "output": "a, start subscript, 2, end subscript, f, start subscript, 2, end subscript, f, start subscript, 2, end subscript, a, a, start subscript, 2, end subscript, a, f, start subscript, 2, end subscript"
+    },
+    {
+        "input": "x^{x^{x}}\\Big|x_{x_{x_{x_{x}}}}\\bigg|x^{x^{x_{x_{x_{x_{x}}}}}}\\bigg|",
+        "output": "x, start superscript, x, start superscript, x, end superscript, end superscript, vertical bar, x, start subscript, x, start subscript, x, start subscript, x, start subscript, x, end subscript, end subscript, end subscript, end subscript, vertical bar, x, start superscript, x, start superscript, x, start subscript, x, start subscript, x, start subscript, x, start subscript, x, end subscript, end subscript, end subscript, end subscript, end superscript, end superscript, vertical bar"
+    },
+    {
+        "input": "\\displaystyle \\int_{2+3}x f^{2+3}+3\\lim_{2+3+4+5}f",
+        "output": "integral, start subscript, 2, plus, 3, end subscript, x, f, start superscript, 2, plus, 3, end superscript, plus, 3, limit, start subscript, 2, plus, 3, plus, 4, plus, 5, end subscript, f"
+    },
+    {
+        "input": "\\frac{a}{b}\\text{c~ {ab} \\ e}+fg",
+        "output": "start fraction, a, divided by, b, end fraction, c, space, space, a, b, space, space, e, plus, f, g"
+    },
+    {
+        "input": "x^{\\Huge y}z",
+        "output": "x, start superscript, y, end superscript, z"
+    },
+    {
+        "input": "4^\\circ",
+        "output": "4, degree"
+    },
+    {
+        "input": "4 \\geq 3",
+        "output": "4, is greater than or equal to, 3"
+    }
+]
