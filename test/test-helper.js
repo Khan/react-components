@@ -6,6 +6,9 @@ require("./object-assign-polyfill.js");
 // Perhaps a bug in React?
 var jsdom = require("jsdom");
 
-global.window = jsdom.jsdom().createWindow('<html><body></body></html>');
-global.document = window.document;
+global.document = jsdom.jsdom();
+global.window = document.parentWindow;
 global.navigator = window.navigator;
+
+// Bring in katex for the katex-specific tests
+global.katex = require("../docs/js/katex");

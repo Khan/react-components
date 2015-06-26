@@ -6,8 +6,8 @@ var BlurInput = require("../js/blur-input.jsx");
 
 describe("BlurInput", function() {
     beforeEach(function() {
-        global.window = jsdom.jsdom().createWindow();
-        global.document = window.document;
+        global.document = jsdom.jsdom();
+        global.window = document.parentWindow;
 
         this.value = "starting value";
         var handleChange = (newValue) => {

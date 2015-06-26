@@ -34,4 +34,4 @@ watch-preview: jsdeps
 	./node_modules/.bin/watchify -d -t [ reactify --es6 ] js/*.jsx reactify-components.jsx -o docs/preview-bundle.js
 
 test: jsdeps
-	mocha --reporter spec --compilers jsx:test/compiler.js test/test-helper.js test/*test.jsx
+	mocha --reporter spec --compilers jsx:test/compiler.js -r test/test-helper.js test/*test.jsx

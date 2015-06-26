@@ -8,8 +8,8 @@ var LayeredComponentMixin = require("../js/layered-component-mixin.jsx");
 
 describe("LayeredComponentMixin", function() {
     beforeEach(function() {
-        global.window = jsdom.jsdom().createWindow();
-        global.document = window.document;
+        global.document = jsdom.jsdom();
+        global.window = document.parentWindow;
     });
 
     it("should render the layer outside of the render area", function() {

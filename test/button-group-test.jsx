@@ -6,8 +6,8 @@ var ButtonGroup = require("../js/button-group.jsx");
 
 describe("ButtonGroup", function() {
     beforeEach(function() {
-        global.window = jsdom.jsdom().createWindow();
-        global.document = window.document;
+        global.document = jsdom.jsdom();
+        global.window = document.parentWindow;
 
         this.value = 'starting';
         this.handleChange = (value) => {

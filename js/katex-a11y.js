@@ -4,16 +4,6 @@
  */
 var _ = require("underscore");
 
-/*
-if (typeof katex === "undefined" && typeof require !== "undefined") {
-    // NOTE(jeresig): This is mad hacky and used for testing
-    // We want katex to exist in the mocha environment, but we don't
-    // want it to be included in normal builds.
-    var tmp = require;
-    katex = tmp("../docs/js/katex");
-}
-*/
-
 var stringMap = {
     "(": "left parenthesis",
     ")": "right parenthesis",

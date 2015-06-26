@@ -7,8 +7,8 @@ var DragTarget = require('../js/drag-target.jsx');
 
 describe('DragTarget', function() {
     beforeEach(function() {
-        global.window = jsdom.jsdom().createWindow();
-        global.document = window.document;
+        global.document = jsdom.jsdom();
+        global.window = document.parentWindow;
 
         this.dataTransfer = null;
         this.shouldDragHighlight = true;

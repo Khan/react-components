@@ -7,8 +7,8 @@ var WindowDrag = require('../js/window-drag.jsx');
 
 describe('WindowDrag', function() {
     beforeEach(function() {
-        global.window = jsdom.jsdom().createWindow();
-        global.document = window.document;
+        global.document = jsdom.jsdom();
+        global.window = document.parentWindow;
 
         var WindowNotifier = React.createClass({
             render: function() {
