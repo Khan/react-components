@@ -5,7 +5,7 @@
 
 var React = require('react');
 
-var katexA11y = require('./katex-a11y');
+var katexA11y = require('./katex-a11y.js');
 
 var pendingScripts = [];
 var needsProcess = false;
