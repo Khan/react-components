@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var _     = require('underscore');
 
@@ -11,7 +9,7 @@ var sortableDragging = {
 
 var sortableEnabled = {
     cursor: "pointer"
-}
+};
 
 var userSelect = function(rhs)  {
     return {
@@ -27,23 +25,23 @@ var userSelect = function(rhs)  {
 var sortableDisabled = userSelect("none");
 
 // Takes an array of components to sort
-var SortableArea = React.createClass({displayName: 'SortableArea',
+var SortableArea = React.createClass({displayName: "SortableArea",
     propTypes: {
-        components: PT.arrayOf(PT.renderable).isRequired,
+        components: PT.arrayOf(PT.node).isRequired,
         onReorder: PT.func.isRequired,
         verify: PT.func
     },
     render: function() {
         var sortables = _(this.state.components).map(function(component, index) 
-            {return SortableItem(
-                {index:index,
-                component:component,
-                area:this,
-                key:component.props.key,
-                draggable:component.props.draggable,
-                dragging:index === this.state.dragging} );}.bind(this)
+            {return React.createElement(SortableItem, {
+                index: index, 
+                component: component, 
+                area: this, 
+                key: component.key, 
+                draggable: component.props.draggable, 
+                dragging: index === this.state.dragging});}.bind(this)
         );
-        return React.DOM.ol( {className:this.props.className, style:this.props.style}, 
+        return React.createElement("ol", {className: this.props.className, style: this.props.style}, 
             sortables
         );
     },
@@ -128,7 +126,7 @@ var SortableArea = React.createClass({displayName: 'SortableArea',
 });
 
 // An individual sortable item
-var SortableItem = React.createClass({displayName: 'SortableItem',
+var SortableItem = React.createClass({displayName: "SortableItem",
     propTypes: {
         // item: what is this?
     },
@@ -140,12 +138,12 @@ var SortableItem = React.createClass({displayName: 'SortableItem',
             dragState = "sortable-enabled";
         }
 
-        return React.DOM.li( {draggable:this.props.draggable,
-                   className:dragState,
-                   onDragStart:this.handleDragStart,
-                   onDrop:this.handleDrop,
-                   onDragEnter:this.handleDragEnter,
-                   onDragOver:this.handleDragOver}, 
+        return React.createElement("li", {draggable: this.props.draggable, 
+                   className: dragState, 
+                   onDragStart: this.handleDragStart, 
+                   onDrop: this.handleDrop, 
+                   onDragEnter: this.handleDragEnter, 
+                   onDragOver: this.handleDragOver}, 
             this.props.component
         );
     },

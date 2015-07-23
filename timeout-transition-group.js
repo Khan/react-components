@@ -12,15 +12,9 @@
  *
  * This is adapted from Facebook's CSSTransitionGroup which is in the React
  * addons and under the Apache 2.0 License.
- *
- * @jsx React.DOM
  */
 
-// TODO(zach): convert to CSSCore
-var $ = require('jquery');
-
-var React = require('react');
-React.addons = require('react-addons');
+var React = require('react/addons');
 
 var ReactTransitionGroup = React.addons.TransitionGroup;
 
@@ -52,6 +46,10 @@ var EVENT_NAME_MAP = {
 var endEvents = [];
 
 (function detectEvents() {
+    if (typeof window === "undefined") {
+        return;
+    }
+
     var testEl = document.createElement('div');
     var style = testEl.style;
 
@@ -86,15 +84,46 @@ function animationSupported() {
     return endEvents.length !== 0;
 }
 
-var TimeoutTransitionGroupChild = React.createClass({displayName: 'TimeoutTransitionGroupChild',
+/**
+ * Functions for element class management to replace dependency on jQuery
+ * addClass, removeClass and hasClass
+ */
+function addClass(element, className) {
+    if (element.classList) {
+        element.classList.add(className);
+    } else if (!hasClass(element, className)) {
+        element.className = element.className + ' ' + className;
+    }
+    return element;
+}
+function removeClass(element, className) {
+    if (hasClass(className)) {
+        if (element.classList) {
+            element.classList.remove(className);
+        } else {
+            element.className = (' ' + element.className + ' ')
+                .replace(' ' + className + ' ', ' ').trim();
+        }
+    }
+    return element;
+}
+function hasClass(element, className) {
+    if (element.classList) {
+        return element.classList.contains(className);
+    } else {
+        return (' ' + element.className + ' ').indexOf(' ' + className + ' ') > -1;
+    }
+}
+
+var TimeoutTransitionGroupChild = React.createClass({displayName: "TimeoutTransitionGroupChild",
     transition: function(animationType, finishCallback) {
         var node = this.getDOMNode();
         var className = this.props.name + '-' + animationType;
         var activeClassName = className + '-active';
 
         var endListener = function() {
-            $(node).removeClass(className);
-            $(node).removeClass(activeClassName);
+            removeClass(node, className);
+            removeClass(node, activeClassName);
 
             // Usually this optional callback is used for informing an owner of
             // a leave animation and telling it to remove the child.
@@ -113,7 +142,7 @@ var TimeoutTransitionGroupChild = React.createClass({displayName: 'TimeoutTransi
             }
         }
 
-        $(node).addClass(className);
+        addClass(node, className);
 
         // Need to do this to actually trigger a transition.
         this.queueClass(activeClassName);
@@ -129,7 +158,9 @@ var TimeoutTransitionGroupChild = React.createClass({displayName: 'TimeoutTransi
 
     flushClassNameQueue: function() {
         if (this.isMounted()) {
-            $(this.getDOMNode()).addClass(this.classNameQueue.join(" "));
+            this.classNameQueue.forEach(function(name) {
+                addClass(this.getDOMNode(), name);
+            }.bind(this));
         }
         this.classNameQueue.length = 0;
         this.timeout = null;
@@ -169,7 +200,7 @@ var TimeoutTransitionGroupChild = React.createClass({displayName: 'TimeoutTransi
     }
 });
 
-var TimeoutTransitionGroup = React.createClass({displayName: 'TimeoutTransitionGroup',
+var TimeoutTransitionGroup = React.createClass({displayName: "TimeoutTransitionGroup",
     propTypes: {
         enterTimeout: React.PropTypes.number.isRequired,
         leaveTimeout: React.PropTypes.number.isRequired,
@@ -186,23 +217,23 @@ var TimeoutTransitionGroup = React.createClass({displayName: 'TimeoutTransitionG
     },
 
     _wrapChild: function(child) {
-        return TimeoutTransitionGroupChild(
-            {
-                enterTimeout: this.props.enterTimeout,
-                leaveTimeout: this.props.leaveTimeout,
-                name: this.props.transitionName,
-                enter: this.props.transitionEnter,
-                leave: this.props.transitionLeave
-            },
-            child
+        return (
+            React.createElement(TimeoutTransitionGroupChild, {
+                    enterTimeout: this.props.enterTimeout, 
+                    leaveTimeout: this.props.leaveTimeout, 
+                    name: this.props.transitionName, 
+                    enter: this.props.transitionEnter, 
+                    leave: this.props.transitionLeave}, 
+                child
+            )
         );
     },
 
     render: function() {
-        return this.transferPropsTo(
-            ReactTransitionGroup( {childFactory:this._wrapChild}, 
-                this.props.children
-            )
+        return (
+            React.createElement(ReactTransitionGroup, React.__spread({}, 
+                this.props, 
+                {childFactory: this._wrapChild}))
         );
     }
 });

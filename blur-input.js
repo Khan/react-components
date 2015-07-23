@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require("react");
 
 /* You know when you want to propagate input to a parent...
@@ -14,7 +12,7 @@ var React = require("react");
  * Enough melodrama. Its an input that only sends changes
  * to its parent on blur.
  */
-var BlurInput = React.createClass({displayName: 'BlurInput',
+var BlurInput = React.createClass({displayName: "BlurInput",
     propTypes: {
         value: React.PropTypes.string.isRequired,
         onChange: React.PropTypes.func.isRequired
@@ -23,11 +21,12 @@ var BlurInput = React.createClass({displayName: 'BlurInput',
         return { value: this.props.value };
     },
     render: function() {
-        return this.transferPropsTo(React.DOM.input(
-            {type:"text",
-            value:this.state.value,
-            onChange:this.handleChange,
-            onBlur:this.handleBlur} ));
+        return React.createElement("input", React.__spread({}, 
+            this.props, 
+            {type: "text", 
+            value: this.state.value, 
+            onChange: this.handleChange, 
+            onBlur: this.handleBlur}));
     },
     componentWillReceiveProps: function(nextProps) {
         this.setState({ value: nextProps.value });

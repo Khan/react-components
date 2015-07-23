@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require("react");
 var _ = require("underscore");
 
@@ -14,14 +12,14 @@ var _ = require("underscore");
  *
  * Rewrite of http://stackoverflow.com/a/10310815/2121468
  */
-var WindowDrag = React.createClass({displayName: 'WindowDrag',
+var WindowDrag = React.createClass({displayName: "WindowDrag",
     render: function() {
         if (this.state.dropTargetShown) {
-            return React.DOM.div( {onDrop:this.handleDrop}, 
+            return React.createElement("div", {onDrop: this.handleDrop}, 
                 this.props.children
             );
         } else {
-            return React.DOM.span(null );
+            return React.createElement("div", null);
         }
     },
 

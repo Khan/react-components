@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 /* The equivalent to jQuery.timeago for react.
  *
  * TimeAgo returns a span containing the amount of time (in English) that has
@@ -14,17 +12,18 @@
  *     return <a href={khanAcademy}><TimeAgo time={date} /></a>
  */
 
-var SetIntervalMixin = require("./set-interval-mixin.jsx");
+var React = require("react");
+var SetIntervalMixin = require("./set-interval-mixin.js");
 var moment = require("moment");
 
 // TODO(joel) i18n
-var TimeAgo = React.createClass({displayName: 'TimeAgo',
+var TimeAgo = React.createClass({displayName: "TimeAgo",
     mixins: [SetIntervalMixin],
     render: function() {
-        return React.DOM.span(null, moment(this.props.time).fromNow());
+        return React.createElement("span", null, moment(this.props.time).fromNow());
     },
     componentDidMount: function() {
-        var interval = this.props.time || 60000;
+        var interval = this.props.refreshMillis || 60000;
         // TODO(joel) why did I have to bind forceUpdate?
         this.setInterval(this.forceUpdate.bind(this), interval);
     }

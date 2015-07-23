@@ -1,49 +1,11 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var RCSS = require('rcss');
 var _ = require('underscore');
+var styles = require('./styles.js');
 
-var outerStyle = {
-    display: 'inline-block',
-};
+var buttonStyle = styles.button.buttonStyle;
+var selectedStyle = styles.button.selectedStyle;
 
-var buttonStyle = {
-    backgroundColor: 'white',
-    border: '1px solid #ccc',
-    borderBottom: '1px solid #ccc',
-    borderLeft: '0',
-    cursor: 'pointer',
-    margin: '0',
-    padding: '5px 10px',
-    position: 'relative', // for hover
-
-    ':first-child': {
-        borderLeft: '1px solid #ccc',
-        borderTopLeftRadius: '3px',
-        borderBottomLeftRadius: '3px'
-    },
-
-    ':last-child': {
-        borderRight: '1px solid #ccc',
-        borderTopRightRadius: '3px',
-        borderBottomRightRadius: '3px'
-    },
-
-    ':hover': {
-        backgroundColor: '#ccc'
-    },
-
-    ':focus': {
-        zIndex: '2'
-    }
-};
-
-var selectedStyle = {
-    backgroundColor: '#ddd'
-};
-
-RCSS.createClass(outerStyle);
 RCSS.createClass(buttonStyle);
 RCSS.createClass(selectedStyle);
 
@@ -52,7 +14,8 @@ RCSS.createClass(selectedStyle);
  * The class requires these properties:
  *   buttons - an array of objects with keys:
  *     "value": this is the value returned when the button is selected
- *     "text": this is the text shown on the button
+ *     "content": this is the JSX shown within the button, typically a string
+ *         that gets rendered as the button's display text
  *     "title": this is the title-text shown on hover
  *   onChange - a function that is provided with the updated value
  *     (which it then is responsible for updating)
@@ -65,12 +28,12 @@ RCSS.createClass(selectedStyle);
  * Requires stylesheets/perseus-admin-package/editor.less to look nice.
  */
 
-var ButtonGroup = React.createClass({displayName: 'ButtonGroup',
+var ButtonGroup = React.createClass({displayName: "ButtonGroup",
     propTypes: {
         value: React.PropTypes.any,
         buttons: React.PropTypes.arrayOf(React.PropTypes.shape({
             value: React.PropTypes.any.isRequired,
-            text: React.PropTypes.string,
+            content: React.PropTypes.node,
             title: React.PropTypes.string
         })).isRequired,
         onChange: React.PropTypes.func.isRequired,
@@ -90,17 +53,21 @@ var ButtonGroup = React.createClass({displayName: 'ButtonGroup',
                 var maybeSelected = button.value === value ?
                         selectedStyle.className :
                         "";
-                return React.DOM.button( {title:button.title,
-                        id:"" + i,
-                        ref:"button" + i,
-                        key:"" + i,
-                        className:(buttonStyle.className + " " + maybeSelected),
-                        onClick:this.toggleSelect.bind(this, button.value)}, 
-                    button.text || "" + button.value
+                return React.createElement("button", {title: button.title, 
+                        type: "button", 
+                        id: "" + i, 
+                        ref: "button" + i, 
+                        key: "" + i, 
+                        className: (buttonStyle.className + " " + maybeSelected), 
+                        onClick: this.toggleSelect.bind(this, button.value)}, 
+                    button.content || "" + button.value
                 );
             }.bind(this));
 
-        return React.DOM.div( {className:outerStyle.className}, 
+        var outerStyle = {
+            display: 'inline-block',
+        };
+        return React.createElement("div", {style: outerStyle}, 
             buttons
         );
     },

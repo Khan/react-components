@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var React = require('react');
 var RCSS = require('rcss');
 var _ = require('underscore');
@@ -29,12 +27,12 @@ RCSS.createClass(selectedStyle);
  * Requires stylesheets/perseus-admin-package/editor.less to look nice.
  */
 
-var MultiButtonGroup = React.createClass({displayName: 'MultiButtonGroup',
+var MultiButtonGroup = React.createClass({displayName: "MultiButtonGroup",
     propTypes: {
         values: React.PropTypes.arrayOf(React.PropTypes.any),
         buttons: React.PropTypes.arrayOf(React.PropTypes.shape({
             value: React.PropTypes.any.isRequired,
-            content: React.PropTypes.renderable,
+            content: React.PropTypes.node,
             title: React.PropTypes.string
         })).isRequired,
         onChange: React.PropTypes.func.isRequired,
@@ -53,7 +51,7 @@ var MultiButtonGroup = React.createClass({displayName: 'MultiButtonGroup',
         var buttons = _(this.props.buttons).map(function(button, i)  {
             var maybeSelected = _.contains(values, button.value) ?
                 selectedStyle.className : "";
-            return React.DOM.button({title: button.title, 
+            return React.createElement("button", {title: button.title, 
                     type: "button", 
                     id: "" + i, 
                     key: "" + i, 
@@ -67,7 +65,7 @@ var MultiButtonGroup = React.createClass({displayName: 'MultiButtonGroup',
         var outerStyle = {
             display: 'inline-block'
         };
-        return React.DOM.div({style: outerStyle}, 
+        return React.createElement("div", {style: outerStyle}, 
             buttons
         );
     },

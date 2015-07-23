@@ -1,6 +1,5 @@
-/** @jsx React.DOM */
-
 var React = require('react');
+var _ = require('underscore');
 
 /* This component makes its children a drag target. Example:
  *
@@ -25,25 +24,25 @@ var React = require('react');
 // Other extensions:
 // * custom styles for global drag and dragOver
 // * only respond to certain types of drags (only images for instance)!
-var DragTarget = React.createClass({displayName: 'DragTarget',
+var DragTarget = React.createClass({displayName: "DragTarget",
     propTypes: {
         onDrop: React.PropTypes.func.isRequired,
-        component: React.PropTypes.component,
+        component: React.PropTypes.any,  // component type
         shouldDragHighlight: React.PropTypes.func
     },
     render: function() {
         var opacity = this.state.dragHover ? { "opacity": 0.3 } : {};
-        var component = this.props.component;
+        var Component = this.props.component;
 
-        return this.transferPropsTo(
-            component( {style:opacity,
-                       onDrop:this.handleDrop,
-                       onDragEnd:this.handleDragEnd,
-                       onDragOver:this.handleDragOver,
-                       onDragEnter:this.handleDragEnter,
-                       onDragLeave:this.handleDragLeave}, 
-                this.props.children
-            )
+        return (
+            React.createElement(Component, React.__spread({}, 
+                this.props, 
+                {style: _.extend({}, this.props.style, opacity), 
+                onDrop: this.handleDrop, 
+                onDragEnd: this.handleDragEnd, 
+                onDragOver: this.handleDragOver, 
+                onDragEnter: this.handleDragEnter, 
+                onDragLeave: this.handleDragLeave}))
         );
     },
     getInitialState: function() {
@@ -51,7 +50,7 @@ var DragTarget = React.createClass({displayName: 'DragTarget',
     },
     getDefaultProps: function() {
         return {
-            component: React.DOM.div,
+            component: "div",
             shouldDragHighlight: function()  {return true;}
         };
     },

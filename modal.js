@@ -1,8 +1,5 @@
-/** @jsx React.DOM */
-
 var RCSS = require('rcss');
 var React = require("react");
-var $ = require("jquery");
 
 var modalStyle = {
     position: "fixed",
@@ -50,7 +47,7 @@ RCSS.createClass(modalBackdropStyle);
  *          </div>
  *      </Modal>
  */
-var Modal = React.createClass({displayName: 'Modal',
+var Modal = React.createClass({displayName: "Modal",
     propTypes: {
         className: React.PropTypes.string,
 
@@ -71,14 +68,15 @@ var Modal = React.createClass({displayName: 'Modal',
 
     render: function() {
         var className = [modalStyle.className, this.props.className].join(" ");
-        var modal = this.transferPropsTo(
-            React.DOM.div({tabIndex: "-1", className: className + " modal"}, 
-                this.props.children
-            )
+        var modal = React.createElement("div", React.__spread({}, 
+                this.props, 
+                {tabIndex: "-1", 
+                className: className + " modal"}), 
+            this.props.children
         );
 
-        var backdrop = React.DOM.div({className: modalBackdropStyle.className});
-        return React.DOM.div(null, 
+        var backdrop = React.createElement("div", {className: modalBackdropStyle.className});
+        return React.createElement("div", null, 
             modal, 
             backdrop
         );
