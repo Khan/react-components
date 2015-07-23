@@ -1,0 +1,224 @@
+body {
+    background: url(../images/bg2.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+h2 {
+    font-family: 'Glegoo', serif;
+    font-size: 45px;
+    font-weight: 400;
+    margin: 25px 0;
+}
+
+h3 {
+    font-family: 'Glegoo', serif;
+    font-size: 35px;
+    font-weight: 400;
+    margin: 50px 0 15px;
+}
+
+body {
+    font-family: Georgia, serif;
+}
+
+p, li {
+    font-size: 1.25rem;
+    line-height: 1.6em;
+}
+
+p {
+    margin: 10px 0;
+}
+
+em {
+    font-style: italic;
+}
+
+a {
+    color: rgb(77, 74, 145);
+}
+
+li {
+    list-style: inside disc;
+}
+
+.inner {
+    margin: 0 auto;
+    width: 1000px;
+}
+
+.highlight {
+    font-family: monospace;
+}
+
+#landing {
+    background-color: rgba(0, 0, 0, 0.3);
+    color: white;
+    height: 500px;
+}
+
+#landing h1 {
+    font-family: 'Bitter', serif;
+    font-size: 90px;
+    font-weight: 700;
+    margin: 0 auto;
+    padding: 100px 0 10px;
+    width: 838px;
+}
+
+#landing h2 {
+    font-family: 'Glegoo', serif;
+    font-size: 45px;
+    font-weight: 400;
+    margin: 0 auto;
+    padding: 20px 0;
+    width: 924px;
+}
+
+#landing h2 a {
+    color: rgb(214, 247, 250);
+    text-decoration: none;
+}
+
+main, section {
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #444;
+    padding: 20px;
+}
+
+#introduction {
+    padding-top: 40px;
+}
+
+main {
+    padding-bottom: 200px;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.sidebar-list li {
+    list-style-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==);
+    border: 1px solid #ddd;
+    background-color: #fafafa;
+    margin: 8px 0;
+    height: 30px;
+}
+
+.sidebar-list li div {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.dependency, .no-dependency, .deprecated, .experimental, .unstable, .stable {
+    color: rgb(58, 58, 58);
+    font-family: sans-serif; /* TODO(joel) lock down the sans-serify */
+    font-size: 90%;
+    font-weight: 100;
+    margin: 2px;
+    padding: 3px;
+    text-decoration: none;
+}
+
+.deprecated {
+    border: 1px solid rgb(206, 51, 51);
+    border-left: 5px solid rgb(206, 51, 51);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.experimental {
+    border: 1px solid rgb(236, 124, 21);
+    border-left: 5px solid rgb(236, 124, 21);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.unstable {
+    border: 1px solid rgb(219, 219, 0);
+    border-left: 5px solid rgb(219, 219, 0);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.stable {
+    border: 1px solid rgb(0, 148, 49);
+    border-left: 5px solid rgb(0, 148, 49);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.dependency {
+    border: 1px solid rgb(111, 145, 187);
+    border-left: 5px solid rgb(111, 145, 187);
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.no-dependency {
+    border: 1px solid rgb(180, 180, 180);
+    border-left: 5px solid rgb(180, 180, 180);
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgb(180, 180, 180);
+}
+
+.stability, .depends {
+    margin: 10px 0;
+}
+
+.meta-info-header {
+    display: inline-block;
+    font-family: sans-serif;
+    width: 80px;
+}
+
+#stability pre {
+    background-color: rgba(255, 255, 255, 0.7);
+    font-family: monospace;
+    font-size: 16px;
+    margin: 10px 0;
+    padding: 10px;
+}
+
+.demo-enter {
+    opacity: 0.01;
+    height: 0px;
+    padding: 0px 10px !important;
+    transition: opacity 500ms ease-out,
+                padding 500ms ease-out,
+                height 500ms ease-out;
+}
+.demo-enter.demo-enter-active {
+    opacity: 1;
+    height: 16px;
+    padding: 10px !important;
+}
+.demo-leave {
+    opacity: 1;
+    height: 16px;
+    transition: opacity 500ms ease-out,
+                padding 500ms ease-out,
+                height 500ms ease-out;
+}
+.demo-leave.demo-leave-active {
+    opacity: 0;
+    height: 0px;
+    padding: 0px 10px !important;
+}
+
+.modal {
+  color: #555555;
+  margin: 0;
+  padding: 15px;
+}
+.modal-header {
+  border-bottom: 1px solid #ddd;
+  padding: 0 0 9px 0;
+}
+.modal-body {
+  margin: 0;
+  max-height: none;
+  padding: 20px 0 9px 0;
+}

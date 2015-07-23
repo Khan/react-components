@@ -1,0 +1,282 @@
+{# based on http://nodejs.org/api/documentation.html#documentation_stability_index #}
+{% macro stability(status) -%}
+<div class="stability">
+    <span class="meta-info-header">Stability</span><a href="#stability" class="{{ status }}">{{ status }}</a>
+</div>
+{%- endmacro %}
+{% macro depends(packages) -%}
+<div class="depends">
+    <span class="meta-info-header">Depends</span>{% for package in packages %}<a href={{ package[0] }} class="dependency">{{ package[1] }}</a>{% else %}<a href="#" class="no-dependency">None</a>{% endfor %}
+</div>
+{%- endmacro %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="./favicon.ico">
+    <link href='http://fonts.googleapis.com/css?family=Bitter:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Glegoo' rel='stylesheet' type='text/css'>
+    <link href="stylesheets/reset.css"      rel="stylesheet">
+    <link href="stylesheets/index.css"      rel="stylesheet">
+    <link href="stylesheets/katex.css"      rel="stylesheet">
+    <link href="stylesheets/codemirror.css" rel="stylesheet">
+    <link href="stylesheets/react.css"      rel="stylesheet">
+    <!--[if lte IE 8]>
+    <script type="text/javascript" src="js/html5shiv.min.js"></script>
+    <script type="text/javascript" src="js/es5-shim.min.js"></script>
+    <script type="text/javascript" src="js/es5-sham.min.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML&delayStartupUntil=configured"></script>
+    <script type="text/javascript">
+      MathJax.Hub.Config({
+          messageStyle: "none",
+          "HTML-CSS": {
+              showMathMenu: false
+          },
+          TeX: {
+              extensions: ["AMSmath.js", "AMSsymbols.js", "noErrors.js", "noUndefined.js"]
+          },
+          skipStartupTypeset: true
+      });
+      MathJax.Hub.Configured();
+    </script>
+    <script type="text/javascript" src="js/katex.js"></script>
+    <script type="text/javascript" src="js/codemirror.js"></script>
+    <script type="text/javascript" src="js/foldcode.js"></script>
+    <script type="text/javascript" src="js/javascript.js"></script>
+    <script type="text/javascript" src="js/showdown.js"></script>
+    <script type="text/javascript" src="js/JSXTransformer.js"></script>
+    <title>React Components</title>
+</head>
+
+<body>
+    <div id="landing">
+        <h1>React Components</h1>
+        <h2>reusable components by <a href="http://www.khanacademy.org">Khan Academy</a></h2>
+    </div>
+
+    <section id="introduction">
+    <div class="inner">
+        <h2>Introduction</h2>
+        <p>This is a collection of some of the most reusable <a href="http://facebook.github.io/react/index.html">React</a> components built at <a href="http://www.khanacademy.org">Khan Academy</a>. In the jQuery ecosystem there's a large collection of plugins that can be used for anything from modals to translation. We're trying to make it just as easy to jumpstart React applications with a well-tested, thoughtful, and beautiful library of components.</p>
+        <p>Most of our components are bespoke, so if you're already invested in a UI framework like Bootstrap, Topcoat, or KendoUI, you should check to see if there's an <a href="https://github.com/facebook/react/wiki/Complementary-Tools#ui-components">existing React wrapper</a> for your framework.</p>
+        <p>Important files and info:</p>
+        <ul>
+            <li><a href="https://github.com/Khan/react-components/blob/master/LICENSE">license</a> (MIT)</li>
+            <li><a href="https://github.com/Khan/react-components">git repository</a></li>
+            <li><a href="https://github.com/Khan/react-components/issues">issues</a></li>
+            <li>documentation on all components is below</li>
+        </ul>
+    </div>
+    </section>
+
+    <!-- the black triangle -->
+    <section id="getting-started">
+    <div class="inner">
+        <h2>Getting Started</h2>
+        <p>React Components uses <a href="http://wiki.commonjs.org/wiki/Modules/1.1">CommonJS-style requires</a>, making them easy to include in a project using Browserify or Webpack.</p>
+        <h3>Use as a Git Submodule (Recommended)</h3>
+        <p>In the author's limited experience, it's easiest to clone React Components as a subrepo (assuming Git).</p>
+        <textarea class="code shell" readonly>
+git submodule add https://github.com/Khan/react-components.git react-components
+        </textarea>
+
+        <p>Then simply use CommonJS requires pointing to the components within the subrepo.</p>
+        <textarea class="code javascript" readonly>
+var TeX = require('react-components/js/tex.jsx');
+React.render(<TeX>\nabla \cdot E = 4 \pi \rho</TeX>, domNode);
+        </textarea>
+        <h3>External Requirements</h3>
+        <p>Some components require external libraries - <code>TimeAgo</code>, <code>TeX</code>, <code>BackboneMixin</code>, etc. The libraries aren't included with React Components (to keep it lightweight), so you'll need to provide them as necessary. External requirements need to be available as CommonJS imports, which usually means adding them to your <code>package.json</code>. For example, <code>TimeAgo</code> uses <code>moment</code>:</p>
+        <textarea class="code javascript" readonly>
+"dependencies": {
+  "moment": "~2.7.0
+}
+        </textarea>
+        <p>Now we can use <code>TimeAgo</code> just like any of the other components.</p>
+        <textarea class="code javascript" readonly>
+React.render(<TimeAgo time={new Date()} />, domNode);
+        </textarea>
+        <!-- TODO(joel) create react-components-quickstart repo
+        <h3>Installing Through NPM</h3>
+        -->
+    </div>
+    </section>
+
+    <!-- the hairball / reference -->
+    <section id="stability">
+    <div class="inner">
+        <h2>Component Stability</h2>
+        <p>
+        We borrow Mozilla's SDK <a href="https://developer.mozilla.org/en-US/Add-ons/SDK/Guides/SDK_API_Lifecycle">stability index</a> (which is in turn borrowed from <a href="http://nodejs.org/api/documentation.html#documentation_stability_index">Node</a>) to indicate how much you can rely on each component.
+        </p>
+
+        <pre class="deprecated">Stability: 0 - Deprecated
+
+This component is known to be problematic, and changes are planned.
+Do not rely on it. Use of the feature may cause warnings. Backwards
+compatibility should not be expected.</pre>
+
+        <pre class="experimental">Stability: 1 - Experimental
+
+This component was introduced recently, and may change or be removed in
+future versions. Please try it out and provide feedback. If it addresses
+a use-case that is important to you, tell the react-components team.</pre>
+
+        <pre class="unstable">Stability: 2 - Unstable
+
+The component is in the process of settling, but has not yet had
+sufficient real-world testing to be considered stable. Backwards-
+compatibility will be maintained if reasonable.</pre>
+
+        <pre class="stable">Stability: 3 - Stable
+
+The component is a fully supported part of react-components. We will
+avoid breaking backwards compatibility unless absolutely necessary.</pre>
+
+    </div>
+    </section>
+
+    <main class="clearfix">
+    <div class="inner">
+        <h2>Components</h2>
+
+        <nav>
+            <div class="inner">
+            <ul>
+                <li><a href="#modal">Modal</a></li>
+                <li><a href="#button-group">Button Group</a></li>
+                <li><a href="#multi-button-group">Multi Button Group</a></li>
+                <li><a href="#dollar-underscore">$_</a></li>
+                <li><a href="#layered-component">Layered Component Mixin</a></li>
+                <li><a href="#set-interval">Set Interval Mixin</a></li>
+                <li><a href="#state-from-store">State-from-Store Mixin</a></li>
+                <li><a href="#timeago">TimeAgo</a></li>
+                <li><a href="#blur-input">Blur Input</a></li>
+                <li><a href="#tex">TeX</a></li>
+                <li><a href="#tooltip">Tooltip</a></li>
+                <li><a href="#info-tip">Info-Tip</a></li>
+                <li><a href="#sortable">Sortable</a></li>
+                <li><a href="#drag-target">Drag Target</a></li>
+                <li><a href="#timeout-transition-group">Timeout Transition Group</a></li>
+                <li><a href="#backbone-mixin">Backbone Mixin</a></li>
+                <li><a href="#window-drag">Window Drag</a></li>
+            </ul>
+            </div>
+        </nav>
+
+        <h3 id="modal">Modal</h3>
+        {{ stability("experimental") }}
+        {{ depends([]) }}
+        <p>This works like a simplified, React-native version of <a href="http://getbootstrap.com/javascript/#modals">Bootstrap's modal</a>.</p>
+        {% code_example "modal.jsx" %}
+
+        <h3 id="button-group">Button Group</h3>
+        {{ stability("unstable") }}
+        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
+        {% code_example "button-group.jsx" %}
+
+        <h3 id="multi-button-group">Multi Button Group</h3>
+        {{ stability("unstable") }}
+        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        <p>Like Button Group, but with multi-select (like checkboxes).</p>
+        {% code_example "multi-button-group.jsx" %}
+
+        <h3 id="dollar-underscore"><code>$_</code></h3>
+        {{ stability("unstable") }}
+        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        <p>A pseudo-component useful for internationalization.</p>
+        {% code_example "i18n.jsx" %}
+
+        <h3 id="layered-component">Layered Component Mixin</h3>
+        {{ stability("unstable") }}
+        {{ depends([]) }}
+        <p>Render another component in a div appended to the page.</p>
+        {% code_example "layered-component-mixin.jsx" %}
+
+        <h3 id="set-interval">Set Interval Mixin</h3>
+        {{ stability("unstable") }}
+        {{ depends([]) }}
+        <p>Like <code>setInterval</code> that calls <code>clearInterval</code> for you.</p>
+        {% code_example "set-interval-mixin.jsx" %}
+
+        <h3 id="state-from-store">State-from-Store Mixin</h3>
+        {{ stability("unstable") }}
+        {{ depends([("https://facebook.github.io/flux/", "Flux"),
+                    ("http://underscorejs.org/", "Underscore")]) }}
+        <p>Wires change listeners to get updates from a flux store.</p>
+        {% code_example "state-from-store-mixin.jsx" %}
+
+        <h3 id="timeago"><code>TimeAgo</code></h3>
+        {{ stability("unstable") }}
+        {{ depends([("http://momentjs.com/", "moment")]) }}
+        <p>Human friendly display of how long it's been since an event happened.</p>
+        {% code_example "timeago.jsx" %}
+
+        <h3 id="blur-input">Blur Input</h3>
+        {{ stability("unstable") }}
+        {{ depends([]) }}
+        <p>An input component that notifies its parent of changes when it loses focus.</p>
+        {% code_example "blur-input.jsx" %}
+
+        <h3 id="tex">TeX</h3>
+        {{ stability("unstable") }}
+        {{ depends([("https://github.com/Khan/KaTeX", "KaTeX"),
+                    ("http://www.mathjax.org/", "MathJax")]) }}
+        <p>Easily render LaTeX using <a href="http://www.mathjax.org/">MathJax</a> or Khan Academy's <em>fast</em> <a href="https://github.com/Khan/KaTeX">KaTeX</a> library.</p>
+        {% code_example "tex.jsx" %}
+
+        <h3 id="tooltip">Tooltip</h3>
+        {{ stability("unstable") }}
+        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        <p>A better tooltip.</p>
+        {% code_example "tooltip.jsx" %}
+
+        <h3 id="info-tip">Info-Tip</h3>
+        {{ stability("unstable") }}
+        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        <p>A very simple informational tooltip that displays on hover.</p>
+        {% code_example "info-tip.jsx" %}
+
+        <h3 id="sortable">Sortable</h3>
+        {{ stability("unstable") }}
+        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        <p>Sort a list.</p>
+        {% code_example "sortable.jsx" %}
+
+        <h3 id="drag-target">Drag Target</h3>
+        {{ stability("unstable") }}
+        {{ depends([]) }}
+        <p>Accept dragged content from the browser or the desktop.</p>
+        {% code_example "drag-target.jsx" %}
+
+        <h3 id="window-drag">Window Drag</h3>
+        {{ stability("experimental") }}
+        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        <p>Detect drags into and out of the page.</p>
+        {% code_example "window-drag.jsx" %}
+
+        <h3 id="timeout-transition-group">Timeout Transition Group</h3>
+        {{ stability("unstable") }}
+        {{ depends([("http://jquery.com/", "jQuery")]) }}
+        <p>A wrapper which applies CSS classes to children who are entering or leaving. It is very much like the <code>CSSTransitionGroup</code> provided in the React addons. Unfortunately, <code>CSSTransitionGroup</code> uses the <code>transitionEnd</code> event, which is not fired in a variety of conditions (including the transition not being visible or in another tab). This version of <code>CSSTransitionGroup</code> uses a manually set timeout, instead.</p>
+        {% code_example "timeout-transition-group.jsx" %}
+
+        <h3 id="backbone-mixin">Backbone Mixin</h3>
+        {{ stability("deprecated") }}
+        {{ depends([("http://backbonejs.org/", "Backbone.js")]) }}
+        <p>Update this view every time a backbone model updates:</p>
+        <p>
+        You should know that I highly recommend <em>not</em> using this mixin. It inevitably leads to inefficient code and janky UX. Not at first - only gradually. You won't really notice until it's too late and <code>BackboneMixin</code> runs the interface you just spent three months on.
+        </p>
+        <p>
+            Anyway, you're your own person - do what you think is right.
+        </p>
+        {% code_example "backbone-mixin.jsx" %}
+
+    </div>
+    </main>
+	<script type="text/javascript" src="preview-bundle.js"></script>
+</body>
+</html>

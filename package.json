@@ -1,0 +1,51 @@
+{
+  "name": "react-components",
+  "version": "0.2.0",
+  "author": "Khan Academy",
+  "description": "React components used by Khan Academy",
+  "homepage": "http://khan.github.io/react-components/",
+  "browserify": {
+    "transform": [
+      "reactify"
+    ]
+  },
+  "keywords": [
+    "react",
+    "widgets",
+    "react-ui",
+    "react-component",
+    "khan"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Khan/react-components.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Khan/react-components/issues"
+  },
+  "license": {
+    "type": "MIT",
+    "url": "https://github.com/Khan/react-components/blob/master/LICENSE"
+  },
+  "dependencies": {
+    "rcss": "khan/RCSS#9e5ec9614e391d28a621297a63bc2d850eae89e8"
+  },
+  "devDependencies": {
+    "browserify": "^10.0.0",
+    "watchify": "^3.2.2",
+    "backbone": "~1.1.2",
+    "mocha": "~1.18.2",
+    "jquery": "~2.1.1",
+    "jsdom": "~2.0.0",
+    "jstransform": "~6.3.2",
+    "react": "~0.13.0-rc2",
+    "reactify": "git://github.com/andreypopp/reactify.git#c1b0e15eca9d5e663f34f372682723d5fb4f15af",
+    "react-tools": "~0.12.0",
+    "underscore": "~1.6.0",
+    "moment": "*"
+  },
+  "scripts": {
+    "test": "make test",
+    "prepublish": "node prepublish.js"
+  }
+}
