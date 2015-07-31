@@ -1,6 +1,4 @@
 var React = require('react');
-var _     = require('underscore');
-
 var PT    = React.PropTypes;
 
 var sortableDragging = {
@@ -24,6 +22,13 @@ var userSelect = rhs => {
 
 var sortableDisabled = userSelect("none");
 
+/**
+ * Return the values from arr1 that are not present in arr2.
+ */
+function difference(arr1, arr2) {
+    return Array.prototype.filter.call(arr1, (item) => {return arr2.indexOf(item) < 0});
+}
+
 // Takes an array of components to sort
 var SortableArea = React.createClass({
     propTypes: {
@@ -32,7 +37,7 @@ var SortableArea = React.createClass({
         verify: PT.func
     },
     render: function() {
-        var sortables = _(this.state.components).map((component, index) =>
+        var sortables = this.state.components.map((component, index) =>
             <SortableItem
                 index={index}
                 component={component}
@@ -110,15 +115,15 @@ var SortableArea = React.createClass({
     _setDragEvents: function() {
         this._dragItems = this._dragItems || [];
         var items = this.getDOMNode().querySelectorAll('[draggable=true]');
-        var oldItems = _(this._dragItems).difference(items);
-        var newItems = _(items).difference(this._dragItems);
+        var oldItems = difference(this._dragItems, items);
+        var newItems = difference(items, this._dragItems);
 
-        _(newItems).each(dragItem => {
+        newItems.forEach(dragItem => {
             dragItem.addEventListener('dragstart', this._listenEvent);
             dragItem.addEventListener('drop',      this._cancelEvent);
         });
 
-        _(oldItems).each(dragItem => {
+        oldItems.forEach(dragItem => {
             dragItem.removeEventListener('dragstart', this._listenEvent);
             dragItem.removeEventListener('drop',      this._cancelEvent);
         });
