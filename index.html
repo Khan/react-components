@@ -757,12 +757,7 @@ return &lt;List /&gt;;</div>
     <span class="meta-info-header">Depends</span><a href=http://backbonejs.org/ class="dependency">Backbone.js</a>
 </div>
         <p>Update this view every time a backbone model updates:</p>
-        <p>
-        You should know that I highly recommend <em>not</em> using this mixin. It inevitably leads to inefficient code and janky UX. Not at first - only gradually. You won't really notice until it's too late and <code>BackboneMixin</code> runs the interface you just spent three months on.
-        </p>
-        <p>
-            Anyway, you're your own person - do what you think is right.
-        </p>
+        <p>This mixin is deprecated. We do not recommend using it in production.</p>
         <div class='example_div'>var SimpleModel = Backbone.Model.extend({
     defaults: {
         comment: &#34;This is a comment!&#34;
