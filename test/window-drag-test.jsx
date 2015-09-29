@@ -1,7 +1,7 @@
 var jsdom = require("jsdom");
 var assert = require("assert");
-var React = require("react/addons");
-var TestUtils = React.addons.TestUtils;
+var React = require("react");
+var TestUtils = require("react-addons-test-utils");
 
 var WindowDrag = require('../js/window-drag.jsx');
 

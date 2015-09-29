@@ -1,7 +1,7 @@
 var assert = require("assert");
 var jsdom = require("jsdom");
 var React = require("react");
-var TestUtils = React.addons.TestUtils;
+var TestUtils = require("react-addons-test-utils");
 
 var LayeredComponentMixin = require("../js/layered-component-mixin.jsx");
 

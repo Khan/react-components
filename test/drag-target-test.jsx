@@ -1,8 +1,8 @@
 var jsdom = require("jsdom");
 var assert = require("assert");
-var React = require("react/addons");
+var React = require("react");
 var ReactDOM = require("react-dom");
-var TestUtils = React.addons.TestUtils;
+var TestUtils = require("react-addons-test-utils");
 
 var DragTarget = require('../js/drag-target.jsx');
 

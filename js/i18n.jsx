@@ -1,4 +1,4 @@
-var React = require('react');
+var React = require('react/addons');
 var _ = require('underscore');
 
 var interpolationMarker = /%\(([\w_]+)\)s/g;
