@@ -1,6 +1,7 @@
 var jsdom = require("jsdom");
 var assert = require("assert");
 var React = require("react/addons");
+var ReactDOM = require("react-dom");
 var TestUtils = React.addons.TestUtils;
 
 var DragTarget = require('../js/drag-target.jsx');
@@ -24,21 +25,21 @@ describe('DragTarget', function() {
     });
 
     it('shows hover at the appropriate times', function() {
-        TestUtils.Simulate.dragEnter(this.dragTarget.getDOMNode());
+        TestUtils.Simulate.dragEnter(ReactDOM.findDOMNode(this.dragTarget));
         assert.strictEqual(this.dragTarget.state.dragHover, true);
 
-        TestUtils.Simulate.dragLeave(this.dragTarget.getDOMNode());
+        TestUtils.Simulate.dragLeave(ReactDOM.findDOMNode(this.dragTarget));
         assert.strictEqual(this.dragTarget.state.dragHover, false);
 
         this.shouldDragHighlight = false;
-        TestUtils.Simulate.dragEnter(this.dragTarget.getDOMNode());
+        TestUtils.Simulate.dragEnter(ReactDOM.findDOMNode(this.dragTarget));
         assert.strictEqual(this.dragTarget.state.dragHover, false);
     });
 
     it('accepts drops', function() {
-        TestUtils.Simulate.dragOver(this.dragTarget.getDOMNode());
+        TestUtils.Simulate.dragOver(ReactDOM.findDOMNode(this.dragTarget));
         var dataTransfer = {};
-        TestUtils.Simulate.drop(this.dragTarget.getDOMNode(),
+        TestUtils.Simulate.drop(ReactDOM.findDOMNode(this.dragTarget),
             { dataTransfer });
         assert.strictEqual(this.dataTransfer, dataTransfer);
     });

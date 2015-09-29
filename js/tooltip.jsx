@@ -1,4 +1,5 @@
 var React = require("react");
+var ReactDOM = require("react-dom");
 var _ = require("underscore");
 
 // TODO(joel/jack) fix z-index issues https://s3.amazonaws.com/uploads.hipchat.com/6574/29028/yOApjwmgiMhEZYJ/Screen%20Shot%202014-05-30%20at%203.34.18%20PM.png
@@ -356,7 +357,7 @@ var Tooltip = React.createClass({
     },
 
     _updateHeight: function() {
-        var height = this.refs.tooltipContainer.getDOMNode().offsetHeight;
+        var height = ReactDOM.findDOMNode(this.refs.tooltipContainer).offsetHeight;
         if (height !== this.state.height) {
             this.setState({height});
         }

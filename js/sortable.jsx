@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require("react-dom");
 var _     = require('underscore');
 
 var PT    = React.PropTypes;
@@ -109,7 +110,7 @@ var SortableArea = React.createClass({
     },
     _setDragEvents: function() {
         this._dragItems = this._dragItems || [];
-        var items = this.getDOMNode().querySelectorAll('[draggable=true]');
+        var items = ReactDOM.findDOMNode(this).querySelectorAll('[draggable=true]');
         var oldItems = _(this._dragItems).difference(items);
         var newItems = _(items).difference(this._dragItems);
 

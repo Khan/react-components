@@ -1,6 +1,7 @@
 var jsdom = require("jsdom");
 var assert = require("assert");
 var React = require("react/addons");
+var ReactDOM = require("react-dom");
 var TestUtils = React.addons.TestUtils;
 var BlurInput = require("../js/blur-input.jsx");
 
@@ -22,16 +23,16 @@ describe("BlurInput", function() {
     });
 
     it("does not call onChange if there is no `blur`", function() {
-        TestUtils.Simulate.change(this.blurInput.getDOMNode(),
+        TestUtils.Simulate.change(ReactDOM.findDOMNode(this.blurInput),
                                   {target: {value: "new value"}});
 
         assert.strictEqual(this.value, "starting value");
     });
 
     it("calls onChange if there is a `blur`", function() {
-        TestUtils.Simulate.change(this.blurInput.getDOMNode(),
+        TestUtils.Simulate.change(ReactDOM.findDOMNode(this.blurInput),
                                   {target: {value: "new value"}});
-        TestUtils.Simulate.blur(this.blurInput.getDOMNode());
+        TestUtils.Simulate.blur(ReactDOM.findDOMNode(this.blurInput));
 
         assert.strictEqual(this.value, "new value");
     });

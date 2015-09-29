@@ -1,6 +1,7 @@
 var jsdom = require("jsdom");
 var assert = require("assert");
 var React = require("react/addons");
+var ReactDOM = require("react-dom");
 var TestUtils = React.addons.TestUtils;
 var ButtonGroup = require("../js/button-group.jsx");
 
@@ -30,13 +31,13 @@ describe("ButtonGroup", function() {
         });
 
         it("changes when a button is clicked", function() {
-            var alternateButton = this.buttonGroup.refs.button1.getDOMNode();
+            var alternateButton = ReactDOM.findDOMNode(this.buttonGroup.refs.button1);
             TestUtils.Simulate.click(alternateButton);
             assert.strictEqual(this.value, 'alternate');
         });
 
         it("stays selected when clicking on the selected item", function() {
-            var startingButton = this.buttonGroup.refs.button0.getDOMNode();
+            var startingButton = ReactDOM.findDOMNode(this.buttonGroup.refs.button0);
             TestUtils.Simulate.click(startingButton);
             assert.strictEqual(this.value, 'starting');
         });
@@ -57,7 +58,7 @@ describe("ButtonGroup", function() {
         });
 
         it("deselects when clicking on the selected item", function() {
-            var startingButton = this.buttonGroup.refs.button0.getDOMNode();
+            var startingButton = ReactDOM.findDOMNode(this.buttonGroup.refs.button0);
             TestUtils.Simulate.click(startingButton);
             assert.strictEqual(this.value, null);
         });

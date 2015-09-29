@@ -4,6 +4,7 @@
 // TODO(joel) - require MathJax / katex so they don't have to be global
 
 var React = require('react');
+var ReactDOM = require("react-dom");
 
 var katexA11y = require('./katex-a11y.js');
 
@@ -75,7 +76,7 @@ var TeX = React.createClass({
     componentDidMount: function() {
         var text = this.props.children;
         var onRender = this.props.onRender;
-        var katexHolder = this.refs.katex.getDOMNode();
+        var katexHolder = ReactDOM.findDOMNode(this.refs.katex);
 
         katexHolder.removeAttribute("aria-hidden");
 
@@ -83,7 +84,7 @@ var TeX = React.createClass({
             katex.render(text, katexHolder);
 
             try {
-                var katexA11yHolder = this.refs.katexA11y.getDOMNode();
+                var katexA11yHolder = ReactDOM.findDOMNode(this.refs.katexA11y);
                 katexA11y.render(text, katexA11yHolder);
 
                 katexHolder.setAttribute("aria-hidden", "true");
@@ -114,14 +115,14 @@ var TeX = React.createClass({
         var onRender = this.props.onRender;
 
         if (oldText !== newText) {
-            var katexHolder = this.refs.katex.getDOMNode();
+            var katexHolder = ReactDOM.findDOMNode(this.refs.katex);
             katexHolder.removeAttribute("aria-hidden");
 
             try {
                 katex.render(newText, katexHolder);
 
                 try {
-                    var katexA11yHolder = this.refs.katexA11y.getDOMNode();
+                    var katexA11yHolder = ReactDOM.findDOMNode(this.refs.katexA11y);
                     katexA11y.render(text, katexA11yHolder);
 
                     katexHolder.setAttribute("aria-hidden", "true");
@@ -149,8 +150,8 @@ var TeX = React.createClass({
                 }
             }
 
-            this.emptyNode(this.refs.katex.getDOMNode());
-            this.emptyNode(this.refs.katexA11y.getDOMNode());
+            this.emptyNode(ReactDOM.findDOMNode(this.refs.katex));
+            this.emptyNode(ReactDOM.findDOMNode(this.refs.katexA11y));
 
             if (this.script) {
                 var component = this;
@@ -174,7 +175,7 @@ var TeX = React.createClass({
         if (!this.script) {
             this.script = document.createElement("script");
             this.script.type = "math/tex";
-            this.refs.mathjax.getDOMNode().appendChild(this.script);
+            ReactDOM.findDOMNode(this.refs.mathjax).appendChild(this.script);
         }
         if ("text" in this.script) {
             // IE8, etc

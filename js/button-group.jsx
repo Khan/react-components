@@ -1,4 +1,5 @@
 var React = require('react');
+var ReactDOM = require("react-dom");
 var RCSS = require('rcss');
 var _ = require('underscore');
 var styles = require('./styles.js');
@@ -73,7 +74,7 @@ var ButtonGroup = React.createClass({
     },
 
     focus: function() {
-        this.getDOMNode().focus();
+        ReactDOM.findDOMNode(this).focus();
         return true;
     },
 

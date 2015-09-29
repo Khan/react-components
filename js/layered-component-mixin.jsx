@@ -14,6 +14,7 @@
  */
 
 var React = require('react');
+var ReactDOM = require("react-dom");
 
 var LayeredComponentMixin = {
     componentDidMount: function() {
@@ -46,9 +47,9 @@ var LayeredComponentMixin = {
         // a noscript element, like React does when an element's render returns
         // null.
         if (layerElement === null) {
-            React.render(<noscript />, this._layer);
+            ReactDOM.render(<noscript />, this._layer);
         } else {
-            React.render(layerElement, this._layer);
+            ReactDOM.render(layerElement, this._layer);
         }
 
         if (this.layerDidMount) {
@@ -61,7 +62,7 @@ var LayeredComponentMixin = {
             this.layerWillUnmount(this._layer);
         }
 
-        React.unmountComponentAtNode(this._layer);
+        ReactDOM.unmountComponentAtNode(this._layer);
     }
 };
 
