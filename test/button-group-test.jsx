@@ -31,13 +31,15 @@ describe("ButtonGroup", function() {
         });
 
         it("changes when a button is clicked", function() {
-            var alternateButton = ReactDOM.findDOMNode(this.buttonGroup.refs.button1);
+            var alternateButton =
+                     ReactDOM.findDOMNode(this.buttonGroup.refs.button1);
             TestUtils.Simulate.click(alternateButton);
             assert.strictEqual(this.value, 'alternate');
         });
 
         it("stays selected when clicking on the selected item", function() {
-            var startingButton = ReactDOM.findDOMNode(this.buttonGroup.refs.button0);
+            var startingButton =
+                    ReactDOM.findDOMNode(this.buttonGroup.refs.button0);
             TestUtils.Simulate.click(startingButton);
             assert.strictEqual(this.value, 'starting');
         });
@@ -58,7 +60,8 @@ describe("ButtonGroup", function() {
         });
 
         it("deselects when clicking on the selected item", function() {
-            var startingButton = ReactDOM.findDOMNode(this.buttonGroup.refs.button0);
+            var startingButton =
+                    ReactDOM.findDOMNode(this.buttonGroup.refs.button0);
             TestUtils.Simulate.click(startingButton);
             assert.strictEqual(this.value, null);
         });

@@ -84,7 +84,8 @@ var TeX = React.createClass({
             katex.render(text, katexHolder);
 
             try {
-                var katexA11yHolder = ReactDOM.findDOMNode(this.refs.katexA11y);
+                var katexA11yHolder =
+                        ReactDOM.findDOMNode(this.refs.katexA11y);
                 katexA11y.render(text, katexA11yHolder);
 
                 katexHolder.setAttribute("aria-hidden", "true");
@@ -122,15 +123,16 @@ var TeX = React.createClass({
                 katex.render(newText, katexHolder);
 
                 try {
-                    var katexA11yHolder = ReactDOM.findDOMNode(this.refs.katexA11y);
+                    var katexA11yHolder =
+                            ReactDOM.findDOMNode(this.refs.katexA11y);
                     katexA11y.render(text, katexA11yHolder);
 
                     katexHolder.setAttribute("aria-hidden", "true");
                 } catch(e) {
-                    // NOTE: If an exception is thrown from the katex-a11y logic
-                    // then we assume that it doesn't know how to render the
-                    // result thus we remove any a11y text and don't show it to
-                    // the user.
+                    // NOTE: If an exception is thrown from the katex-a11y
+                    // logic then we assume that it doesn't know how to render
+                    // the result thus we remove any a11y text and don't show
+                    // it to the user.
                     this.emptyNode(katexA11yHolder);
                 }
 

@@ -122,7 +122,7 @@ var TooltipArrow = React.createClass({
     // TODO(jack): Think about adding a box-shadow to the triangle here
     // See http://css-tricks.com/triangle-with-shadow/
     render: function() {
-        var isRight = (this.props.horizontalDirection === "right");
+        //var isRight = (this.props.horizontalDirection === "right");
         var isTop = (this.props.verticalDirection === "top");
 
         var frontTopOffset = isTop ? 0 : 1;
@@ -357,7 +357,8 @@ var Tooltip = React.createClass({
     },
 
     _updateHeight: function() {
-        var height = ReactDOM.findDOMNode(this.refs.tooltipContainer).offsetHeight;
+        var height =
+                ReactDOM.findDOMNode(this.refs.tooltipContainer).offsetHeight;
         if (height !== this.state.height) {
             this.setState({height});
         }

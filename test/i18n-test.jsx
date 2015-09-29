@@ -1,13 +1,13 @@
 var React = require("react");
 var ReactDOMServer = require("react-dom/server");
 var assert = require("assert");
-var _ = require("underscore");
 
 var $_ = require("../js/i18n.jsx");
 
 var maybeJoin = function(renderable) {
     // lolol
-    var markup = ReactDOMServer.renderToStaticMarkup(React.DOM.div(null, renderable));
+    var markup = ReactDOMServer.renderToStaticMarkup(
+        React.DOM.div(null, renderable));
     assert.equal(markup.slice(0, 5), "<div>");
     assert.equal(markup.slice(-6), "</div>");
     return markup.slice(5, -6);
