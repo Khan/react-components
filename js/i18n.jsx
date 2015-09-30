@@ -1,4 +1,4 @@
-var React = require('react/addons');
+var createFragment = require('react-addons-create-fragment');
 var _ = require('underscore');
 
 var interpolationMarker = /%\(([\w_]+)\)s/g;
@@ -48,7 +48,7 @@ var interpolateStringToFragment = function(str, options) {
         result["text_" + (i + 1)] = split[i + 1];
     }
 
-    return React.addons.createFragment(result);
+    return createFragment(result);
 };
 
 /**
