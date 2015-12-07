@@ -63,7 +63,7 @@ var ButtonGroup = React.createClass({
                         onClick={this.toggleSelect.bind(this, button.value)}>
                     {button.content || "" + button.value}
                 </button>;
-            });
+            }).value();
 
         var outerStyle = {
             display: 'inline-block',
