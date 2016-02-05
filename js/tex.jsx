@@ -1,30 +1,32 @@
+"use strict";
 /**
  * For math rendered using KaTex and/or MathJax. Use me like <TeX>2x + 3</TeX>.
  */
+/* global katex, MathJax */
 // TODO(joel) - require MathJax / katex so they don't have to be global
 
-var React = require('react');
-var ReactDOM = require("react-dom");
+const PureRenderMixin = require('react-addons-pure-render-mixin');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
-var katexA11y = require('./katex-a11y.js');
+const katexA11y = require('./katex-a11y.js');
 
-var pendingScripts = [];
-var needsProcess = false;
-var timeout = null;
+let pendingScripts = [];
+let needsProcess = false;
 
 function process(script, callback) {
     pendingScripts.push(script);
     if (!needsProcess) {
         needsProcess = true;
-        timeout = setTimeout(doProcess, 0, callback);
+        setTimeout(doProcess, 0, callback);
     }
 }
 
 function doProcess(callback) {
     MathJax.Hub.Queue(function() {
-        var oldElementScripts = MathJax.Hub.elementScripts;
+        const oldElementScripts = MathJax.Hub.elementScripts;
         MathJax.Hub.elementScripts = function(element) {
-            var scripts = pendingScripts;
+            const scripts = pendingScripts;
             pendingScripts = [];
             needsProcess = false;
             return scripts;
@@ -43,7 +45,7 @@ function doProcess(callback) {
 
 // Make content only visible to screen readers.
 // Both collegeboard.org and Bootstrap 3 use this exact implementation.
-var srOnly = {
+const srOnly = {
     border: 0,
     clip: "rect(0,0,0,0)",
     height: "1px",
@@ -51,124 +53,81 @@ var srOnly = {
     overflow: "hidden",
     padding: 0,
     position: "absolute",
-    width: "1px"
+    width: "1px",
 };
 
-var TeX = React.createClass({
+const TeX = React.createClass({
+    propTypes: {
+        children: React.PropTypes.node,
+        onClick: React.PropTypes.func,
+        onRender: React.PropTypes.func,
+        style: React.PropTypes.any,
+    },
+
+    mixins: [PureRenderMixin],
+
     getDefaultProps: function() {
         return {
             // Called after math is rendered or re-rendered
             onRender: function() {},
-            onClick: null
+            onClick: null,
         };
     },
 
-    render: function() {
-        return <span
-                style={this.props.style}
-                onClick={this.props.onClick}>
-            <span ref="mathjax" />
-            <span ref="katex" />
-            <span ref="katexA11y" style={srOnly} />
-        </span>;
-    },
-
     componentDidMount: function() {
-        var text = this.props.children;
-        var onRender = this.props.onRender;
-        var katexHolder = ReactDOM.findDOMNode(this.refs.katex);
-
-        katexHolder.removeAttribute("aria-hidden");
-
-        try {
-            katex.render(text, katexHolder);
-
-            try {
-                var katexA11yHolder =
-                        ReactDOM.findDOMNode(this.refs.katexA11y);
-                katexA11y.render(text, katexA11yHolder);
-
-                katexHolder.setAttribute("aria-hidden", "true");
-            } catch(e) {
-                // NOTE: If an exception is thrown from the katex-a11y logic
-                // then we assume that it doesn't know how to render the result
-                // thus we remove any a11y text and don't show it to the user.
-                this.emptyNode(katexA11yHolder);
-            }
-
-            onRender();
+        if (this.refs.katex.childElementCount > 0) {
+            // If we already rendered katex in the render function, we don't
+            // need to render anything here.
+            this.props.onRender();
             return;
-        } catch (e) {
-            /* jshint -W103 */
-            if (e.__proto__ !== katex.ParseError.prototype) {
-            /* jshint +W103 */
-                throw e;
-            }
         }
 
+        const text = this.props.children;
+
         this.setScriptText(text);
-        process(this.script, onRender);
+        process(this.script, this.props.onRender);
     },
 
     componentDidUpdate: function(prevProps, prevState) {
-        var oldText = prevProps.children;
-        var newText = this.props.children;
-        var onRender = this.props.onRender;
-
-        if (oldText !== newText) {
-            var katexHolder = ReactDOM.findDOMNode(this.refs.katex);
-            katexHolder.removeAttribute("aria-hidden");
-
-            try {
-                katex.render(newText, katexHolder);
-
-                try {
-                    var katexA11yHolder =
-                            ReactDOM.findDOMNode(this.refs.katexA11y);
-                    katexA11y.render(text, katexA11yHolder);
-
-                    katexHolder.setAttribute("aria-hidden", "true");
-                } catch(e) {
-                    // NOTE: If an exception is thrown from the katex-a11y
-                    // logic then we assume that it doesn't know how to render
-                    // the result thus we remove any a11y text and don't show
-                    // it to the user.
-                    this.emptyNode(katexA11yHolder);
-                }
-
-                if (this.script) {
-                    var jax = MathJax.Hub.getJaxFor(this.script);
-                    if (jax) {
-                        jax.Remove();
-                    }
-                }
-                onRender();
-                return;
-            } catch (e) {
-                /* jshint -W103 */
-                if (e.__proto__ !== katex.ParseError.prototype) {
-                /* jshint +W103 */
-                    throw e;
+        // If we already rendered katex in the render function, we don't
+        // need to render anything here.
+        if (this.refs.katex.childElementCount > 0) {
+            if (this.script) {
+                // If we successfully rendered KaTeX, check if there's
+                // lingering MathJax from the last render, and if so remove it.
+                const jax = MathJax.Hub.getJaxFor(this.script);
+                if (jax) {
+                    jax.Remove();
                 }
             }
 
-            this.emptyNode(ReactDOM.findDOMNode(this.refs.katex));
-            this.emptyNode(ReactDOM.findDOMNode(this.refs.katexA11y));
+            this.props.onRender();
+            return;
+        }
 
-            if (this.script) {
-                var component = this;
-                MathJax.Hub.Queue(function() {
-                    var jax = MathJax.Hub.getJaxFor(component.script);
-                    if (jax) {
-                        return jax.Text(newText, onRender);
-                    } else {
-                        component.setScriptText(newText);
-                        process(component.script, onRender);
-                    }
-                });
-            } else {
-                this.setScriptText(newText);
-                process(this.script, onRender);
+        const newText = this.props.children;
+
+        if (this.script) {
+            MathJax.Hub.Queue(() => {
+                const jax = MathJax.Hub.getJaxFor(this.script);
+                if (jax) {
+                    return jax.Text(newText, this.props.onRender);
+                } else {
+                    this.setScriptText(newText);
+                    process(this.script, this.props.onRender);
+                }
+            });
+        } else {
+            this.setScriptText(newText);
+            process(this.script, this.props.onRender);
+        }
+    },
+
+    componentWillUnmount: function() {
+        if (this.script) {
+            const jax = MathJax.Hub.getJaxFor(this.script);
+            if (jax) {
+                jax.Remove();
             }
         }
     },
@@ -187,20 +146,47 @@ var TeX = React.createClass({
         }
     },
 
-    componentWillUnmount: function() {
-        if (this.script) {
-            var jax = MathJax.Hub.getJaxFor(this.script);
-            if (jax) {
-                jax.Remove();
+    render: function() {
+        let katexHtml = null;
+        try {
+            katexHtml = {
+                __html: katex.renderToString(this.props.children),
+            };
+        } catch (e) {
+            /* jshint -W103 */
+            if (e.__proto__ !== katex.ParseError.prototype) {
+            /* jshint +W103 */
+                throw e;
             }
         }
-    },
 
-    emptyNode: function(node) {
-        while (node.firstChild) {
-            node.removeChild(node.firstChild);
+        let katexA11yHtml = null;
+        if (katexHtml) {
+            try {
+                katexA11yHtml = {
+                    __html: katexA11y.renderString(this.props.children),
+                };
+            } catch (e) {
+                // Nothing
+            }
         }
-    }
+
+        return <span
+            style={this.props.style}
+            onClick={this.props.onClick}
+        >
+            <span ref="mathjax" />
+            <span
+                ref="katex"
+                dangerouslySetInnerHTML={katexHtml}
+                aria-hidden={!!katexHtml && !!katexA11yHtml}
+            />
+            <span
+                dangerouslySetInnerHTML={katexA11yHtml}
+                style={srOnly}
+            />
+        </span>;
+    },
 });
 
 module.exports = TeX;
