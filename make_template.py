@@ -1,7 +1,6 @@
 #!/usr/bin/env python
+
 import os.path
-import subprocess
-import tempfile
 
 import jinja2
 from jinja2.ext import Extension
@@ -35,7 +34,6 @@ class CodeExampleExtension(Extension):
         return (jinja2.nodes
             .CallBlock(self.call_method('_insert', [filename]), [], [], [])
             .set_lineno(lineno))
-
 
     def _insert(self, filename, caller):
         path = os.path.join('examples', filename)
