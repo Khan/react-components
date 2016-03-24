@@ -22,24 +22,37 @@ function process(script, callback) {
     }
 }
 
-function doProcess(callback) {
-    MathJax.Hub.Queue(function() {
-        const oldElementScripts = MathJax.Hub.elementScripts;
-        MathJax.Hub.elementScripts = function(element) {
-            const scripts = pendingScripts;
-            pendingScripts = [];
-            needsProcess = false;
-            return scripts;
-        };
+function loadMathJax(callback) {
+    if (typeof MathJax !== "undefined") {
+        callback();
+    } else if (typeof Khan !== "undefined" && Khan.mathJaxLoaded) {
+        Khan.mathJaxLoaded.then(callback);
+    } else {
+        throw new Error(
+            "MathJax wasn't loaded before it was needed by <TeX/>");
+    }
+}
 
-        try {
-            return MathJax.Hub.Process(null, callback);
-        } catch (e) {
-            // IE8 requires `catch` in order to use `finally`
-            throw e;
-        } finally {
-            MathJax.Hub.elementScripts = oldElementScripts;
-        }
+function doProcess(callback) {
+    loadMathJax(() => {
+        MathJax.Hub.Queue(function() {
+            const oldElementScripts = MathJax.Hub.elementScripts;
+            MathJax.Hub.elementScripts = function(element) {
+                const scripts = pendingScripts;
+                pendingScripts = [];
+                needsProcess = false;
+                return scripts;
+            };
+
+            try {
+                return MathJax.Hub.Process(null, callback);
+            } catch (e) {
+                // IE8 requires `catch` in order to use `finally`
+                throw e;
+            } finally {
+                MathJax.Hub.elementScripts = oldElementScripts;
+            }
+        });
     });
 }
 
@@ -95,10 +108,12 @@ const TeX = React.createClass({
             if (this.script) {
                 // If we successfully rendered KaTeX, check if there's
                 // lingering MathJax from the last render, and if so remove it.
-                const jax = MathJax.Hub.getJaxFor(this.script);
-                if (jax) {
-                    jax.Remove();
-                }
+                loadMathJax(() => {
+                    const jax = MathJax.Hub.getJaxFor(this.script);
+                    if (jax) {
+                        jax.Remove();
+                    }
+                });
             }
 
             this.props.onRender();
@@ -108,14 +123,16 @@ const TeX = React.createClass({
         const newText = this.props.children;
 
         if (this.script) {
-            MathJax.Hub.Queue(() => {
-                const jax = MathJax.Hub.getJaxFor(this.script);
-                if (jax) {
-                    return jax.Text(newText, this.props.onRender);
-                } else {
-                    this.setScriptText(newText);
-                    process(this.script, this.props.onRender);
-                }
+            loadMathJax(() => {
+                MathJax.Hub.Queue(() => {
+                    const jax = MathJax.Hub.getJaxFor(this.script);
+                    if (jax) {
+                        return jax.Text(newText, this.props.onRender);
+                    } else {
+                        this.setScriptText(newText);
+                        process(this.script, this.props.onRender);
+                    }
+                });
             });
         } else {
             this.setScriptText(newText);
@@ -125,10 +142,12 @@ const TeX = React.createClass({
 
     componentWillUnmount: function() {
         if (this.script) {
-            const jax = MathJax.Hub.getJaxFor(this.script);
-            if (jax) {
-                jax.Remove();
-            }
+            loadMathJax(() => {
+                const jax = MathJax.Hub.getJaxFor(this.script);
+                if (jax) {
+                    jax.Remove();
+                }
+            });
         }
     },
 
