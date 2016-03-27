@@ -50,7 +50,7 @@ var ButtonGroup = React.createClass({
 
     render: function() {
         var value = this.props.value;
-        var buttons = _(this.props.buttons).map((button, i) => {
+        var buttons = this.props.buttons.map((button, i) => {
                 var maybeSelected = button.value === value ?
                         selectedStyle.className :
                         "";
