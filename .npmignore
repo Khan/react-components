@@ -1,5 +1,7 @@
 node_modules
 docs
+test
 venv
 requirements.txt
 Makefile
+.module-cache
