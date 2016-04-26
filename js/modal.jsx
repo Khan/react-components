@@ -2,34 +2,36 @@
 /* eslint-disable comma-dangle, no-var, react/jsx-closing-bracket-location, react/jsx-indent-props, react/jsx-sort-prop-types, react/prop-types, react/sort-comp */
 /* To fix, remove an entry above, run ka-lint, and fix errors. */
 
-var RCSS = require('rcss');
+var aphrodite = require("aphrodite");
 var React = require("react");
 
-var modalStyle = {
-    position: "fixed",
-    width: "500px",
-    margin: "0 0 0 -250px",
-    top: "60px",
-    left: "50%",
-    backgroundColor: "white",
-    border: "1px solid rgba(0, 0, 0, 0.3)",
-    borderRadius: "6px",
-    zIndex: 1050,
-};
+var css = aphrodite.css;
+var StyleSheet = aphrodite.StyleSheet;
 
-var modalBackdropStyle = {
-    opacity: 0.7,
-    position: "fixed",
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    zIndex: 1040,
-    backgroundColor: "black",
-};
+var styles = StyleSheet.create({
+    modalStyle: {
+        position: "fixed",
+        width: "500px",
+        margin: "0 0 0 -250px",
+        top: "60px",
+        left: "50%",
+        backgroundColor: "white",
+        border: "1px solid rgba(0, 0, 0, 0.3)",
+        borderRadius: "6px",
+        zIndex: 1050,
+    },
 
-RCSS.createClass(modalStyle);
-RCSS.createClass(modalBackdropStyle);
+    modalBackdropStyle: {
+        opacity: 0.7,
+        position: "fixed",
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+        zIndex: 1040,
+        backgroundColor: "black",
+    },
+});
 
 /* Render a bootstrap modal.
  *
@@ -71,15 +73,19 @@ var Modal = React.createClass({
     },
 
     render: function() {
-        var className = [modalStyle.className, this.props.className].join(" ");
+        var className = [
+            css(styles.modalStyle),
+            this.props.className,
+            "modal",
+        ].join(" ");
         var modal = <div
                 {...this.props}
                 tabIndex="-1"
-                className={className + " modal"}>
+                className={className}>
             {this.props.children}
         </div>;
 
-        var backdrop = <div className={modalBackdropStyle.className} />;
+        var backdrop = <div className={css(styles.modalBackdropStyle)} />;
         return <div>
             {modal}
             {backdrop}

@@ -1,8 +1,8 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+/* eslint-disable no-var */
 
-var button = {
+var StyleSheet = require("aphrodite").StyleSheet;
+
+var button = StyleSheet.create({
     buttonStyle: {
         backgroundColor: 'white',
         border: '1px solid #ccc',
@@ -15,29 +15,29 @@ var button = {
         ':first-child': {
             borderLeft: '1px solid #ccc',
             borderTopLeftRadius: '3px',
-            borderBottomLeftRadius: '3px'
+            borderBottomLeftRadius: '3px',
         },
 
         ':last-child': {
             borderRight: '1px solid #ccc',
             borderTopRightRadius: '3px',
-            borderBottomRightRadius: '3px'
+            borderBottomRightRadius: '3px',
         },
 
         ':hover': {
-            backgroundColor: '#ccc'
+            backgroundColor: '#ccc',
         },
 
         ':focus': {
-            zIndex: '2'
-        }
+            zIndex: '2',
+        },
     },
 
     selectedStyle: {
-        backgroundColor: '#ddd'
-    }
-};
+        backgroundColor: '#ddd',
+    },
+});
 
 module.exports = {
-    button: button
+    button: button,
 };

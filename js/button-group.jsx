@@ -4,15 +4,9 @@
 
 var React = require('react');
 var ReactDOM = require("react-dom");
-var RCSS = require('rcss');
 var _ = require('underscore');
 var styles = require('./styles.js');
-
-var buttonStyle = styles.button.buttonStyle;
-var selectedStyle = styles.button.selectedStyle;
-
-RCSS.createClass(buttonStyle);
-RCSS.createClass(selectedStyle);
+var css = require("aphrodite").css;
 
 /* ButtonGroup is an aesthetically pleasing group of buttons.
  *
@@ -55,15 +49,16 @@ var ButtonGroup = React.createClass({
     render: function() {
         var value = this.props.value;
         var buttons = _(this.props.buttons).map((button, i) => {
-                var maybeSelected = button.value === value ?
-                        selectedStyle.className :
-                        "";
                 return <button title={button.title}
                         type="button"
                         id={"" + i}
                         ref={"button" + i}
                         key={"" + i}
-                        className={`${buttonStyle.className} ${maybeSelected}`}
+                        className={css(
+                            styles.button.buttonStyle,
+                            button.value === value &&
+                                styles.button.selectedStyle
+                        )}
                         onClick={this.toggleSelect.bind(this, button.value)}>
                     {button.content || "" + button.value}
                 </button>;

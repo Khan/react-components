@@ -4,15 +4,9 @@
 
 var React = require('react');
 var ReactDOM = require("react-dom");
-var RCSS = require('rcss');
 var _ = require('underscore');
 var styles = require('./styles.js');
-
-var buttonStyle = styles.button.buttonStyle;
-var selectedStyle = styles.button.selectedStyle;
-
-RCSS.createClass(buttonStyle);
-RCSS.createClass(selectedStyle);
+var css = require("aphrodite").css;
 
 /* MultiButtonGroup is an aesthetically pleasing group of buttons,
  * which allows multiple buttons to be selected at the same time.
@@ -54,14 +48,16 @@ var MultiButtonGroup = React.createClass({
     render: function() {
         var values = this.props.values;
         var buttons = _(this.props.buttons).map((button, i) => {
-            var maybeSelected = _.contains(values, button.value) ?
-                selectedStyle.className : "";
+            var selected = _.contains(values, button.value);
             return <button title={button.title}
                     type="button"
                     id={"" + i}
                     key = {"" + i}
                     ref={"button" + i}
-                    className={`${buttonStyle.className} ${maybeSelected}`}
+                    className={css(
+                        styles.button.buttonStyle,
+                        selected && styles.button.selectedStyle
+                    )}
                     onClick={this.toggleSelect.bind(this, button.value)}>
                 {button.content || "" + button.value}
             </button>;
