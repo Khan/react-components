@@ -1,3 +1,7 @@
+/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
+/* eslint-disable no-undef, no-unused-vars, no-var */
+/* To fix, remove an entry above, run ka-lint, and fix errors. */
+
 var jsdom = require("jsdom");
 var assert = require("assert");
 var React = require("react");

@@ -1,3 +1,7 @@
+/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
+/* eslint-disable comma-dangle, no-var */
+/* To fix, remove an entry above, run ka-lint, and fix errors. */
+
 /**
  * A React mixin factory which syncs state with a flux-style datastore. In
  * order to be compatible with this mixin, the datastore must support the

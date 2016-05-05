@@ -1,3 +1,7 @@
+/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
+/* eslint-disable comma-dangle, no-var */
+/* To fix, remove an entry above, run ka-lint, and fix errors. */
+
 var button = {
     buttonStyle: {
         backgroundColor: 'white',

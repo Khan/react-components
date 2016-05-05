@@ -1,3 +1,7 @@
+/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
+/* eslint-disable comma-dangle, no-var, react/prop-types, react/sort-comp */
+/* To fix, remove an entry above, run ka-lint, and fix errors. */
+
 /* The equivalent to jQuery.timeago for react.
  *
  * TimeAgo returns a span containing the amount of time (in English) that has

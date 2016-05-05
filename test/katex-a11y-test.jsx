@@ -1,3 +1,7 @@
+/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
+/* eslint-disable eol-last, no-unused-vars, no-var, semi, space-after-keywords */
+/* To fix, remove an entry above, run ka-lint, and fix errors. */
+
 var fs = require("fs");
 var assert = require("assert");
 

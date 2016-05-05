@@ -1,3 +1,7 @@
+/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
+/* eslint-disable comma-dangle, indent, no-undef, no-unused-vars, no-var */
+/* To fix, remove an entry above, run ka-lint, and fix errors. */
+
 var assert = require("assert");
 var jsdom = require("jsdom");
 var React = require("react");

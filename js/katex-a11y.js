@@ -1,3 +1,7 @@
+/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
+/* eslint-disable comma-dangle, no-throw-literal, no-undef, no-var */
+/* To fix, remove an entry above, run ka-lint, and fix errors. */
+
 /**
  * KaTeX A11y
  * A library for converting KaTeX math into readable strings.

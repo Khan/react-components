@@ -1,3 +1,7 @@
+/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
+/* eslint-disable no-var, semi */
+/* To fix, remove an entry above, run ka-lint, and fix errors. */
+
 'use strict';
 
 var fs = require('fs');
