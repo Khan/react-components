@@ -1,3 +1,5 @@
 docs/
 examples/
 react-live-editor/
+*.js
+node_modules/
