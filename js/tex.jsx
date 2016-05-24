@@ -88,17 +88,19 @@ const TeX = React.createClass({
     },
 
     componentDidMount: function() {
+        this._root = ReactDOM.findDOMNode(this);
+
         if (this.refs.katex.childElementCount > 0) {
             // If we already rendered katex in the render function, we don't
             // need to render anything here.
-            this.props.onRender();
+            this.props.onRender(this._root);
             return;
         }
 
         const text = this.props.children;
 
         this.setScriptText(text);
-        process(this.script, this.props.onRender);
+        process(this.script, () => this.props.onRender(this._root));
     },
 
     componentDidUpdate: function(prevProps, prevState) {
