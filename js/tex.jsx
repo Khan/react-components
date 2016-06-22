@@ -12,17 +12,19 @@ const ReactDOM = require('react-dom');
 const katexA11y = require('./katex-a11y.js');
 
 let pendingScripts = [];
+let pendingCallbacks = [];
 let needsProcess = false;
 
-function process(script, callback) {
+const process = (script, callback) => {
     pendingScripts.push(script);
+    pendingCallbacks.push(callback);
     if (!needsProcess) {
         needsProcess = true;
-        setTimeout(doProcess, 0, callback);
+        setTimeout(doProcess, 0);
     }
-}
+};
 
-function loadMathJax(callback) {
+const loadMathJax = (callback) => {
     if (typeof MathJax !== "undefined") {
         callback();
     } else if (typeof Khan !== "undefined" && Khan.mathJaxLoaded) {
@@ -31,21 +33,26 @@ function loadMathJax(callback) {
         throw new Error(
             "MathJax wasn't loaded before it was needed by <TeX/>");
     }
-}
+};
 
-function doProcess(callback) {
+const doProcess = () => {
     loadMathJax(() => {
         MathJax.Hub.Queue(function() {
             const oldElementScripts = MathJax.Hub.elementScripts;
-            MathJax.Hub.elementScripts = function(element) {
-                const scripts = pendingScripts;
-                pendingScripts = [];
-                needsProcess = false;
-                return scripts;
-            };
+            MathJax.Hub.elementScripts = (element) => pendingScripts;
 
             try {
-                return MathJax.Hub.Process(null, callback);
+                return MathJax.Hub.Process(null, () => {
+                    // Trigger all of the pending callbacks before clearing them
+                    // out.
+                    for (const callback of pendingCallbacks) {
+                        callback();
+                    }
+
+                    pendingScripts = [];
+                    pendingCallbacks = [];
+                    needsProcess = false;
+                });
             } catch (e) {
                 // IE8 requires `catch` in order to use `finally`
                 throw e;
@@ -54,7 +61,7 @@ function doProcess(callback) {
             }
         });
     });
-}
+};
 
 // Make content only visible to screen readers.
 // Both collegeboard.org and Bootstrap 3 use this exact implementation.
