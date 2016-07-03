@@ -1,14 +1,12 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var, react/jsx-closing-bracket-location, react/jsx-indent-props, react/jsx-sort-prop-types, react/prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+'use strict';
 
-var aphrodite = require("aphrodite");
-var React = require("react");
+const aphrodite = require("aphrodite");
+const React = require("react");
 
-var css = aphrodite.css;
-var StyleSheet = aphrodite.StyleSheet;
+const css = aphrodite.css;
+const StyleSheet = aphrodite.StyleSheet;
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
     modalStyle: {
         position: "fixed",
         width: "500px",
@@ -53,43 +51,25 @@ var styles = StyleSheet.create({
  *          </div>
  *      </Modal>
  */
-var Modal = React.createClass({
+const Modal = React.createClass({
     propTypes: {
-        className: React.PropTypes.string,
-
-        // Close the modal when esc is pressed? Defaults to true.
-        keyboard: React.PropTypes.bool,
-
-        onClose: React.PropTypes.func,
-
         // TODO(joel) reimplement
         // Bootstrap modal's backdrop argument: Includes a modal-backdrop
         // element. Alternatively, specify static for a backdrop which doesn't
         // close the modal on click. Defaults to true.
         backdrop: React.PropTypes.oneOfType([
             React.PropTypes.bool,
-            React.PropTypes.string
-        ])
-    },
+            React.PropTypes.string,
+        ]),
 
-    render: function() {
-        var className = [
-            css(styles.modalStyle),
-            this.props.className,
-            "modal",
-        ].join(" ");
-        var modal = <div
-                {...this.props}
-                tabIndex="-1"
-                className={className}>
-            {this.props.children}
-        </div>;
+        children: React.PropTypes.node,
 
-        var backdrop = <div className={css(styles.modalBackdropStyle)} />;
-        return <div>
-            {modal}
-            {backdrop}
-        </div>;
+        className: React.PropTypes.string,
+
+        // Close the modal when esc is pressed? Defaults to true.
+        keyboard: React.PropTypes.bool,
+
+        onClose: React.PropTypes.func,
     },
 
     getDefaultProps: function() {
@@ -97,8 +77,16 @@ var Modal = React.createClass({
             className: "",
             onClose: () => {},
             keyboard: true,
-            backdrop: true
+            backdrop: true,
         };
+    },
+
+    componentDidMount: function() {
+        window.addEventListener("keydown", this._listenForEsc, true);
+    },
+
+    componentWillUnmount: function() {
+        window.removeEventListener("keydown", this._listenForEsc, true);
     },
 
     _listenForEsc: function(event) {
@@ -109,13 +97,26 @@ var Modal = React.createClass({
         }
     },
 
-    componentDidMount: function() {
-        window.addEventListener("keydown", this._listenForEsc, true);
-    },
+    render: function() {
+        const className = [
+            css(styles.modalStyle),
+            this.props.className,
+            "modal",
+        ].join(" ");
+        const modal = <div
+            {...this.props}
+            tabIndex="-1"
+            className={className}
+        >
+            {this.props.children}
+        </div>;
 
-    componentWillUnmount: function() {
-        window.removeEventListener("keydown", this._listenForEsc, true);
-    }
+        const backdrop = <div className={css(styles.modalBackdropStyle)} />;
+        return <div>
+            {modal}
+            {backdrop}
+        </div>;
+    },
 });
 
 module.exports = Modal;

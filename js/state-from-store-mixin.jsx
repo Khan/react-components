@@ -1,6 +1,4 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+'use strict';
 
 /**
  * A React mixin factory which syncs state with a flux-style datastore. In
@@ -43,15 +41,15 @@
  * })];
  */
 
-var _ = require("underscore");
+const _ = require("underscore");
 
 //TODO(zach): unit test me
 
-var StateFromStore = function(stateDescriptors) {
-    var storageKey = _.uniqueId("StateFromStoreMixin");
+const StateFromStore = function(stateDescriptors) {
+    const storageKey = _.uniqueId("StateFromStoreMixin");
 
-    var setState = function(component, stateKey, stateData) {
-        var newState = {};
+    const setState = function(component, stateKey, stateData) {
+        const newState = {};
         newState[stateKey] = stateData;
         component.setState(newState);
     };
@@ -72,13 +70,13 @@ var StateFromStore = function(stateDescriptors) {
      * @returns {{stateData, didFetch:bool}} the state data, along with whether
      * an actual fetch occurred
      */
-    var fetchNewStateData = function(component, stateKey, useCache, props) {
+    const fetchNewStateData = function(component, stateKey, useCache, props) {
         props = props || component.props;
 
-        var fetchParamsCache = component[storageKey].fetchParamsCache;
+        const fetchParamsCache = component[storageKey].fetchParamsCache;
 
-        var stateDescriptor = stateDescriptors[stateKey];
-        var fetchParams = null;
+        const stateDescriptor = stateDescriptors[stateKey];
+        let fetchParams = null;
         if (stateDescriptor.getFetchParams) {
             fetchParams = stateDescriptor.getFetchParams(props);
         }
@@ -89,38 +87,38 @@ var StateFromStore = function(stateDescriptors) {
         }
 
         fetchParamsCache[stateKey] = fetchParams;
-        var stateData = stateDescriptor.fetch(stateDescriptor.store,
+        const stateData = stateDescriptor.fetch(stateDescriptor.store,
                                               fetchParams);
 
         return {stateData: stateData, didFetch: true};
     };
 
-    var fetchForUpdate = function(component, stateKey) {
-        var stateData = fetchNewStateData(
+    const fetchForUpdate = function(component, stateKey) {
+        const stateData = fetchNewStateData(
             component, stateKey, false).stateData;
         setState(component, stateKey, stateData);
     };
 
-    var fetchForNewProps = function(component, stateKey, props) {
+    const fetchForNewProps = function(component, stateKey, props) {
         // give destructuring plz
-        var fetchData = fetchNewStateData(component, stateKey, true, props);
+        const fetchData = fetchNewStateData(component, stateKey, true, props);
         if (fetchData.didFetch) {
-            var stateData = fetchData.stateData;
+            const stateData = fetchData.stateData;
             setState(component, stateKey, stateData);
         }
     };
 
-    var addChangeListeners = function(component) {
-        var changeListeners = component[storageKey].changeListeners;
+    const addChangeListeners = function(component) {
+        const changeListeners = component[storageKey].changeListeners;
         _.each(stateDescriptors, function(stateDescriptor, stateKey) {
-            var handleChange = () => fetchForUpdate(component, stateKey);
+            const handleChange = () => fetchForUpdate(component, stateKey);
             changeListeners[stateKey] = handleChange;
             stateDescriptor.store.addChangeListener(handleChange);
         });
     };
 
-    var removeChangeListeners = function(component) {
-        var changeListeners = component[storageKey].changeListeners;
+    const removeChangeListeners = function(component) {
+        const changeListeners = component[storageKey].changeListeners;
         _.each(stateDescriptors, function(stateDescriptor, stateKey) {
             stateDescriptor.store.removeChangeListener(
                 changeListeners[stateKey]);
@@ -128,7 +126,7 @@ var StateFromStore = function(stateDescriptors) {
         });
     };
 
-    var fetchAllForNewProps = function(component, props) {
+    const fetchAllForNewProps = function(component, props) {
         Object.keys(stateDescriptors).forEach(function(stateKey) {
             fetchForNewProps(component, stateKey, props);
         });
@@ -141,12 +139,12 @@ var StateFromStore = function(stateDescriptors) {
                 fetchParamsCache: {},
 
                 /* A dictionary from state keys to change event handlers */
-                changeListeners: {}
+                changeListeners: {},
             };
 
-            var initialState = {};
+            const initialState = {};
             Object.keys(stateDescriptors).forEach(function(stateKey) {
-                var stateData = fetchNewStateData(
+                const stateData = fetchNewStateData(
                     this, stateKey, false).stateData;
                 initialState[stateKey] = stateData;
             }, this);
@@ -163,7 +161,7 @@ var StateFromStore = function(stateDescriptors) {
 
         componentWillReceiveProps: function(nextProps) {
             fetchAllForNewProps(this, nextProps);
-        }
+        },
     };
 };
 

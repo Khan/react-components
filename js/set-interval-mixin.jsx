@@ -1,6 +1,4 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+'use strict';
 
 /* This mixin provides a simple setInterval method.
  *
@@ -19,7 +17,7 @@
  * seconds. Their intervals will be canceled automatically when the component
  * unmounts.
  */
-var SetIntervalMixin = {
+const SetIntervalMixin = {
     componentWillMount: function() {
         this.intervals = [];
     },
@@ -28,7 +26,7 @@ var SetIntervalMixin = {
     },
     componentWillUnmount: function() {
         this.intervals.forEach(clearInterval);
-    }
+    },
 };
 
 module.exports = SetIntervalMixin;
