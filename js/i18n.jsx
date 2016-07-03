@@ -1,11 +1,9 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable no-var */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+'use strict';
 
-var createFragment = require('react-addons-create-fragment');
-var _ = require('underscore');
+const createFragment = require('react-addons-create-fragment');
+const _ = require('underscore');
 
-var interpolationMarker = /%\(([\w_]+)\)s/g;
+const interpolationMarker = /%\(([\w_]+)\)s/g;
 /**
  * Performs sprintf-like %(name)s replacement on str, and returns a React
  * fragment of the string interleaved with those replacements. The replacements
@@ -19,18 +17,18 @@ var interpolationMarker = /%\(([\w_]+)\)s/g;
  *  interpolateStringToFragment("test %(num)s", {num: <Count />}) ->
  *      test <Count />
  */
-var interpolateStringToFragment = function(str, options) {
+const interpolateStringToFragment = function(str, options) {
     options = options || {};
 
     // Split the string into its language fragments and substitutions
-    var split = str.split(interpolationMarker);
+    const split = str.split(interpolationMarker);
 
-    var result = {"text_0": split[0]};
+    const result = {"text_0": split[0]};
 
     // Replace the substitutions with the appropriate option
-    for (var i = 1; i < split.length; i += 2) {
-        var key = split[i];
-        var replaceWith = options[key];
+    for (let i = 1; i < split.length; i += 2) {
+        const key = split[i];
+        let replaceWith = options[key];
         if (replaceWith === undefined) {
             replaceWith = "%(" + key + ")s";
         }
@@ -42,7 +40,7 @@ var interpolateStringToFragment = function(str, options) {
         // This is better than just using the array index in the case that we
         // switch between two translated strings with the same variables.
         // Admittedly, an edge case.
-        var j = 0;
+        let j = 0;
         while (_.has(result, j + "_" + key)) {
             j++;
         }
@@ -82,7 +80,7 @@ var interpolateStringToFragment = function(str, options) {
  * Note: this is not a full react component to avoid complex handling of other
  * things added to props, such as this.props.ref and this.props.children
  */
-var $_ = function(options, str) {
+const $_ = function(options, str) {
     if (arguments.length !== 2 || !_.isString(str)) {
         return "<$_> must have exactly one child, which must be a string";
     }

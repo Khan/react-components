@@ -32,8 +32,8 @@ class CodeExampleExtension(Extension):
         lineno = parser.stream.next().lineno
         filename = parser.parse_expression()
         return (jinja2.nodes
-            .CallBlock(self.call_method('_insert', [filename]), [], [], [])
-            .set_lineno(lineno))
+                .CallBlock(self.call_method('_insert', [filename]), [], [], [])
+                .set_lineno(lineno))
 
     def _insert(self, filename, caller):
         path = os.path.join('examples', filename)

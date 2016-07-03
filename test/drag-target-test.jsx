@@ -1,28 +1,27 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable no-undef, no-var, react/jsx-closing-bracket-location, react/jsx-indent-props */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+const jsdom = require("jsdom");
+const assert = require("assert");
+const React = require("react");
+const ReactDOM = require("react-dom");
+const TestUtils = require("react-addons-test-utils");
 
-var jsdom = require("jsdom");
-var assert = require("assert");
-var React = require("react");
-var ReactDOM = require("react-dom");
-var TestUtils = require("react-addons-test-utils");
-
-var DragTarget = require('../js/drag-target.jsx');
+const DragTarget = require('../js/drag-target.jsx');
 
 describe('DragTarget', function() {
+    /* eslint-disable no-undef */
     beforeEach(function() {
+    /* eslint-enable no-undef */
         global.document = jsdom.jsdom();
         global.window = document.parentWindow;
 
         this.dataTransfer = null;
         this.shouldDragHighlight = true;
 
-        var handleDrop = event => { this.dataTransfer = event.dataTransfer; };
+        const handleDrop = event => { this.dataTransfer = event.dataTransfer; };
 
         this.dragTarget = TestUtils.renderIntoDocument(
             <DragTarget onDrop={handleDrop}
-                        shouldDragHighlight={() => this.shouldDragHighlight}>
+                shouldDragHighlight={() => this.shouldDragHighlight}
+            >
                 <div />
             </DragTarget>
         );
@@ -42,7 +41,7 @@ describe('DragTarget', function() {
 
     it('accepts drops', function() {
         TestUtils.Simulate.dragOver(ReactDOM.findDOMNode(this.dragTarget));
-        var dataTransfer = {};
+        const dataTransfer = {};
         TestUtils.Simulate.drop(ReactDOM.findDOMNode(this.dragTarget),
             { dataTransfer });
         assert.strictEqual(this.dataTransfer, dataTransfer);

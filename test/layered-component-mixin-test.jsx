@@ -1,23 +1,22 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, indent, no-undef, no-unused-vars, no-var */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+'use strict';
 
-var assert = require("assert");
-var jsdom = require("jsdom");
-var React = require("react");
-var TestUtils = require("react-addons-test-utils");
+const assert = require("assert");
+const jsdom = require("jsdom");
+const React = require("react");
+const TestUtils = require("react-addons-test-utils");
 
-var LayeredComponentMixin = require("../js/layered-component-mixin.jsx");
-
+const LayeredComponentMixin = require("../js/layered-component-mixin.jsx");
 
 describe("LayeredComponentMixin", function() {
+    /* eslint-disable no-undef */
     beforeEach(function() {
+    /* eslint-enable no-undef */
         global.document = jsdom.jsdom();
         global.window = document.parentWindow;
     });
 
     it("should render the layer outside of the render area", function() {
-        var Layer = React.createClass({
+        const Layer = React.createClass({
             mixins: [LayeredComponentMixin],
 
             renderLayer: function() {
@@ -26,48 +25,50 @@ describe("LayeredComponentMixin", function() {
 
             render: function() {
                 return <div className="not-layer">This is not a layer</div>;
-            }
+            },
         });
 
-        var layer = TestUtils.renderIntoDocument(<Layer />);
+        const layer = TestUtils.renderIntoDocument(<Layer />);
 
-        var layerChildren = TestUtils.scryRenderedDOMComponentsWithClass(
-            layer, "layer");
-        var nonlayerChildren = TestUtils.scryRenderedDOMComponentsWithClass(
-            layer, "not-layer");
+        const layerChildren = TestUtils.scryRenderedDOMComponentsWithClass(
+              layer, "layer");
+        const nonlayerChildren = TestUtils.scryRenderedDOMComponentsWithClass(
+              layer, "not-layer");
         assert.strictEqual(layerChildren.length, 0);
         assert.strictEqual(nonlayerChildren.length, 1);
     });
 
     it("should render the layer in a div attached to the document body",
-            function() {
-        var Layer = React.createClass({
-            mixins: [LayeredComponentMixin],
+          function() {
+              const Layer = React.createClass({
+                  mixins: [LayeredComponentMixin],
 
-            renderLayer: function() {
-                return <div className="layer">This is the layer</div>;
-            },
+                  renderLayer: function() {
+                      return <div className="layer">This is the layer</div>;
+                  },
 
-            render: function() {
-                return <div className="not-layer">This is not a layer</div>;
-            }
-        });
+                  render: function() {
+                      return <div className="not-layer">
+                          This is not a layer
+                      </div>;
+                  },
+              });
 
-        var layer = TestUtils.renderIntoDocument(<Layer />);
+              TestUtils.renderIntoDocument(<Layer />);
 
-        var layerDOMs = document.getElementsByClassName("layer");
-        assert.strictEqual(layerDOMs.length, 1);
+              const layerDOMs = document.getElementsByClassName("layer");
+              assert.strictEqual(layerDOMs.length, 1);
 
-        var layerDOM = layerDOMs[0];
-        var parent = layerDOM.parentNode;
-        assert.strictEqual(parent.tagName, "DIV");
+              const layerDOM = layerDOMs[0];
+              const parent = layerDOM.parentNode;
+              assert.strictEqual(parent.tagName, "DIV");
 
-        var grandparent = parent.parentNode;
-        assert.strictEqual(grandparent, document.body);
-    });
+              const grandparent = parent.parentNode;
+              assert.strictEqual(grandparent, document.body);
+          });
 
     it("should allow empty layers", function() {
-        var EmptyLayer = React.createClass({
+        const EmptyLayer = React.createClass({
             mixins: [LayeredComponentMixin],
 
             renderLayer: function() {
@@ -77,7 +78,7 @@ describe("LayeredComponentMixin", function() {
 
             render: function() {
                 return <div className="not-layer">This is not a layer</div>;
-            }
+            },
         });
 
         assert.doesNotThrow(function() {

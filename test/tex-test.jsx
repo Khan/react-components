@@ -1,3 +1,5 @@
+'use strict';
+
 /* globals beforeEach, afterEach */
 const assert = require("assert");
 const jsdom = require("jsdom");

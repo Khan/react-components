@@ -1,14 +1,13 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-throw-literal, no-undef, no-var */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+'use strict';
 
 /**
  * KaTeX A11y
  * A library for converting KaTeX math into readable strings.
  */
-var _ = require("underscore");
+const _ = require("underscore");
+const katex = require("../docs/js/katex.js");
 
-var stringMap = {
+const stringMap = {
     "(": "left parenthesis",
     ")": "right parenthesis",
     "[": "open bracket",
@@ -76,26 +75,26 @@ var stringMap = {
     "\\rho": "rho",
     "\\nabla": "del",
     "\\ell": "ell",
-    "\\ldots": "dots"
+    "\\ldots": "dots",
 };
 
-var powerMap = {
+const powerMap = {
     "\\prime": "prime",
     "\\degree": "degree",
-    "\\circ": "degree"
+    "\\circ": "degree",
 };
 
-var openMap = {
+const openMap = {
     "|": "open vertical bar",
-    ".": ""
+    ".": "",
 };
 
-var closeMap = {
+const closeMap = {
     "|": "close vertical bar",
-    ".": ""
+    ".": "",
 };
 
-var binMap = {
+const binMap = {
     "+": "plus",
     "-": "minus",
     "\\pm": "plus minus",
@@ -105,10 +104,10 @@ var binMap = {
     "\\times": "times",
     "\\div": "divided by",
     "\\circ": "circle",
-    "\\bullet": "bullet"
+    "\\bullet": "bullet",
 };
 
-var relMap = {
+const relMap = {
     "=": "equals",
     "\\approx": "approximately equals",
     "\\neq": "does not equal",
@@ -123,15 +122,15 @@ var relMap = {
     "\\Leftarrow": "left arrow",
     "\\rightarrow": "right arrow",
     "\\Rightarrow": "right arrow",
-    ":": "colon"
+    ":": "colon",
 };
 
-var buildString = function(str, type, a11yStrings) {
+const buildString = function(str, type, a11yStrings) {
     if (!str) {
         return;
     }
 
-    var ret;
+    let ret;
 
     if (type === "open") {
         ret = (str in openMap ? openMap[str] : stringMap[str] || str);
@@ -148,7 +147,7 @@ var buildString = function(str, type, a11yStrings) {
     // If nothing was found and it's not a plain string or number
     if (ret === str && !/^\w+$/.test(str)) {
         // This is likely a case that we'll need to handle
-        throw "KaTeX a11y " + type + " string not found: " + str;
+        throw new Error("KaTeX a11y " + type + " string not found: " + str);
     }
 
     // If the text to add is a number and there is already a string
@@ -163,13 +162,13 @@ var buildString = function(str, type, a11yStrings) {
     }
 };
 
-var buildRegion = function(a11yStrings, callback) {
-    var region = [];
+const buildRegion = function(a11yStrings, callback) {
+    const region = [];
     a11yStrings.push(region);
     callback(region);
 };
 
-var typeHandlers = {
+const typeHandlers = {
     accent: function(tree, a11yStrings) {
         buildRegion(a11yStrings, function(a11yStrings) {
             buildA11yStrings(tree.value.base, a11yStrings);
@@ -188,7 +187,7 @@ var typeHandlers = {
     },
 
     color: function(tree, a11yStrings) {
-        var color = tree.value.color.replace(/katex-/, "");
+        const color = tree.value.color.replace(/katex-/, "");
 
         buildRegion(a11yStrings, function(a11yStrings) {
             a11yStrings.push("start color " + color);
@@ -331,13 +330,13 @@ var typeHandlers = {
             });
         }
 
-        var sup = tree.value.sup;
+        const sup = tree.value.sup;
 
         if (sup) {
             // There are some cases that just read better if we don't have
             // the extra start/end baggage, so we skip the extra text
-            var newPower = powerMap[sup];
-            var supValue = sup.value;
+            let newPower = powerMap[sup];
+            const supValue = sup.value;
 
             // The value stored inside the sup property is not always
             // consistent. It could be a string (handled above), an object
@@ -379,10 +378,10 @@ var typeHandlers = {
 
     textord: function(tree, a11yStrings) {
         buildA11yStrings(tree.value, a11yStrings);
-    }
+    },
 };
 
-var buildA11yStrings = function(tree, a11yStrings) {
+const buildA11yStrings = function(tree, a11yStrings) {
     a11yStrings = a11yStrings || [];
 
     // Handle strings
@@ -391,14 +390,14 @@ var buildA11yStrings = function(tree, a11yStrings) {
 
     // Handle arrays
     } else if (tree.constructor === Array) {
-        for (var i = 0; i < tree.length; i++) {
+        for (let i = 0; i < tree.length; i++) {
             buildA11yStrings(tree[i], a11yStrings);
         }
 
     // Everything else is assumed to be an object...
     } else {
         if (!tree.type || !(tree.type in typeHandlers)) {
-            throw "KaTeX a11y un-recognized type: " + tree.type;
+            throw new Error("KaTeX a11y un-recognized type: " + tree.type);
         } else {
             typeHandlers[tree.type](tree, a11yStrings);
         }
@@ -407,11 +406,11 @@ var buildA11yStrings = function(tree, a11yStrings) {
     return a11yStrings;
 };
 
-var renderStrings = function(a11yStrings, a11yNode) {
-    var doc = a11yNode.ownerDocument;
+const renderStrings = function(a11yStrings, a11yNode) {
+    const doc = a11yNode.ownerDocument;
 
-    for (var i = 0; i < a11yStrings.length; i++) {
-        var a11yString = a11yStrings[i];
+    for (let i = 0; i < a11yStrings.length; i++) {
+        const a11yString = a11yStrings[i];
 
         if (i > 0) {
             // Note: We insert commas in (not just spaces) to provide
@@ -424,7 +423,7 @@ var renderStrings = function(a11yStrings, a11yNode) {
         if (typeof a11yString === "string") {
             a11yNode.appendChild(doc.createTextNode(a11yString));
         } else {
-            var newBaseNode = doc.createElement("span");
+            const newBaseNode = doc.createElement("span");
             // NOTE(jeresig): We may want to add in a tabIndex property
             // to the node here, in order to support keyboard navigation.
             a11yNode.appendChild(newBaseNode);
@@ -433,13 +432,13 @@ var renderStrings = function(a11yStrings, a11yNode) {
     }
 };
 
-var flattenStrings = function(a11yStrings, results) {
+const flattenStrings = function(a11yStrings, results) {
     if (!results) {
         results = [];
     }
 
-    for (var i = 0; i < a11yStrings.length; i++) {
-        var a11yString = a11yStrings[i];
+    for (let i = 0; i < a11yStrings.length; i++) {
+        const a11yString = a11yStrings[i];
 
         if (typeof a11yString === "string") {
             results.push(a11yString);
@@ -451,20 +450,20 @@ var flattenStrings = function(a11yStrings, results) {
     return results;
 };
 
-var parseMath = function(text) {
+const parseMath = function(text) {
     // NOTE: `katex` is a global, should be included using require
     return katex.__parse(text);
 };
 
-var render = function(text, a11yNode) {
-    var tree = parseMath(text);
-    var a11yStrings = buildA11yStrings(tree);
+const render = function(text, a11yNode) {
+    const tree = parseMath(text);
+    const a11yStrings = buildA11yStrings(tree);
     renderStrings(a11yStrings, a11yNode);
 };
 
-var renderString = function(text) {
-    var tree = parseMath(text);
-    var a11yStrings = buildA11yStrings(tree);
+const renderString = function(text) {
+    const tree = parseMath(text);
+    const a11yStrings = buildA11yStrings(tree);
     return _.flatten(a11yStrings).join(", ");
 };
 
@@ -472,7 +471,7 @@ if (typeof module !== "undefined") {
     module.exports = {
         render: render,
         renderString: renderString,
-        parseMath: parseMath
+        parseMath: parseMath,
     };
 } else {
     this.katexA11yRender = render;

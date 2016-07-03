@@ -1,9 +1,7 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var, react/prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+'use strict';
 
-var React = require("react");
-var _ = require("underscore");
+const React = require("react");
+const _ = require("underscore");
 
 /* The solution to detecting drags into and out of the page.
  *
@@ -16,15 +14,9 @@ var _ = require("underscore");
  *
  * Rewrite of http://stackoverflow.com/a/10310815/2121468
  */
-var WindowDrag = React.createClass({
-    render: function() {
-        if (this.state.dropTargetShown) {
-            return <div onDrop={this.handleDrop}>
-                {this.props.children}
-            </div>;
-        } else {
-            return <div />;
-        }
+const WindowDrag = React.createClass({
+    propTypes: {
+        children: React.PropTypes.node,
     },
 
     getInitialState: function() {
@@ -63,7 +55,17 @@ var WindowDrag = React.createClass({
         if (this._collection.length === 0) {
             this.setState({ dropTargetShown: false });
         }
-    }
+    },
+
+    render: function() {
+        if (this.state.dropTargetShown) {
+            return <div onDrop={this.handleDrop}>
+                {this.props.children}
+            </div>;
+        } else {
+            return <div />;
+        }
+    },
 });
 
 module.exports = WindowDrag;

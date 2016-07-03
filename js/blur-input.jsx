@@ -1,8 +1,6 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var, react/jsx-closing-bracket-location, react/jsx-sort-prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+'use strict';
 
-var React = require("react");
+const React = require("react");
 
 /* You know when you want to propagate input to a parent...
  * but then that parent does something with the input...
@@ -16,21 +14,13 @@ var React = require("react");
  * Enough melodrama. Its an input that only sends changes
  * to its parent on blur.
  */
-var BlurInput = React.createClass({
+const BlurInput = React.createClass({
     propTypes: {
+        onChange: React.PropTypes.func.isRequired,
         value: React.PropTypes.string.isRequired,
-        onChange: React.PropTypes.func.isRequired
     },
     getInitialState: function() {
         return { value: this.props.value };
-    },
-    render: function() {
-        return <input
-            {...this.props}
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-            onBlur={this.handleBlur} />;
     },
     componentWillReceiveProps: function(nextProps) {
         this.setState({ value: nextProps.value });
@@ -40,7 +30,16 @@ var BlurInput = React.createClass({
     },
     handleBlur: function(e) {
         this.props.onChange(e.target.value);
-    }
+    },
+    render: function() {
+        return <input
+            {...this.props}
+            type="text"
+            value={this.state.value}
+            onChange={this.handleChange}
+            onBlur={this.handleBlur}
+        />;
+    },
 });
 
 module.exports = BlurInput;
