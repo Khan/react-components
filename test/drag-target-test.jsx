@@ -18,7 +18,9 @@ describe('DragTarget', function() {
         this.dataTransfer = null;
         this.shouldDragHighlight = true;
 
-        var handleDrop = event => { this.dataTransfer = event.dataTransfer; };
+        var handleDrop = event => {
+            this.dataTransfer = event.dataTransfer;
+        };
 
         this.dragTarget = TestUtils.renderIntoDocument(
             <DragTarget onDrop={handleDrop}
@@ -44,7 +46,7 @@ describe('DragTarget', function() {
         TestUtils.Simulate.dragOver(ReactDOM.findDOMNode(this.dragTarget));
         var dataTransfer = {};
         TestUtils.Simulate.drop(ReactDOM.findDOMNode(this.dragTarget),
-            { dataTransfer });
+            {dataTransfer});
         assert.strictEqual(this.dataTransfer, dataTransfer);
     });
 });

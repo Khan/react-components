@@ -35,7 +35,7 @@ var DragTarget = React.createClass({
         shouldDragHighlight: React.PropTypes.func
     },
     render: function() {
-        var opacity = this.state.dragHover ? { "opacity": 0.3 } : {};
+        var opacity = this.state.dragHover ? {"opacity": 0.3} : {};
         var Component = this.props.component;
 
         return (
@@ -50,7 +50,7 @@ var DragTarget = React.createClass({
         );
     },
     getInitialState: function() {
-        return { dragHover: false };
+        return {dragHover: false};
     },
     getDefaultProps: function() {
         return {
@@ -61,20 +61,20 @@ var DragTarget = React.createClass({
     handleDrop: function(e) {
         e.stopPropagation();
         e.preventDefault();
-        this.setState({ dragHover: false });
+        this.setState({dragHover: false});
         this.props.onDrop(e);
     },
     handleDragEnd: function() {
-        this.setState({ dragHover: false });
+        this.setState({dragHover: false});
     },
     handleDragOver: function(e) {
         e.preventDefault();
     },
     handleDragLeave: function() {
-        this.setState({ dragHover: false });
+        this.setState({dragHover: false});
     },
     handleDragEnter: function(e) {
-        this.setState({ dragHover: this.props.shouldDragHighlight(e) });
+        this.setState({dragHover: this.props.shouldDragHighlight(e)});
     }
 });
 

@@ -22,7 +22,7 @@ var BlurInput = React.createClass({
         onChange: React.PropTypes.func.isRequired
     },
     getInitialState: function() {
-        return { value: this.props.value };
+        return {value: this.props.value};
     },
     render: function() {
         return <input
@@ -33,10 +33,10 @@ var BlurInput = React.createClass({
             onBlur={this.handleBlur} />;
     },
     componentWillReceiveProps: function(nextProps) {
-        this.setState({ value: nextProps.value });
+        this.setState({value: nextProps.value});
     },
     handleChange: function(e) {
-        this.setState({ value: e.target.value });
+        this.setState({value: e.target.value});
     },
     handleBlur: function(e) {
         this.props.onChange(e.target.value);

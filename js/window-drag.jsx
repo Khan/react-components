@@ -28,7 +28,7 @@ var WindowDrag = React.createClass({
     },
 
     getInitialState: function() {
-        return { dropTargetShown: false };
+        return {dropTargetShown: false};
     },
 
     componentDidMount: function() {
@@ -46,12 +46,12 @@ var WindowDrag = React.createClass({
     },
 
     handleDrop: function(event) {
-        this.setState({ dropTargetShown: false });
+        this.setState({dropTargetShown: false});
     },
 
     _handleDragEnter: function(event) {
         if (this._collection.length === 0) {
-            this.setState({ dropTargetShown: true });
+            this.setState({dropTargetShown: true});
         }
 
         this._collection = _(this._collection).union([event.target]);
@@ -61,7 +61,7 @@ var WindowDrag = React.createClass({
         this._collection = _(this._collection).without(event.target);
 
         if (this._collection.length === 0) {
-            this.setState({ dropTargetShown: false });
+            this.setState({dropTargetShown: false});
         }
     }
 });

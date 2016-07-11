@@ -31,8 +31,12 @@ describe('WindowDrag', function() {
         this.elem = TestUtils.renderIntoDocument(
             <WindowDrag>
                 <WindowNotifier
-                    didMount={() => { this.activeDrag = true; }}
-                    willUnmount={() => { this.activeDrag = false; }} />
+                    didMount={() => {
+                        this.activeDrag = true;
+                    }}
+                    willUnmount={() => {
+                        this.activeDrag = false;
+                    }} />
             </WindowDrag>
         );
     });

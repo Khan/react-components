@@ -17,7 +17,9 @@ describe('Modal', function() {
         // TODO(joel) there's probably a way to do this automatically with
         // sinon
         this.callsToClose = 0;
-        var closeCalled = () => { this.callsToClose += 1; };
+        var closeCalled = () => {
+            this.callsToClose += 1;
+        };
 
         this.modal = TestUtils.renderIntoDocument(
             <Modal onClose={closeCalled}>

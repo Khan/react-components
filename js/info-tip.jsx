@@ -2,7 +2,7 @@
 /* eslint-disable comma-dangle, max-len, no-var, react/jsx-closing-bracket-location, react/jsx-indent-props, react/prop-types, react/sort-comp */
 /* To fix, remove an entry above, run ka-lint, and fix errors. */
 
-var { StyleSheet, css } = require("aphrodite");
+var {StyleSheet, css} = require("aphrodite");
 var React = require('react');
 var _ = require('underscore');
 

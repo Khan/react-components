@@ -30,7 +30,7 @@ var SortableArea = React.createClass({
         </ol>;
     },
     getDefaultProps: function() {
-        return { verify: () => true };
+        return {verify: () => true};
     },
     getInitialState: function() {
         return {
@@ -40,16 +40,16 @@ var SortableArea = React.createClass({
         };
     },
     componentWillReceiveProps: function(nextProps) {
-        this.setState({ components: nextProps.components });
+        this.setState({components: nextProps.components});
     },
     // Alternatively send each handler to each component individually,
     // partially applied
     onDragStart: function(startIndex) {
-        this.setState({ dragging: startIndex });
+        this.setState({dragging: startIndex});
     },
     onDrop: function() {
         // tell the parent component
-        this.setState({ dragging: null });
+        this.setState({dragging: null});
         this.props.onReorder(this.state.components);
     },
     onDragEnter: function(enterIndex) {
