@@ -24,6 +24,7 @@ var _ = require("underscore");
  *         arrowSize={10} // arrow size in pixels
  *         borderColor="#ccc" // color of the border for the tooltip
  *         show={true} // whether the tooltip should currently be visible
+ *         targetContainerStyle={targetContainerStyle}
  *         >
  *     <TargetElementOfTheTooltip />
  *     <TooltipContents1 />
@@ -216,7 +217,8 @@ var Tooltip = React.createClass({
         ),
         children: React.PropTypes.arrayOf(
             React.PropTypes.element
-        ).isRequired
+        ).isRequired,
+        targetContainerStyle: React.PropTypes.any,  // style object
     },
 
     getDefaultProps: function() {
@@ -226,7 +228,8 @@ var Tooltip = React.createClass({
             borderColor: "#ccc",
             verticalPosition: "bottom",
             horizontalPosition: "left",
-            horizontalAlign: "left"
+            horizontalAlign: "left",
+            targetContainerStyle: {},
         };
     },
 
@@ -250,7 +253,7 @@ var Tooltip = React.createClass({
 
             {/* We wrap our input in a div so that we can put the tooltip in a
                 div above/below it */}
-            <div>
+            <div style={this.props.targetContainerStyle}>
                 {_.first(this.props.children)}
             </div>
 

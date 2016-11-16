@@ -4,6 +4,11 @@ var pStyle = {
     padding: 10,
     backgroundColor: "white"
 };
+
+var tStyle = {
+    display: 'inline-block',
+    fontWeight: 'bold'
+};
 // }}}
 
 return <Tooltip className="class-for-tooltip-contents"
@@ -12,6 +17,7 @@ return <Tooltip className="class-for-tooltip-contents"
                 verticalPosition="bottom"
                 arrowSize={10}
                 borderColor="#ccc"
+                targetContainerStyle={tStyle}
                 show>
     <div>reticulating splines!</div>
     <p style={pStyle}>
