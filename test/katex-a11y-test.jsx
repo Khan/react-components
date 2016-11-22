@@ -22,7 +22,7 @@ describe("a11y math", function() {
 
                 // Successfully rendered a string
                 assert(true, math);
-            } catch(e) {
+            } catch (e) {
                 // Hit something that was unknown - this is bad!
                 assert(false, math + " " + e)
             }
