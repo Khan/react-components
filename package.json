@@ -31,6 +31,7 @@
     "aphrodite": "^0.3.0"
   },
   "devDependencies": {
+    "@kadira/storybook": "^1.28.1",
     "backbone": "~1.1.2",
     "browserify": "^10.0.0",
     "jquery": "~2.1.1",
@@ -51,6 +52,7 @@
   },
   "scripts": {
     "test": "make test",
-    "prepublish": "node prepublish.js"
+    "prepublish": "node prepublish.js",
+    "storybook": "start-storybook -p 9001"
   }
 }
