@@ -1,12 +1,10 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-redeclare, no-undef, no-var */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
-
-var React = require('react');
-var ReactPlayground = require('./react-live-editor/live-editor.jsx');
+/* global CodeMirror */
 
 // BackboneMixin example needs Backbone
 window.Backbone = require('backbone');
+const React = require('react');
+const ReactDOM = require("react-dom");
+const ReactPlayground = require('./react-live-editor/live-editor.jsx');
 
 // Bring all these into scope
 window.$_                     = require("./js/i18n.jsx");
@@ -27,11 +25,11 @@ window.Tooltip                = require("./js/tooltip.jsx");
 window.WindowDrag             = require("./js/window-drag.jsx");
 
 // Create a <ReactPlayground> for each example.
-var examples = document.querySelectorAll('div.example_div');
+const examples = document.querySelectorAll('div.example_div');
 
-for (var i = 0; i < examples.length; i++) {
-    var elem = examples[i];
-    React.render(
+for (let i = 0; i < examples.length; i++) {
+    const elem = examples[i];
+    ReactDOM.render(
         <ReactPlayground codeText={elem.textContent} />,
         elem
     );
@@ -39,11 +37,11 @@ for (var i = 0; i < examples.length; i++) {
 
 // Highlight all of the other code snippets. Each code snippet is in a textarea
 // (TODO(joel) - don't use a textarea?) with two classes - "code <language>".
-var codes = document.querySelectorAll('textarea.code');
+const codes = document.querySelectorAll('textarea.code');
 
-for (var i = 0; i < codes.length; i++) {
-    var code = codes[i];
-    var classes = code.classList;
+for (let i = 0; i < codes.length; i++) {
+    const code = codes[i];
+    const classes = code.classList;
 
     // Remove code so the only remaining class is the name of the highlight
     // language.
@@ -52,6 +50,6 @@ for (var i = 0; i < codes.length; i++) {
     CodeMirror.fromTextArea(code, {
         mode: classes.item(0),
         lineNumbers: false,
-        readOnly: code.getAttribute("readonly") != null
+        readOnly: code.getAttribute("readonly") != null,
     });
 }

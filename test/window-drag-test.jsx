@@ -1,29 +1,30 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-undef, no-unused-vars, no-var, react/jsx-closing-bracket-location, react/prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+/* global beforeEach */
 
-var jsdom = require("jsdom");
-var assert = require("assert");
-var React = require("react");
-var TestUtils = require("react-addons-test-utils");
+const jsdom = require("jsdom");
+const React = require("react");
+const TestUtils = require("react-addons-test-utils");
 
-var WindowDrag = require('../js/window-drag.jsx');
+const WindowDrag = require('../js/window-drag.jsx');
 
 describe('WindowDrag', function() {
     beforeEach(function() {
         global.document = jsdom.jsdom();
-        global.window = document.parentWindow;
+        global.window = document.defaultView;
 
-        var WindowNotifier = React.createClass({
-            render: function() {
-                return <div />;
+        const WindowNotifier = React.createClass({
+            propTypes: {
+                didMount: React.PropTypes.func.isRequired,
+                willUnmount: React.PropTypes.func.isRequired,
             },
             componentDidMount: function() {
                 this.props.didMount();
             },
             componentWillUnmount: function() {
                 this.props.willUnmount();
-            }
+            },
+            render: function() {
+                return <div />;
+            },
         });
 
         this.activeDrag = false;
@@ -36,7 +37,8 @@ describe('WindowDrag', function() {
                     }}
                     willUnmount={() => {
                         this.activeDrag = false;
-                    }} />
+                    }}
+                />
             </WindowDrag>
         );
     });

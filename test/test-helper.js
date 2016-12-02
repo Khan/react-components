@@ -1,5 +1,4 @@
 "use strict";
-require("./object-assign-polyfill.js");
 
 // React determines if it can depend on the DOM at require-time, so if we don't
 // set this up beforehand it will complain about not being able to do things
@@ -8,8 +7,8 @@ require("./object-assign-polyfill.js");
 const jsdom = require("jsdom");
 
 global.document = jsdom.jsdom();
-global.window = document.parentWindow;
-global.navigator = window.navigator;
+global.window = document.defaultView;
+global.navigator = {userAgent: 'node.js'};
 
 // KaTeX complains and doesn't work unless we set the compatMode to something
 // reasonable.

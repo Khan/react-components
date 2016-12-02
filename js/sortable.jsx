@@ -1,33 +1,16 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var, react/jsx-closing-bracket-location, react/jsx-indent-props, react/prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+const React = require('react');
+const ReactDOM = require("react-dom");
 
-var React = require('react');
-var ReactDOM = require("react-dom");
-var _     = require('underscore');
-
-var PT    = React.PropTypes;
+const PT = React.PropTypes;
 
 // Takes an array of components to sort
-var SortableArea = React.createClass({
+const SortableArea = React.createClass({
     propTypes: {
+        className: PT.string,
         components: PT.arrayOf(PT.node).isRequired,
         onReorder: PT.func.isRequired,
-        verify: PT.func
-    },
-    render: function() {
-        var sortables = _(this.state.components).map((component, index) =>
-            <SortableItem
-                index={index}
-                component={component}
-                area={this}
-                key={component.key}
-                draggable={component.props.draggable}
-                dragging={index === this.state.dragging} />
-        );
-        return <ol className={this.props.className} style={this.props.style}>
-            {sortables}
-        </ol>;
+        style: PT.any,
+        verify: PT.func,
     },
     getDefaultProps: function() {
         return {verify: () => true};
@@ -36,11 +19,19 @@ var SortableArea = React.createClass({
         return {
             // index of the component being dragged
             dragging: null,
-            components: this.props.components
+            components: this.props.components,
         };
+    },
+    // Firefox refuses to drag an element unless you set data on it. Hackily
+    // add data each time an item is dragged.
+    componentDidMount: function() {
+        this._setDragEvents();
     },
     componentWillReceiveProps: function(nextProps) {
         this.setState({components: nextProps.components});
+    },
+    componentDidUpdate: function() {
+        this._setDragEvents();
     },
     // Alternatively send each handler to each component individually,
     // partially applied
@@ -59,30 +50,21 @@ var SortableArea = React.createClass({
             return;
         }
 
-        var newComponents = this.state.components.slice();
+        const newComponents = this.state.components.slice();
 
         // splice the tab out of its old position
-        var removed = newComponents.splice(this.state.dragging, 1);
+        const removed = newComponents.splice(this.state.dragging, 1);
         // ... and into its new position
         newComponents.splice(enterIndex, 0, removed[0]);
 
-        var verified = this.props.verify(newComponents);
+        const verified = this.props.verify(newComponents);
         if (verified) {
             this.setState({
                 dragging: enterIndex,
-                components: newComponents
+                components: newComponents,
             });
         }
         return verified;
-    },
-
-    // Firefox refuses to drag an element unless you set data on it. Hackily
-    // add data each time an item is dragged.
-    componentDidMount: function() {
-        this._setDragEvents();
-    },
-    componentDidUpdate: function() {
-        this._setDragEvents();
     },
     _listenEvent: function(e) {
         e.dataTransfer.setData('hackhackhack', 'because browsers!');
@@ -93,44 +75,63 @@ var SortableArea = React.createClass({
     },
     _setDragEvents: function() {
         this._dragItems = this._dragItems || [];
-        var items = ReactDOM.findDOMNode(this)
+        const items = ReactDOM.findDOMNode(this)
                 .querySelectorAll('[draggable=true]');
-        var oldItems = _(this._dragItems).difference(items);
-        var newItems = _(items).difference(this._dragItems);
 
-        _(newItems).each(dragItem => {
+        const oldItems = [];
+        const newItems = [];
+
+        for (const item of this._dragItems) {
+            if (items.indexOf(item) < 0) {
+                oldItems.push(item);
+            }
+        }
+
+        for (const item of items) {
+            if (this._dragItems.indexOf(item) < 0) {
+                oldItems.push(item);
+            }
+        }
+
+        for (const dragItem of newItems) {
             dragItem.addEventListener('dragstart', this._listenEvent);
             dragItem.addEventListener('drop',      this._cancelEvent);
-        });
+        }
 
-        _(oldItems).each(dragItem => {
+        for (const dragItem of oldItems) {
             dragItem.removeEventListener('dragstart', this._listenEvent);
             dragItem.removeEventListener('drop',      this._cancelEvent);
-        });
-    }
+        }
+    },
+    render: function() {
+        const sortables = this.state.components.map((component, index) =>
+            <SortableItem
+                index={index}
+                component={component}
+                area={this}
+                key={component.key}
+                draggable={component.props.draggable}
+                dragging={index === this.state.dragging}
+            />
+        );
+        return <ol className={this.props.className} style={this.props.style}>
+            {sortables}
+        </ol>;
+    },
 });
 
 // An individual sortable item
-var SortableItem = React.createClass({
+const SortableItem = React.createClass({
     propTypes: {
-        // item: what is this?
-    },
-    render: function() {
-        var dragState = "sortable-disabled";
-        if (this.props.dragging) {
-            dragState = "sortable-dragging";
-        } else if (this.props.draggable) {
-            dragState = "sortable-enabled";
-        }
-
-        return <li draggable={this.props.draggable}
-                   className={dragState}
-                   onDragStart={this.handleDragStart}
-                   onDrop={this.handleDrop}
-                   onDragEnter={this.handleDragEnter}
-                   onDragOver={this.handleDragOver}>
-            {this.props.component}
-        </li>;
+        area: PT.shape({
+            onDragEnter: PT.func.isRequired,
+            onDragStart: PT.func.isRequired,
+            onDrop: PT.func.isRequired,
+        }),
+        component: PT.node.isRequired,
+        dragging: PT.bool.isRequired,
+        draggable: PT.bool.isRequired,
+        index: PT.number.isRequired,
     },
     handleDragStart: function(e) {
         e.nativeEvent.dataTransfer.effectAllowed = "move";
@@ -140,7 +141,7 @@ var SortableItem = React.createClass({
         this.props.area.onDrop(this.props.index);
     },
     handleDragEnter: function(e) {
-        var verified = this.props.area.onDragEnter(this.props.index);
+        const verified = this.props.area.onDragEnter(this.props.index);
         // Ideally this would change the cursor based on whether this is a
         // valid place to drop.
         e.nativeEvent.dataTransfer.effectAllowed = verified ? "move" : "none";
@@ -148,7 +149,25 @@ var SortableItem = React.createClass({
     handleDragOver: function(e) {
         // allow a drop by preventing default handling
         e.preventDefault();
-    }
+    },
+    render: function() {
+        let dragState = "sortable-disabled";
+        if (this.props.dragging) {
+            dragState = "sortable-dragging";
+        } else if (this.props.draggable) {
+            dragState = "sortable-enabled";
+        }
+
+        return <li draggable={this.props.draggable}
+            className={dragState}
+            onDragStart={this.handleDragStart}
+            onDrop={this.handleDrop}
+            onDragEnter={this.handleDragEnter}
+            onDragOver={this.handleDragOver}
+        >
+            {this.props.component}
+        </li>;
+    },
 });
 
 module.exports = SortableArea;

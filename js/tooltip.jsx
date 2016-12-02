@@ -1,31 +1,20 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, indent, no-var, one-var, react/jsx-closing-bracket-location, react/jsx-indent-props, react/jsx-sort-prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
-
-var React = require("react");
-var ReactDOM = require("react-dom");
-var _ = require("underscore");
-
-// TODO(joel/jack) fix z-index issues https://s3.amazonaws.com/uploads.hipchat.com/6574/29028/yOApjwmgiMhEZYJ/Screen%20Shot%202014-05-30%20at%203.34.18%20PM.png
-// z-index: 3 on perseus-formats-tooltip seemed to work
-
 /**
  * A generic tooltip library for React.js
  *
  * This should eventually end up in react-components
  *
  * Interface: ({a, b} means one of a or b)
- * var Tooltip = require("./tooltip.jsx");
+ * const Tooltip = require("./tooltip.jsx");
  * <Tooltip
- *         className="class-for-tooltip-contents"
- *         horizontalPosition="left" // one of "left", "right"
- *         horizontalAlign="left" // one of "left", "right"
- *         verticalPosition="bottom" // one of "top", "bottom"
- *         arrowSize={10} // arrow size in pixels
- *         borderColor="#ccc" // color of the border for the tooltip
- *         show={true} // whether the tooltip should currently be visible
- *         targetContainerStyle={targetContainerStyle}
- *         >
+ *     className="class-for-tooltip-contents"
+ *     horizontalPosition="left" // one of "left", "right"
+ *     horizontalAlign="left" // one of "left", "right"
+ *     verticalPosition="bottom" // one of "top", "bottom"
+ *     arrowSize={10} // arrow size in pixels
+ *     borderColor="#ccc" // color of the border for the tooltip
+ *     show={true} // whether the tooltip should currently be visible
+ *     targetContainerStyle={targetContainerStyle}
+ * >
  *     <TargetElementOfTheTooltip />
  *     <TooltipContents1 />
  *     <TooltipContents2 />
@@ -48,9 +37,15 @@ var _ = require("underscore");
 //    `-''`''
 // Here be dragons.
 
-var zIndex = 10;
+// TODO(joel/aria) fix z-index issues https://s3.amazonaws.com/uploads.hipchat.com/6574/29028/yOApjwmgiMhEZYJ/Screen%20Shot%202014-05-30%20at%203.34.18%20PM.png
+// z-index: 3 on perseus-formats-tooltip seemed to work
 
-var Triangle = React.createClass({
+const React = require("react");
+const ReactDOM = require("react-dom");
+
+const zIndex = 10;
+
+const Triangle = React.createClass({
     propTypes: {
         color: React.PropTypes.string.isRequired,
         left: React.PropTypes.number.isRequired,
@@ -66,38 +61,43 @@ var Triangle = React.createClass({
     },
 
     render: function() {
-        var borderLeft, borderRight, borderTop, borderBottom;
+        let borderLeft;
+        let borderRight;
+        let borderTop;
+        let borderBottom;
 
-        var hBorder = `${this.props.width}px solid transparent`;
+        const hBorder = `${this.props.width}px solid transparent`;
         if (this.props.horizontalDirection === "right") {
             borderLeft = hBorder;
         } else {
             borderRight = hBorder;
         }
 
-        var vBorder = `${this.props.height}px solid ${this.props.color}`;
+        const vBorder = `${this.props.height}px solid ${this.props.color}`;
         if (this.props.verticalDirection === "top") {
             borderTop = vBorder;
         } else {
             borderBottom = vBorder;
         }
 
-        return <div style={{
-            display: "block",
-            height: 0,
-            width: 0,
-            position: "absolute",
-            left: this.props.left,
-            "top": this.props["top"],
-            borderLeft: borderLeft,
-            borderRight: borderRight,
-            borderTop: borderTop,
-            borderBottom: borderBottom
-        }} />;
-    }
+        return <div
+            style={{
+                display: "block",
+                height: 0,
+                width: 0,
+                position: "absolute",
+                left: this.props.left,
+                "top": this.props["top"],
+                borderLeft: borderLeft,
+                borderRight: borderRight,
+                borderTop: borderTop,
+                borderBottom: borderBottom,
+            }}
+        />;
+    },
 });
 
-var TooltipArrow = React.createClass({
+const TooltipArrow = React.createClass({
     propTypes: {
         position: React.PropTypes.string,
         visibility: React.PropTypes.string,
@@ -112,7 +112,7 @@ var TooltipArrow = React.createClass({
         ).isRequired,
         verticalDirection: React.PropTypes.oneOf(
             ["top", "bottom"]
-        ).isRequired
+        ).isRequired,
     },
 
     getDefaultProps: function() {
@@ -120,31 +120,32 @@ var TooltipArrow = React.createClass({
             position: "relative",
             visibility: "visible",
             left: 0,
-            "top": 0
+            "top": 0,
         };
     },
 
-    // TODO(jack): Think about adding a box-shadow to the triangle here
+    // TODO(aria): Think about adding a box-shadow to the triangle here
     // See http://css-tricks.com/triangle-with-shadow/
     render: function() {
-        //var isRight = (this.props.horizontalDirection === "right");
-        var isTop = (this.props.verticalDirection === "top");
+        //const isRight = (this.props.horizontalDirection === "right");
+        const isTop = (this.props.verticalDirection === "top");
 
-        var frontTopOffset = isTop ? 0 : 1;
-        var borderTopOffset = isTop ? 0 : -1;
+        const frontTopOffset = isTop ? 0 : 1;
+        const borderTopOffset = isTop ? 0 : -1;
 
         return <div style={{
-                display: "block",
-                position: this.props.position,
-                visibility: this.props.visibility,
-                left: this.props.left,
-                "top": this.props["top"],
-                width: this.props.width + 2,
-                height: this.props.height + 1,
-                marginTop: -1,
-                marginBottom: -2,
-                zIndex: zIndex
-            }}>
+            display: "block",
+            position: this.props.position,
+            visibility: this.props.visibility,
+            left: this.props.left,
+            "top": this.props["top"],
+            width: this.props.width + 2,
+            height: this.props.height + 1,
+            marginTop: -1,
+            marginBottom: -2,
+            zIndex: zIndex,
+        }}
+        >
             {/* The background triangle used to create the effect of a
                 border around the foreground triangle*/}
             <Triangle
@@ -154,7 +155,8 @@ var TooltipArrow = React.createClass({
                 left={0}
                 top={borderTopOffset}
                 width={this.props.width + 2}  // one extra for the diagonal
-                height={this.props.height + 2} />
+                height={this.props.height + 2}
+            />
             {/* The foreground triangle covers all but the left/right edges
                 of the background triangle */}
             <Triangle
@@ -164,56 +166,57 @@ var TooltipArrow = React.createClass({
                 left={1}
                 top={frontTopOffset}
                 width={this.props.width}
-                height={this.props.height} />
+                height={this.props.height}
+            />
         </div>;
-    }
+    },
 });
 
-var VERTICAL_CORNERS = {
+const VERTICAL_CORNERS = {
     "top": {
-        "top": "-100%"
+        "top": "-100%",
     },
     bottom: {
-        "top": 0
-    }
+        "top": 0,
+    },
 };
 
-var HORIZONTAL_CORNERS = {
+const HORIZONTAL_CORNERS = {
     left: {
         targetLeft: 0,
     },
 
     right: {
         targetLeft: "100%",
-    }
+    },
 };
 
-var HORIZONTAL_ALIGNMNENTS = {
+const HORIZONTAL_ALIGNMNENTS = {
     left: {
         tooltipLeft: 0,
-        arrowLeft: (arrowSize) => 0
+        arrowLeft: (arrowSize) => 0,
     },
     right: {
         tooltipLeft: "-100%",
-        arrowLeft: (arrowSize) => -arrowSize - 2
-    }
+        arrowLeft: (arrowSize) => -arrowSize - 2,
+    },
 };
 
 
-var Tooltip = React.createClass({
+const Tooltip = React.createClass({
     propTypes: {
         show: React.PropTypes.bool.isRequired,
         className: React.PropTypes.string,
         arrowSize: React.PropTypes.number,
         borderColor: React.PropTypes.string,
         verticalPosition: React.PropTypes.oneOf(
-            _.keys(VERTICAL_CORNERS)
+            Object.keys(VERTICAL_CORNERS)
         ),
         horizontalPosition: React.PropTypes.oneOf(
-            _.keys(HORIZONTAL_CORNERS)
+            Object.keys(HORIZONTAL_CORNERS)
         ),
         horizontalAlign: React.PropTypes.oneOf(
-            _.keys(HORIZONTAL_ALIGNMNENTS)
+            Object.keys(HORIZONTAL_ALIGNMNENTS)
         ),
         children: React.PropTypes.arrayOf(
             React.PropTypes.element
@@ -235,8 +238,12 @@ var Tooltip = React.createClass({
 
     getInitialState: function() {
         return {
-            height: null  // used for offsetting "top" positioned tooltips
+            height: null,  // used for offsetting "top" positioned tooltips
         };
+    },
+
+    componentDidMount: function() {
+        this._updateHeight();
     },
 
     componentWillReceiveProps: function() {
@@ -244,32 +251,19 @@ var Tooltip = React.createClass({
         this.setState({height: null});
     },
 
-    render: function() {
-        var isTooltipAbove = this.props.verticalPosition === "top";
-
-        /* We wrap the entire output in a span so that it displays inline */
-        return <span>
-            {isTooltipAbove && this._renderToolTipDiv(isTooltipAbove)}
-
-            {/* We wrap our input in a div so that we can put the tooltip in a
-                div above/below it */}
-            <div style={this.props.targetContainerStyle}>
-                {_.first(this.props.children)}
-            </div>
-
-            {!isTooltipAbove && this._renderToolTipDiv()}
-        </span>;
+    componentDidUpdate: function() {
+        this._updateHeight();
     },
 
     _renderToolTipDiv: function(isTooltipAbove) {
-        var settings = _.extend({},
+        const settings = Object.assign({},
             HORIZONTAL_CORNERS[this.props.horizontalPosition],
             HORIZONTAL_ALIGNMNENTS[this.props.horizontalAlign],
             VERTICAL_CORNERS[this.props.verticalPosition]
         );
 
-        var arrowAbove;
-        var arrowBelow;
+        let arrowAbove;
+        let arrowBelow;
 
         if (isTooltipAbove) {
             // We put an absolutely positioned arrow in the correct place
@@ -283,7 +277,8 @@ var Tooltip = React.createClass({
                 top={-this.props.arrowSize + 2}
                 width={this.props.arrowSize}
                 height={this.props.arrowSize}
-                zIndex={zIndex} />;
+                zIndex={zIndex}
+            />;
 
             // And we use a visibility: hidden arrow below to shift up the
             // content by the correct amount
@@ -297,7 +292,8 @@ var Tooltip = React.createClass({
                 top={-1}
                 width={this.props.arrowSize}
                 height={this.props.arrowSize}
-                zIndex={zIndex} />;
+                zIndex={zIndex}
+            />;
         } else {
             arrowAbove = <TooltipArrow
                 verticalDirection="bottom"
@@ -308,7 +304,8 @@ var Tooltip = React.createClass({
                 top={-1}
                 width={this.props.arrowSize}
                 height={this.props.arrowSize}
-                zIndex={zIndex} />;
+                zIndex={zIndex}
+            />;
 
             arrowBelow = null;
         }
@@ -316,38 +313,41 @@ var Tooltip = React.createClass({
         /* A positioned div below the input to be the parent for our
             tooltip */
         return <div style={{
-                position: "relative",
-                height: 0,
-                display: this.props.show ? "block" : "none",
-                }}>
+            position: "relative",
+            height: 0,
+            display: this.props.show ? "block" : "none",
+        }}
+        >
             <div ref="tooltipContainer" className="tooltipContainer" style={{
-                        position: "absolute",
-                        // height must start out undefined, not null, so that
-                        // we can measure the actual height with jquery.
-                        // This is used to position the tooltip with top: -100%
-                        // when in verticalPosition: "top" mode
-                        height: this.state.height || undefined,
-                        left: settings.targetLeft
-                    }}>
+                position: "absolute",
+                // height must start out undefined, not null, so that
+                // we can measure the actual height with jquery.
+                // This is used to position the tooltip with top: -100%
+                // when in verticalPosition: "top" mode
+                height: this.state.height || undefined,
+                left: settings.targetLeft,
+            }}
+            >
                 {arrowAbove}
 
                 {/* The contents of the tooltip */}
                 <div className={this.props.className}
-                        ref="tooltipContent"
-                        style={{
-                            position: "relative",
-                            top: settings["top"],
-                            left: settings.tooltipLeft,
-                            border: "1px solid " + this.props.borderColor,
-                            WebkitBoxShadow: "0 1px 3px " +
-                                    this.props.borderColor,
-                            MozBoxShadow: "0 1px 3px " +
-                                    this.props.borderColor,
-                            boxShadow: "0 1px 3px " +
-                                    this.props.borderColor,
-                            zIndex: zIndex - 1
-                        }}>
-                    {_.rest(this.props.children)}
+                    ref="tooltipContent"
+                    style={{
+                        position: "relative",
+                        top: settings["top"],
+                        left: settings.tooltipLeft,
+                        border: "1px solid " + this.props.borderColor,
+                        WebkitBoxShadow: "0 1px 3px " +
+                                this.props.borderColor,
+                        MozBoxShadow: "0 1px 3px " +
+                                this.props.borderColor,
+                        boxShadow: "0 1px 3px " +
+                                this.props.borderColor,
+                        zIndex: zIndex - 1,
+                    }}
+                >
+                    {this.props.children.slice(1)}
                 </div>
 
                 {arrowBelow}
@@ -355,21 +355,30 @@ var Tooltip = React.createClass({
         </div>;
     },
 
-    componentDidMount: function() {
-        this._updateHeight();
-    },
-
-    componentDidUpdate: function() {
-        this._updateHeight();
-    },
-
     _updateHeight: function() {
-        var height =
+        const height =
                 ReactDOM.findDOMNode(this.refs.tooltipContainer).offsetHeight;
         if (height !== this.state.height) {
             this.setState({height});
         }
-    }
+    },
+
+    render: function() {
+        const isTooltipAbove = this.props.verticalPosition === "top";
+
+        /* We wrap the entire output in a span so that it displays inline */
+        return <span>
+            {isTooltipAbove && this._renderToolTipDiv(isTooltipAbove)}
+
+            {/* We wrap our input in a div so that we can put the tooltip in a
+                div above/below it */}
+            <div style={this.props.targetContainerStyle}>
+                {this.props.children[0]}
+            </div>
+
+            {!isTooltipAbove && this._renderToolTipDiv()}
+        </span>;
+    },
 });
 
 // Sorry.  // Apology-Oriented-Programming

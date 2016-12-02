@@ -1,12 +1,6 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
-
-// From http://jsfiddle.net/LBAr8/
-
 /* Create a new "layer" on the page, like a modal or overlay.
  *
- * var LayeredComponent = React.createClass({
+ * const LayeredComponent = React.createClass({
  *     mixins: [LayeredComponentMixin],
  *     render: function() {
  *         // render like usual
@@ -15,12 +9,14 @@
  *         // render a separate layer (the modal or overlay)
  *     }
  * });
+ *
+ * From http://jsfiddle.net/LBAr8/
  */
 
-var React = require('react');
-var ReactDOM = require("react-dom");
+const React = require('react');
+const ReactDOM = require("react-dom");
 
-var LayeredComponentMixin = {
+const LayeredComponentMixin = {
     componentDidMount: function() {
         // Appending to the body is easier than managing the z-index of
         // everything on the page.  It's also better for accessibility and
@@ -45,7 +41,7 @@ var LayeredComponentMixin = {
         // funnels React's hierarchical updates through to a DOM node on an
         // entirely different part of the page.
 
-        var layerElement = this.renderLayer();
+        const layerElement = this.renderLayer();
         // Renders can return null, but React.render() doesn't like being asked
         // to render null. If we get null back from renderLayer(), just render
         // a noscript element, like React does when an element's render returns
@@ -67,7 +63,7 @@ var LayeredComponentMixin = {
         }
 
         ReactDOM.unmountComponentAtNode(this._layer);
-    }
+    },
 };
 
 module.exports = LayeredComponentMixin;

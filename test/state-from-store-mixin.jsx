@@ -1,17 +1,11 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable no-undef, no-unused-vars, no-var */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+/* global beforeEach */
 
-var jsdom = require("jsdom");
-var assert = require("assert");
-var React = require("react");
-var TestUtils = require("react-addons-test-utils");
-var StateFromStoreMixin = require("../js/state-from-store-mixin.jsx");
+const jsdom = require("jsdom");
 
 describe("StateFromStoreMixin", function() {
     beforeEach(function() {
-        global.window = jsdom.jsdom().createWindow();
-        global.document = window.document;
+        global.document = jsdom.jsdom();
+        global.window = document.defaultView;
     });
 
     describe("fetch", function() {

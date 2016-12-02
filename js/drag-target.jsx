@@ -1,10 +1,3 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var, react/jsx-closing-bracket-location, react/jsx-sort-prop-types, react/prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
-
-var React = require('react');
-var _ = require('underscore');
-
 /* This component makes its children a drag target. Example:
  *
  *     <DragTarget onDrop={this.handleDrop}>Drag to me</DragTarget>
@@ -28,35 +21,24 @@ var _ = require('underscore');
 // Other extensions:
 // * custom styles for global drag and dragOver
 // * only respond to certain types of drags (only images for instance)!
-var DragTarget = React.createClass({
+
+const React = require('react');
+
+const DragTarget = React.createClass({
     propTypes: {
         onDrop: React.PropTypes.func.isRequired,
         component: React.PropTypes.any,  // component type
-        shouldDragHighlight: React.PropTypes.func
-    },
-    render: function() {
-        var opacity = this.state.dragHover ? {"opacity": 0.3} : {};
-        var Component = this.props.component;
-
-        return (
-            <Component
-                {...this.props}
-                style={_.extend({}, this.props.style, opacity)}
-                onDrop={this.handleDrop}
-                onDragEnd={this.handleDragEnd}
-                onDragOver={this.handleDragOver}
-                onDragEnter={this.handleDragEnter}
-                onDragLeave={this.handleDragLeave} />
-        );
-    },
-    getInitialState: function() {
-        return {dragHover: false};
+        shouldDragHighlight: React.PropTypes.func,
+        style: React.PropTypes.any,
     },
     getDefaultProps: function() {
         return {
             component: "div",
-            shouldDragHighlight: () => true
+            shouldDragHighlight: () => true,
         };
+    },
+    getInitialState: function() {
+        return {dragHover: false};
     },
     handleDrop: function(e) {
         e.stopPropagation();
@@ -75,7 +57,22 @@ var DragTarget = React.createClass({
     },
     handleDragEnter: function(e) {
         this.setState({dragHover: this.props.shouldDragHighlight(e)});
-    }
+    },
+    render: function() {
+        const opacity = this.state.dragHover ? {"opacity": 0.3} : {};
+        const Component = this.props.component;
+
+        return (
+            <Component
+                style={Object.assign({}, this.props.style, opacity)}
+                onDrop={this.handleDrop}
+                onDragEnd={this.handleDragEnd}
+                onDragOver={this.handleDragOver}
+                onDragEnter={this.handleDragEnter}
+                onDragLeave={this.handleDragLeave}
+            />
+        );
+    },
 });
 
 module.exports = DragTarget;

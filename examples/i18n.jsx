@@ -2,7 +2,7 @@ var translated = <$_ first="Motoko" last="Kusanagi">
     Hello, %(first)s %(last)s!
 </$_>;
 
-var link = <a href="javascript:void 0;" onClick={this._markTooHard}>
+var link = <a href="javascript:void 0;">
     <$_>Click here</$_>
 </a>;
 

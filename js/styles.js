@@ -1,8 +1,6 @@
-/* eslint-disable no-var */
+const StyleSheet = require("aphrodite").StyleSheet;
 
-var StyleSheet = require("aphrodite").StyleSheet;
-
-var button = StyleSheet.create({
+const button = StyleSheet.create({
     buttonStyle: {
         backgroundColor: 'white',
         border: '1px solid #ccc',

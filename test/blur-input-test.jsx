@@ -1,28 +1,27 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable no-undef, no-var, react/jsx-closing-bracket-location */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+/* global beforeEach */
 
-var jsdom = require("jsdom");
-var assert = require("assert");
-var React = require("react");
-var ReactDOM = require("react-dom");
-var TestUtils = require("react-addons-test-utils");
-var BlurInput = require("../js/blur-input.jsx");
+const jsdom = require("jsdom");
+const assert = require("assert");
+const React = require("react");
+const ReactDOM = require("react-dom");
+const TestUtils = require("react-addons-test-utils");
+const BlurInput = require("../js/blur-input.jsx");
 
 describe("BlurInput", function() {
     beforeEach(function() {
         global.document = jsdom.jsdom();
-        global.window = document.parentWindow;
+        global.window = document.defaultView;
 
         this.value = "starting value";
-        var handleChange = (newValue) => {
+        const handleChange = (newValue) => {
             this.value = newValue;
         };
 
         this.blurInput = TestUtils.renderIntoDocument(
-           <BlurInput
-               value={this.value}
-               onChange={handleChange} />
+            <BlurInput
+                value={this.value}
+                onChange={handleChange}
+            />
         );
     });
 

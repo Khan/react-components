@@ -1,18 +1,16 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-undef, no-var, react/jsx-closing-bracket-location */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+/* global beforeEach */
 
-var jsdom = require("jsdom");
-var assert = require("assert");
-var React = require("react");
-var ReactDOM = require("react-dom");
-var TestUtils = require("react-addons-test-utils");
-var ButtonGroup = require("../js/button-group.jsx");
+const jsdom = require("jsdom");
+const assert = require("assert");
+const React = require("react");
+const ReactDOM = require("react-dom");
+const TestUtils = require("react-addons-test-utils");
+const ButtonGroup = require("../js/button-group.jsx");
 
 describe("ButtonGroup", function() {
     beforeEach(function() {
         global.document = jsdom.jsdom();
-        global.window = document.parentWindow;
+        global.window = document.defaultView;
 
         this.value = 'starting';
         this.handleChange = (value) => {
@@ -23,26 +21,27 @@ describe("ButtonGroup", function() {
     describe("allowEmpty = false", function() {
         beforeEach(function() {
             this.buttonGroup = TestUtils.renderIntoDocument(
-               <ButtonGroup
-                   value={this.value}
-                   buttons={[
+                <ButtonGroup
+                    value={this.value}
+                    buttons={[
                        {value: 'starting', text: 'Starting Selection'},
-                       {value: 'alternate', text: 'Alternate Selection'}
-                   ]}
-                   allowEmpty={false}
-                   onChange={this.handleChange} />
+                       {value: 'alternate', text: 'Alternate Selection'},
+                    ]}
+                    allowEmpty={false}
+                    onChange={this.handleChange}
+                />
             );
         });
 
         it("changes when a button is clicked", function() {
-            var alternateButton =
+            const alternateButton =
                      ReactDOM.findDOMNode(this.buttonGroup.refs.button1);
             TestUtils.Simulate.click(alternateButton);
             assert.strictEqual(this.value, 'alternate');
         });
 
         it("stays selected when clicking on the selected item", function() {
-            var startingButton =
+            const startingButton =
                     ReactDOM.findDOMNode(this.buttonGroup.refs.button0);
             TestUtils.Simulate.click(startingButton);
             assert.strictEqual(this.value, 'starting');
@@ -52,19 +51,20 @@ describe("ButtonGroup", function() {
     describe("allowEmpty = true", function() {
         beforeEach(function() {
             this.buttonGroup = TestUtils.renderIntoDocument(
-               <ButtonGroup
-                   value={this.value}
-                   buttons={[
+                <ButtonGroup
+                    value={this.value}
+                    buttons={[
                        {value: 'starting', text: 'Starting Selection'},
-                       {value: 'alternate', text: 'Alternate Selection'}
-                   ]}
-                   onChange={this.handleChange}
-                   allowEmpty={true} />
+                       {value: 'alternate', text: 'Alternate Selection'},
+                    ]}
+                    onChange={this.handleChange}
+                    allowEmpty={true}
+                />
             );
         });
 
         it("deselects when clicking on the selected item", function() {
-            var startingButton =
+            const startingButton =
                     ReactDOM.findDOMNode(this.buttonGroup.refs.button0);
             TestUtils.Simulate.click(startingButton);
             assert.strictEqual(this.value, null);

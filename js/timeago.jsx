@@ -1,7 +1,3 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var, react/prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
-
 /* The equivalent to jQuery.timeago for react.
  *
  * TimeAgo returns a span containing the amount of time (in English) that has
@@ -16,21 +12,25 @@
  *     return <a href={khanAcademy}><TimeAgo time={date} /></a>
  */
 
-var React = require("react");
-var SetIntervalMixin = require("./set-interval-mixin.jsx");
-var moment = require("moment");
+const React = require("react");
+const SetIntervalMixin = require("./set-interval-mixin.jsx");
+const moment = require("moment");
 
 // TODO(joel) i18n
-var TimeAgo = React.createClass({
+const TimeAgo = React.createClass({
+    propTypes: {
+        refreshMillis: React.PropTypes.number,
+        time: React.PropTypes.any.isRequired,
+    },
     mixins: [SetIntervalMixin],
+    componentDidMount: function() {
+        const interval = this.props.refreshMillis || 60000;
+        // TODO(joel) why did I have to bind forceUpdate?
+        this.setInterval(this.forceUpdate.bind(this), interval);
+    },
     render: function() {
         return <span>{moment(this.props.time).fromNow()}</span>;
     },
-    componentDidMount: function() {
-        var interval = this.props.refreshMillis || 60000;
-        // TODO(joel) why did I have to bind forceUpdate?
-        this.setInterval(this.forceUpdate.bind(this), interval);
-    }
 });
 
 module.exports = TimeAgo;

@@ -1,13 +1,3 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var, react/jsx-closing-bracket-location, react/jsx-indent-props, react/jsx-sort-prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
-
-var React = require('react');
-var ReactDOM = require("react-dom");
-var _ = require('underscore');
-var styles = require('./styles.js');
-var css = require("aphrodite").css;
-
 /* MultiButtonGroup is an aesthetically pleasing group of buttons,
  * which allows multiple buttons to be selected at the same time.
  *
@@ -26,49 +16,28 @@ var css = require("aphrodite").css;
  * Requires stylesheets/perseus-admin-package/editor.less to look nice.
  */
 
-var MultiButtonGroup = React.createClass({
+const React = require('react');
+const ReactDOM = require("react-dom");
+const styles = require('./styles.js');
+const css = require("aphrodite").css;
+
+const MultiButtonGroup = React.createClass({
     propTypes: {
         values: React.PropTypes.arrayOf(React.PropTypes.any),
         buttons: React.PropTypes.arrayOf(React.PropTypes.shape({
             value: React.PropTypes.any.isRequired,
             content: React.PropTypes.node,
-            title: React.PropTypes.string
+            title: React.PropTypes.string,
         })).isRequired,
         onChange: React.PropTypes.func.isRequired,
-        allowEmpty: React.PropTypes.bool
+        allowEmpty: React.PropTypes.bool,
     },
 
     getDefaultProps: function() {
         return {
             values: [],
-            allowEmpty: true
+            allowEmpty: true,
         };
-    },
-
-    render: function() {
-        var values = this.props.values;
-        var buttons = _(this.props.buttons).map((button, i) => {
-            var selected = _.contains(values, button.value);
-            return <button title={button.title}
-                    type="button"
-                    id={"" + i}
-                    key = {"" + i}
-                    ref={"button" + i}
-                    className={css(
-                        styles.button.buttonStyle,
-                        selected && styles.button.selectedStyle
-                    )}
-                    onClick={this.toggleSelect.bind(this, button.value)}>
-                {button.content || "" + button.value}
-            </button>;
-        });
-
-        var outerStyle = {
-            display: 'inline-block'
-        };
-        return <div style={outerStyle}>
-            {buttons}
-        </div>;
     },
 
     focus: function() {
@@ -77,18 +46,49 @@ var MultiButtonGroup = React.createClass({
     },
 
     toggleSelect: function(newValue) {
-        var values = this.props.values;
-        var allowEmpty = this.props.allowEmpty;
+        const values = (this.props.values || []).slice(0);
+        const allowEmpty = this.props.allowEmpty;
 
-        if (_.contains(values, newValue) &&
+        if (values.indexOf(newValue) >= 0 &&
                 (values.length > 1 || allowEmpty)) {
             // If the value is already selected, unselect it
-            this.props.onChange(_.without(values, newValue));
+            values.splice(values.indexOf(newValue), 1);
         } else {
             // Otherwise merge with other values and return
-            this.props.onChange(_.union(values, [newValue]));
+            if (values.indexOf(newValue) < 0) {
+                values.push(newValue);
+            }
         }
-    }
+
+        this.props.onChange(values);
+    },
+
+    render: function() {
+        const values = this.props.values || [];
+        const buttons = this.props.buttons.map((button, i) => {
+            const selected = values.indexOf(button.value) >= 0;
+            return <button title={button.title}
+                type="button"
+                id={"" + i}
+                key = {"" + i}
+                ref={"button" + i}
+                className={css(
+                    styles.button.buttonStyle,
+                    selected && styles.button.selectedStyle
+                )}
+                onClick={this.toggleSelect.bind(this, button.value)}
+            >
+                {button.content || "" + button.value}
+            </button>;
+        });
+
+        const outerStyle = {
+            display: 'inline-block',
+        };
+        return <div style={outerStyle}>
+            {buttons}
+        </div>;
+    },
 });
 
 module.exports = MultiButtonGroup;

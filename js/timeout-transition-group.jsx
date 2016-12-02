@@ -1,7 +1,3 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var, react/jsx-closing-bracket-location, react/jsx-indent-props, react/jsx-sort-prop-types, react/prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
-
 /**
  * The CSSTransitionGroup component uses the 'transitionend' event, which
  * browsers will not send for any number of reasons, including the
@@ -18,24 +14,24 @@
  * addons and under the Apache 2.0 License.
  */
 
-var React = require('react/addons');
-var ReactDOM = require('react-dom');
-var ReactTransitionGroup = require('react-addons-transition-group');
+const React = require('react');
+const ReactDOM = require('react-dom');
+const ReactTransitionGroup = require('react-addons-transition-group');
 
-var TICK = 17;
+const TICK = 17;
 
 /**
  * EVENT_NAME_MAP is used to determine which event fired when a
  * transition/animation ends, based on the style property used to
  * define that event.
  */
-var EVENT_NAME_MAP = {
+const EVENT_NAME_MAP = {
     transitionend: {
         'transition': 'transitionend',
         'WebkitTransition': 'webkitTransitionEnd',
         'MozTransition': 'mozTransitionEnd',
         'OTransition': 'oTransitionEnd',
-        'msTransition': 'MSTransitionEnd'
+        'msTransition': 'MSTransitionEnd',
     },
 
     animationend: {
@@ -43,19 +39,19 @@ var EVENT_NAME_MAP = {
         'WebkitAnimation': 'webkitAnimationEnd',
         'MozAnimation': 'mozAnimationEnd',
         'OAnimation': 'oAnimationEnd',
-        'msAnimation': 'MSAnimationEnd'
-    }
+        'msAnimation': 'MSAnimationEnd',
+    },
 };
 
-var endEvents = [];
+const endEvents = [];
 
 (function detectEvents() {
     if (typeof window === "undefined") {
         return;
     }
 
-    var testEl = document.createElement('div');
-    var style = testEl.style;
+    const testEl = document.createElement('div');
+    const style = testEl.style;
 
     // On some platforms, in particular some releases of Android 4.x, the
     // un-prefixed "animation" and "transition" properties are defined on the
@@ -70,10 +66,10 @@ var endEvents = [];
         delete EVENT_NAME_MAP.transitionend.transition;
     }
 
-    for (var baseEventName in EVENT_NAME_MAP) {
+    for (const baseEventName in EVENT_NAME_MAP) {
         if (EVENT_NAME_MAP.hasOwnProperty(baseEventName)) {
-            var baseEvents = EVENT_NAME_MAP[baseEventName];
-            for (var styleName in baseEvents) {
+            const baseEvents = EVENT_NAME_MAP[baseEventName];
+            for (const styleName in baseEvents) {
                 if (styleName in style) {
                     endEvents.push(baseEvents[styleName]);
                     break;
@@ -120,13 +116,51 @@ function hasClass(element, className) {
     }
 }
 
-var TimeoutTransitionGroupChild = React.createClass({
-    transition: function(animationType, finishCallback) {
-        var node = ReactDOM.findDOMNode(this);
-        var className = this.props.name + '-' + animationType;
-        var activeClassName = className + '-active';
+const TimeoutTransitionGroupChild = React.createClass({
+    propTypes: {
+        children: React.PropTypes.node,
+        enter: React.PropTypes.bool,
+        enterTimeout: React.PropTypes.number.isRequired,
+        name: React.PropTypes.string.isRequired,
+        leave: React.PropTypes.bool,
+        leaveTimeout: React.PropTypes.number.isRequired,
+    },
 
-        var endListener = function() {
+    componentWillMount: function() {
+        this.classNameQueue = [];
+    },
+
+    componentWillUnmount: function() {
+        if (this.timeout) {
+            clearTimeout(this.timeout);
+        }
+        if (this.animationTimeout) {
+            clearTimeout(this.animationTimeout);
+        }
+    },
+
+    componentWillEnter: function(done) {
+        if (this.props.enter) {
+            this.transition('enter', done);
+        } else {
+            done();
+        }
+    },
+
+    componentWillLeave: function(done) {
+        if (this.props.leave) {
+            this.transition('leave', done);
+        } else {
+            done();
+        }
+    },
+
+    transition: function(animationType, finishCallback) {
+        const node = ReactDOM.findDOMNode(this);
+        const className = this.props.name + '-' + animationType;
+        const activeClassName = className + '-active';
+
+        const endListener = function() {
             removeClass(node, className);
             removeClass(node, activeClassName);
 
@@ -171,41 +205,12 @@ var TimeoutTransitionGroupChild = React.createClass({
         this.timeout = null;
     },
 
-    componentWillMount: function() {
-        this.classNameQueue = [];
-    },
-
-    componentWillUnmount: function() {
-        if (this.timeout) {
-            clearTimeout(this.timeout);
-        }
-        if (this.animationTimeout) {
-            clearTimeout(this.animationTimeout);
-        }
-    },
-
-    componentWillEnter: function(done) {
-        if (this.props.enter) {
-            this.transition('enter', done);
-        } else {
-            done();
-        }
-    },
-
-    componentWillLeave: function(done) {
-        if (this.props.leave) {
-            this.transition('leave', done);
-        } else {
-            done();
-        }
-    },
-
     render: function() {
         return React.Children.only(this.props.children);
-    }
+    },
 });
 
-var TimeoutTransitionGroup = React.createClass({
+const TimeoutTransitionGroup = React.createClass({
     propTypes: {
         enterTimeout: React.PropTypes.number.isRequired,
         leaveTimeout: React.PropTypes.number.isRequired,
@@ -217,18 +222,19 @@ var TimeoutTransitionGroup = React.createClass({
     getDefaultProps: function() {
         return {
             transitionEnter: true,
-            transitionLeave: true
+            transitionLeave: true,
         };
     },
 
     _wrapChild: function(child) {
         return (
             <TimeoutTransitionGroupChild
-                    enterTimeout={this.props.enterTimeout}
-                    leaveTimeout={this.props.leaveTimeout}
-                    name={this.props.transitionName}
-                    enter={this.props.transitionEnter}
-                    leave={this.props.transitionLeave}>
+                enterTimeout={this.props.enterTimeout}
+                leaveTimeout={this.props.leaveTimeout}
+                name={this.props.transitionName}
+                enter={this.props.transitionEnter}
+                leave={this.props.transitionLeave}
+            >
                 {child}
             </TimeoutTransitionGroupChild>
         );
@@ -237,10 +243,13 @@ var TimeoutTransitionGroup = React.createClass({
     render: function() {
         return (
             <ReactTransitionGroup
-                {...this.props}
-                childFactory={this._wrapChild} />
+                transitionName={this.props.transitionName}
+                transitionEnter={this.props.transitionEnter}
+                transitionLeave={this.props.transitionLeave}
+                childFactory={this._wrapChild}
+            />
         );
-    }
+    },
 });
 
 module.exports = TimeoutTransitionGroup;

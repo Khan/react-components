@@ -1,6 +1,6 @@
 {
   "name": "react-components",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "author": "Khan Academy",
   "description": "React components used by Khan Academy",
   "homepage": "http://khan.github.io/react-components/",
@@ -28,26 +28,27 @@
     "url": "https://github.com/Khan/react-components/blob/master/LICENSE"
   },
   "dependencies": {
-    "aphrodite": "^0.3.0"
+    "aphrodite": "1.1.0"
   },
   "devDependencies": {
-    "backbone": "~1.1.2",
-    "browserify": "^10.0.0",
-    "jquery": "~2.1.1",
-    "jsdom": "~2.0.0",
-    "jstransform": "~6.3.2",
-    "mocha": "~1.18.2",
+    "babel-preset-latest": "6.16.0",
+    "babel-preset-react": "6.16.0",
+    "babel-register": "6.18.0",
+    "babelify": "7.3.0",
+    "backbone": "*",
+    "browserify": "13.1.1",
+    "jquery": "*",
+    "jsdom": "9.8.3",
+    "mocha": "3.2.0",
     "moment": "*",
-    "react": "^0.14.7",
-    "react-addons-create-fragment": "^0.14.7",
-    "react-addons-pure-render-mixin": "^0.14.7",
-    "react-addons-test-utils": "^0.14.7",
-    "react-addons-transition-group": "^0.14.7",
-    "react-dom": "^0.14.7",
-    "react-tools": "~0.12.0",
-    "reactify": "git://github.com/andreypopp/reactify.git#c1b0e15eca9d5e663f34f372682723d5fb4f15af",
-    "underscore": "~1.6.0",
-    "watchify": "^3.2.2"
+    "react": "15.4.1",
+    "react-addons-create-fragment": "15.4.1",
+    "react-addons-pure-render-mixin": "15.4.1",
+    "react-addons-test-utils": "15.4.1",
+    "react-addons-transition-group": "15.4.1",
+    "react-dom": "15.4.1",
+    "react-tools": "0.13.3",
+    "watchify": "3.7.0"
   },
   "scripts": {
     "test": "make test",

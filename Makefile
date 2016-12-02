@@ -22,16 +22,16 @@ pages: docs
 	git checkout master
 
 bundle.js: jsdeps
-	./node_modules/.bin/browserify -t [ reactify --es6 ] js/*.jsx -o bundle.js
+	./node_modules/.bin/browserify -t [ babelify --presets [ es2015 react ] ] js/*.jsx -o bundle.js
 
 docs/index.html: pydeps
 	./make_template.py
 
 docs/preview-bundle.js: jsdeps
-	./node_modules/.bin/browserify -d -t [ reactify --es6 ] reactify-components.jsx -o docs/preview-bundle.js
+	./node_modules/.bin/browserify -d -t [ babelify --presets [ es2015 react ] ] reactify-components.jsx -o docs/preview-bundle.js
 
 watch-preview: jsdeps
-	./node_modules/.bin/watchify -d -t [ reactify --es6 ] js/*.jsx reactify-components.jsx -o docs/preview-bundle.js
+	./node_modules/.bin/watchify -d -t [ babelify --presets [ es2015 react ] ] js/*.jsx reactify-components.jsx -o docs/preview-bundle.js
 
 test: jsdeps
-	./node_modules/.bin/mocha --reporter spec --compilers jsx:test/compiler.js -r test/test-helper.js test/*test.jsx
+	./node_modules/.bin/mocha --reporter spec --compilers jsx:babel-register -r test/test-helper.js test/*test.jsx

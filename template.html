@@ -173,19 +173,19 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
 
         <h3 id="button-group">Button Group</h3>
         {{ stability("unstable") }}
-        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        {{ depends([]) }}
         <p>A nice looking replacement for a related set of buttons (like radio buttons).</p>
         {% code_example "button-group.jsx" %}
 
         <h3 id="multi-button-group">Multi Button Group</h3>
         {{ stability("unstable") }}
-        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        {{ depends([]) }}
         <p>Like Button Group, but with multi-select (like checkboxes).</p>
         {% code_example "multi-button-group.jsx" %}
 
         <h3 id="dollar-underscore"><code>$_</code></h3>
         {{ stability("unstable") }}
-        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        {{ depends([]) }}
         <p>A pseudo-component useful for internationalization.</p>
         {% code_example "i18n.jsx" %}
 
@@ -203,8 +203,7 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
 
         <h3 id="state-from-store">State-from-Store Mixin</h3>
         {{ stability("unstable") }}
-        {{ depends([("https://facebook.github.io/flux/", "Flux"),
-                    ("http://underscorejs.org/", "Underscore")]) }}
+        {{ depends([("https://facebook.github.io/flux/", "Flux")]) }}
         <p>Wires change listeners to get updates from a flux store.</p>
         {% code_example "state-from-store-mixin.jsx" %}
 
@@ -229,19 +228,19 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
 
         <h3 id="tooltip">Tooltip</h3>
         {{ stability("unstable") }}
-        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        {{ depends([]) }}
         <p>A better tooltip.</p>
         {% code_example "tooltip.jsx" %}
 
         <h3 id="info-tip">Info-Tip</h3>
         {{ stability("unstable") }}
-        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        {{ depends([]) }}
         <p>A very simple informational tooltip that displays on hover.</p>
         {% code_example "info-tip.jsx" %}
 
         <h3 id="sortable">Sortable</h3>
         {{ stability("unstable") }}
-        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        {{ depends([]) }}
         <p>Sort a list.</p>
         {% code_example "sortable.jsx" %}
 
@@ -253,19 +252,19 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
 
         <h3 id="window-drag">Window Drag</h3>
         {{ stability("experimental") }}
-        {{ depends([("http://underscorejs.org/", "Underscore")]) }}
+        {{ depends([]) }}
         <p>Detect drags into and out of the page.</p>
         {% code_example "window-drag.jsx" %}
 
         <h3 id="timeout-transition-group">Timeout Transition Group</h3>
         {{ stability("unstable") }}
-        {{ depends([("http://jquery.com/", "jQuery")]) }}
+        {{ depends([]) }}
         <p>A wrapper which applies CSS classes to children who are entering or leaving. It is very much like the <code>CSSTransitionGroup</code> provided in the React addons. Unfortunately, <code>CSSTransitionGroup</code> uses the <code>transitionEnd</code> event, which is not fired in a variety of conditions (including the transition not being visible or in another tab). This version of <code>CSSTransitionGroup</code> uses a manually set timeout, instead.</p>
         {% code_example "timeout-transition-group.jsx" %}
 
         <h3 id="backbone-mixin">Backbone Mixin</h3>
         {{ stability("deprecated") }}
-        {{ depends([("http://backbonejs.org/", "Backbone.js")]) }}
+        {{ depends([]) }}
         <p>Update this view every time a backbone model updates:</p>
         <p>
         You should know that I highly recommend <em>not</em> using this mixin. It inevitably leads to inefficient code and janky UX. Not at first - only gradually. You won't really notice until it's too late and <code>BackboneMixin</code> runs the interface you just spent three months on.

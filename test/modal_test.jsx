@@ -1,23 +1,20 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable no-undef, no-unused-vars, no-var */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+/* global beforeEach */
 
-var jsdom = require("jsdom");
-var assert = require("assert");
-var React = require("react");
-var TestUtils = require("react-addons-test-utils");
+const jsdom = require("jsdom");
+const React = require("react");
+const TestUtils = require("react-addons-test-utils");
 
-var Modal = require('../js/modal.jsx');
+const Modal = require('../js/modal.jsx');
 
 describe('Modal', function() {
     beforeEach(function() {
-        global.window = jsdom.jsdom().createWindow();
-        global.document = window.document;
+        global.document = jsdom.jsdom();
+        global.window = document.defaultView;
 
         // TODO(joel) there's probably a way to do this automatically with
         // sinon
         this.callsToClose = 0;
-        var closeCalled = () => {
+        const closeCalled = () => {
             this.callsToClose += 1;
         };
 

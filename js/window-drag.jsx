@@ -1,10 +1,3 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var, react/prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
-
-var React = require("react");
-var _ = require("underscore");
-
 /* The solution to detecting drags into and out of the page.
  *
  * This could be generalized to detect drags into and out of arbitrary
@@ -16,15 +9,12 @@ var _ = require("underscore");
  *
  * Rewrite of http://stackoverflow.com/a/10310815/2121468
  */
-var WindowDrag = React.createClass({
-    render: function() {
-        if (this.state.dropTargetShown) {
-            return <div onDrop={this.handleDrop}>
-                {this.props.children}
-            </div>;
-        } else {
-            return <div />;
-        }
+
+const React = require("react");
+
+const WindowDrag = React.createClass({
+    propTypes: {
+        children: React.PropTypes.node,
     },
 
     getInitialState: function() {
@@ -54,16 +44,30 @@ var WindowDrag = React.createClass({
             this.setState({dropTargetShown: true});
         }
 
-        this._collection = _(this._collection).union([event.target]);
+        if (this._collection.indexOf(event.target) < 0) {
+            this._collection.push(event.target);
+        }
     },
 
     _handleDragLeave: function(event) {
-        this._collection = _(this._collection).without(event.target);
+        if (this._collection.indexOf(event.target) >= 0) {
+            this._collection.splice(this._collection.indexOf(event.target), 1);
+        }
 
         if (this._collection.length === 0) {
             this.setState({dropTargetShown: false});
         }
-    }
+    },
+
+    render: function() {
+        if (this.state.dropTargetShown) {
+            return <div onDrop={this.handleDrop}>
+                {this.props.children}
+            </div>;
+        } else {
+            return <div />;
+        }
+    },
 });
 
 module.exports = WindowDrag;

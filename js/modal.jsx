@@ -1,14 +1,31 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable comma-dangle, no-var, react/jsx-closing-bracket-location, react/jsx-indent-props, react/jsx-sort-prop-types, react/prop-types, react/sort-comp */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+/* Render a bootstrap modal.
+ *
+ * TODO(joel) figure out how to use the header, body, and footer styles
+ *
+ * Example:
+ *
+ *      <Modal onClose={this.props.onClose}>
+ *          <div className="modal-header">
+ *              <h2>{header}</h2>
+ *          </div>
 
-var aphrodite = require("aphrodite");
-var React = require("react");
+ *          <div className="modal-body">
+ *              {body}
+ *          </div>
 
-var css = aphrodite.css;
-var StyleSheet = aphrodite.StyleSheet;
+ *          <div className="modal-footer">
+ *              {footer}
+ *          </div>
+ *      </Modal>
+ */
 
-var styles = StyleSheet.create({
+const aphrodite = require("aphrodite");
+const React = require("react");
+
+const css = aphrodite.css;
+const StyleSheet = aphrodite.StyleSheet;
+
+const styles = StyleSheet.create({
     modalStyle: {
         position: "fixed",
         width: "500px",
@@ -33,28 +50,10 @@ var styles = StyleSheet.create({
     },
 });
 
-/* Render a bootstrap modal.
- *
- * TODO(joel) figure out how to use the header, body, and footer styles
- *
- * Example:
- *
- *      <Modal onClose={this.props.onClose}>
- *          <div className="modal-header">
- *              <h2>{header}</h2>
- *          </div>
-
- *          <div className="modal-body">
- *              {body}
- *          </div>
-
- *          <div className="modal-footer">
- *              {footer}
- *          </div>
- *      </Modal>
- */
-var Modal = React.createClass({
+const Modal = React.createClass({
     propTypes: {
+        children: React.PropTypes.node,
+
         className: React.PropTypes.string,
 
         // Close the modal when esc is pressed? Defaults to true.
@@ -68,28 +67,8 @@ var Modal = React.createClass({
         // close the modal on click. Defaults to true.
         backdrop: React.PropTypes.oneOfType([
             React.PropTypes.bool,
-            React.PropTypes.string
-        ])
-    },
-
-    render: function() {
-        var className = [
-            css(styles.modalStyle),
-            this.props.className,
-            "modal",
-        ].join(" ");
-        var modal = <div
-                {...this.props}
-                tabIndex="-1"
-                className={className}>
-            {this.props.children}
-        </div>;
-
-        var backdrop = <div className={css(styles.modalBackdropStyle)} />;
-        return <div>
-            {modal}
-            {backdrop}
-        </div>;
+            React.PropTypes.string,
+        ]),
     },
 
     getDefaultProps: function() {
@@ -97,8 +76,16 @@ var Modal = React.createClass({
             className: "",
             onClose: () => {},
             keyboard: true,
-            backdrop: true
+            backdrop: true,
         };
+    },
+
+    componentDidMount: function() {
+        window.addEventListener("keydown", this._listenForEsc, true);
+    },
+
+    componentWillUnmount: function() {
+        window.removeEventListener("keydown", this._listenForEsc, true);
     },
 
     _listenForEsc: function(event) {
@@ -109,13 +96,26 @@ var Modal = React.createClass({
         }
     },
 
-    componentDidMount: function() {
-        window.addEventListener("keydown", this._listenForEsc, true);
-    },
+    render: function() {
+        const className = [
+            css(styles.modalStyle),
+            this.props.className,
+            "modal",
+        ].join(" ");
+        const modal = <div
+            {...this.props}
+            tabIndex="-1"
+            className={className}
+        >
+            {this.props.children}
+        </div>;
 
-    componentWillUnmount: function() {
-        window.removeEventListener("keydown", this._listenForEsc, true);
-    }
+        const backdrop = <div className={css(styles.modalBackdropStyle)} />;
+        return <div>
+            {modal}
+            {backdrop}
+        </div>;
+    },
 });
 
 module.exports = Modal;

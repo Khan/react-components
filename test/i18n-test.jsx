@@ -1,16 +1,12 @@
-/* TODO(emily): fix these lint errors (http://eslint.org/docs/rules): */
-/* eslint-disable no-var */
-/* To fix, remove an entry above, run ka-lint, and fix errors. */
+const React = require("react");
+const ReactDOMServer = require("react-dom/server");
+const assert = require("assert");
 
-var React = require("react");
-var ReactDOMServer = require("react-dom/server");
-var assert = require("assert");
+const $_ = require("../js/i18n.jsx");
 
-var $_ = require("../js/i18n.jsx");
-
-var maybeJoin = function(renderable) {
+const maybeJoin = function(renderable) {
     // lolol
-    var markup = ReactDOMServer.renderToStaticMarkup(
+    const markup = ReactDOMServer.renderToStaticMarkup(
         React.DOM.div(null, renderable));
     assert.equal(markup.slice(0, 5), "<div>");
     assert.equal(markup.slice(-6), "</div>");
