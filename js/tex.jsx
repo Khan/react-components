@@ -8,7 +8,9 @@
 const PureRenderMixin = require('react-addons-pure-render-mixin');
 const React = require('react');
 const ReactDOM = require('react-dom');
+const _ = require('underscore');
 
+const FontObserver = require('./font-observer.js');
 const katexA11y = require('./katex-a11y.js');
 
 let pendingScripts = [];
@@ -34,6 +36,12 @@ const loadMathJax = (callback) => {
             "MathJax wasn't loaded before it was needed by <TeX/>");
     }
 };
+
+// Create a FontObserver that listens for KaTeX fonts to load, all of whose
+// font family names start with "KaTeX".
+// Some browsers will quote the font family name and others won't, so we
+// include an optional leading quote in the regular expression.
+const fontObserver = new FontObserver((font) => font.family.match(/^"?KaTeX/));
 
 const doProcess = () => {
     loadMathJax(() => {
@@ -81,6 +89,14 @@ const TeX = React.createClass({
         children: React.PropTypes.node,
         onClick: React.PropTypes.func,
         onRender: React.PropTypes.func,
+        // Some resources in some browsers will, when loaded, trigger a call to
+        // the onResourceLoaded callback. This is a hint that the appearance of
+        // the TeX node may have changed, including its size.
+        //
+        // DO NOT DEPEND ON THESE EVENTS. Browser support for detecting font
+        // loading is poor. But it's still a helpful way to resolve minor race
+        // conditions :)
+        onResourceLoaded: React.PropTypes.func,
         style: React.PropTypes.any,
     },
 
@@ -90,12 +106,15 @@ const TeX = React.createClass({
         return {
             // Called after math is rendered or re-rendered
             onRender: function() {},
+            onResourceLoaded: function() {},
             onClick: null,
         };
     },
 
     componentDidMount: function() {
         this._root = ReactDOM.findDOMNode(this);
+
+        fontObserver.addListener(this.handleResourceLoaded);
 
         if (this.refs.katex.childElementCount > 0) {
             // If we already rendered katex in the render function, we don't
@@ -150,6 +169,8 @@ const TeX = React.createClass({
     },
 
     componentWillUnmount: function() {
+        fontObserver.removeListener(this.handleResourceLoaded);
+
         if (this.script) {
             loadMathJax(() => {
                 const jax = MathJax.Hub.getJaxFor(this.script);
@@ -158,6 +179,10 @@ const TeX = React.createClass({
                 }
             });
         }
+    },
+
+    handleResourceLoaded: function() {
+        this.props.onResourceLoaded();
     },
 
     setScriptText: function(text) {
