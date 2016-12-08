@@ -3,9 +3,12 @@
  * A library for converting KaTeX math into readable strings.
  */
 
+// NOTE(jeresig): We need to keep this file as pure ES5 to avoid import
+// problems into webapp.
+/* eslint-disable no-var */
 /* global katex */
 
-const stringMap = {
+var stringMap = {
     "(": "left parenthesis",
     ")": "right parenthesis",
     "[": "open bracket",
@@ -76,23 +79,23 @@ const stringMap = {
     "\\ldots": "dots",
 };
 
-const powerMap = {
+var powerMap = {
     "\\prime": "prime",
     "\\degree": "degree",
     "\\circ": "degree",
 };
 
-const openMap = {
+var openMap = {
     "|": "open vertical bar",
     ".": "",
 };
 
-const closeMap = {
+var closeMap = {
     "|": "close vertical bar",
     ".": "",
 };
 
-const binMap = {
+var binMap = {
     "+": "plus",
     "-": "minus",
     "\\pm": "plus minus",
@@ -105,7 +108,7 @@ const binMap = {
     "\\bullet": "bullet",
 };
 
-const relMap = {
+var relMap = {
     "=": "equals",
     "\\approx": "approximately equals",
     "\\neq": "does not equal",
@@ -123,12 +126,12 @@ const relMap = {
     ":": "colon",
 };
 
-const buildString = function(str, type, a11yStrings) {
+var buildString = function(str, type, a11yStrings) {
     if (!str) {
         return;
     }
 
-    let ret;
+    var ret;
 
     if (type === "open") {
         ret = (str in openMap ? openMap[str] : stringMap[str] || str);
@@ -160,13 +163,13 @@ const buildString = function(str, type, a11yStrings) {
     }
 };
 
-const buildRegion = function(a11yStrings, callback) {
-    const region = [];
+var buildRegion = function(a11yStrings, callback) {
+    var region = [];
     a11yStrings.push(region);
     callback(region);
 };
 
-const typeHandlers = {
+var typeHandlers = {
     accent: function(tree, a11yStrings) {
         buildRegion(a11yStrings, function(a11yStrings) {
             buildA11yStrings(tree.value.base, a11yStrings);
@@ -185,7 +188,7 @@ const typeHandlers = {
     },
 
     color: function(tree, a11yStrings) {
-        const color = tree.value.color.replace(/katex-/, "");
+        var color = tree.value.color.replace(/katex-/, "");
 
         buildRegion(a11yStrings, function(a11yStrings) {
             a11yStrings.push("start color " + color);
@@ -328,13 +331,13 @@ const typeHandlers = {
             });
         }
 
-        const sup = tree.value.sup;
+        var sup = tree.value.sup;
 
         if (sup) {
             // There are some cases that just read better if we don't have
             // the extra start/end baggage, so we skip the extra text
-            let newPower = powerMap[sup];
-            const supValue = sup.value;
+            var newPower = powerMap[sup];
+            var supValue = sup.value;
 
             // The value stored inside the sup property is not always
             // consistent. It could be a string (handled above), an object
@@ -379,7 +382,7 @@ const typeHandlers = {
     },
 };
 
-const buildA11yStrings = function(tree, a11yStrings) {
+var buildA11yStrings = function(tree, a11yStrings) {
     a11yStrings = a11yStrings || [];
 
     // Handle strings
@@ -388,7 +391,7 @@ const buildA11yStrings = function(tree, a11yStrings) {
 
     // Handle arrays
     } else if (tree.constructor === Array) {
-        for (let i = 0; i < tree.length; i++) {
+        for (var i = 0; i < tree.length; i++) {
             buildA11yStrings(tree[i], a11yStrings);
         }
 
@@ -404,11 +407,11 @@ const buildA11yStrings = function(tree, a11yStrings) {
     return a11yStrings;
 };
 
-const renderStrings = function(a11yStrings, a11yNode) {
-    const doc = a11yNode.ownerDocument;
+var renderStrings = function(a11yStrings, a11yNode) {
+    var doc = a11yNode.ownerDocument;
 
-    for (let i = 0; i < a11yStrings.length; i++) {
-        const a11yString = a11yStrings[i];
+    for (var i = 0; i < a11yStrings.length; i++) {
+        var a11yString = a11yStrings[i];
 
         if (i > 0) {
             // Note: We insert commas in (not just spaces) to provide
@@ -421,7 +424,7 @@ const renderStrings = function(a11yStrings, a11yNode) {
         if (typeof a11yString === "string") {
             a11yNode.appendChild(doc.createTextNode(a11yString));
         } else {
-            const newBaseNode = doc.createElement("span");
+            var newBaseNode = doc.createElement("span");
             // NOTE(jeresig): We may want to add in a tabIndex property
             // to the node here, in order to support keyboard navigation.
             a11yNode.appendChild(newBaseNode);
@@ -430,13 +433,13 @@ const renderStrings = function(a11yStrings, a11yNode) {
     }
 };
 
-const flattenStrings = function(a11yStrings, results) {
+var flattenStrings = function(a11yStrings, results) {
     if (!results) {
         results = [];
     }
 
-    for (let i = 0; i < a11yStrings.length; i++) {
-        const a11yString = a11yStrings[i];
+    for (var i = 0; i < a11yStrings.length; i++) {
+        var a11yString = a11yStrings[i];
 
         if (typeof a11yString === "string") {
             results.push(a11yString);
@@ -448,34 +451,34 @@ const flattenStrings = function(a11yStrings, results) {
     return results;
 };
 
-const parseMath = function(text) {
+var parseMath = function(text) {
     // NOTE: `katex` is a global, should be included using require
     return katex.__parse(text);
 };
 
-const render = function(text, a11yNode) {
-    const tree = parseMath(text);
-    const a11yStrings = buildA11yStrings(tree);
+var render = function(text, a11yNode) {
+    var tree = parseMath(text);
+    var a11yStrings = buildA11yStrings(tree);
     renderStrings(a11yStrings, a11yNode);
 };
 
-const flatten = function(array) {
-    let result = [];
+var flatten = function(array) {
+    var result = [];
 
-    for (const item of array) {
+    array.forEach(function(item) {
         if (Array.isArray(item)) {
             result = result.concat(flatten(item));
         } else {
             result.push(item);
         }
-    }
+    });
 
     return result;
 };
 
-const renderString = function(text) {
-    const tree = parseMath(text);
-    const a11yStrings = buildA11yStrings(tree);
+var renderString = function(text) {
+    var tree = parseMath(text);
+    var a11yStrings = buildA11yStrings(tree);
     return flatten(a11yStrings).join(", ");
 };
 
