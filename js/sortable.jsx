@@ -89,7 +89,7 @@ const SortableArea = React.createClass({
 
         for (const item of items) {
             if (this._dragItems.indexOf(item) < 0) {
-                oldItems.push(item);
+                newItems.push(item);
             }
         }
 
