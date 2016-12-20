@@ -81,24 +81,28 @@ const SortableArea = React.createClass({
         const oldItems = [];
         const newItems = [];
 
-        for (const item of this._dragItems) {
+        for (let i = 0; i < this._dragItems.length; i++) {
+            const item = this._dragItems[i];
             if (items.indexOf(item) < 0) {
                 oldItems.push(item);
             }
         }
 
-        for (const item of items) {
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i];
             if (this._dragItems.indexOf(item) < 0) {
                 newItems.push(item);
             }
         }
 
-        for (const dragItem of newItems) {
+        for (let i = 0; i < newItems.length; i++) {
+            const dragItem = newItems[i];
             dragItem.addEventListener('dragstart', this._listenEvent);
             dragItem.addEventListener('drop',      this._cancelEvent);
         }
 
-        for (const dragItem of oldItems) {
+        for (let i = 0; i < oldItems.length; i++) {
+            const dragItem = oldItems[i];
             dragItem.removeEventListener('dragstart', this._listenEvent);
             dragItem.removeEventListener('drop',      this._cancelEvent);
         }
