@@ -26,6 +26,8 @@ const React = require('react');
 
 const DragTarget = React.createClass({
     propTypes: {
+        // All props not listed here are forwarded to the root element without
+        // modification.
         onDrop: React.PropTypes.func.isRequired,
         component: React.PropTypes.any,  // component type
         shouldDragHighlight: React.PropTypes.func,
@@ -64,6 +66,7 @@ const DragTarget = React.createClass({
 
         return (
             <Component
+                {...this.props}
                 style={Object.assign({}, this.props.style, opacity)}
                 onDrop={this.handleDrop}
                 onDragEnd={this.handleDragEnd}
