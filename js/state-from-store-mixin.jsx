@@ -43,11 +43,14 @@
 
 const StateFromStore = function(stateDescriptors) {
     const storageKey = "StateFromStoreMixin" + (new Date).getTime();
+    let isMounted = false;
 
     const setState = function(component, stateKey, stateData) {
-        const newState = {};
-        newState[stateKey] = stateData;
-        component.setState(newState);
+        if (isMounted) {
+            const newState = {};
+            newState[stateKey] = stateData;
+            component.setState(newState);
+        }
     };
 
     /**
@@ -155,11 +158,13 @@ const StateFromStore = function(stateDescriptors) {
         },
 
         componentDidMount: function() {
+            isMounted = true;
             addChangeListeners(this);
         },
 
         componentWillUnmount: function() {
             removeChangeListeners(this);
+            isMounted = false;
         },
 
         componentWillReceiveProps: function(nextProps) {
