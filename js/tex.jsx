@@ -2,7 +2,7 @@
 /**
  * For math rendered using KaTex and/or MathJax. Use me like <TeX>2x + 3</TeX>.
  */
-/* global katex, MathJax */
+/* global katex, MathJax, Khan */
 // TODO(joel) - require MathJax / katex so they don't have to be global
 
 const PureRenderMixin = require('react-addons-pure-render-mixin');
