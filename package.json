@@ -48,6 +48,7 @@
     "react-addons-transition-group": "15.4.1",
     "react-dom": "15.4.1",
     "react-tools": "0.13.3",
+    "reactify": "1.1.1",
     "watchify": "3.7.0"
   },
   "scripts": {
