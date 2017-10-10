@@ -64,9 +64,13 @@ const DragTarget = React.createClass({
         const opacity = this.state.dragHover ? {"opacity": 0.3} : {};
         const Component = this.props.component;
 
+        const forwardProps = Object.assign({}, this.props);
+        delete forwardProps.component;
+        delete forwardProps.shouldDragHighlight;
+
         return (
             <Component
-                {...this.props}
+                {...forwardProps}
                 style={Object.assign({}, this.props.style, opacity)}
                 onDrop={this.handleDrop}
                 onDragEnd={this.handleDragEnd}
