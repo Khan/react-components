@@ -26,10 +26,13 @@
  * This binds *and* unbinds the events.
  */
 const BackboneMixin = {
-    _isMounted: false,
+    // This is just us re-implementing `isMounted()`, to avoid noisy
+    // deprecation warnings. We give it a unique prefixed name, to avoid
+    // conflicts with properties on other components or mixins.
+    _backboneMixinIsMounted: false,
 
     componentDidMount: function() {
-        this._isMounted = true;
+        this._backboneMixinIsMounted = true;
 
         this._backboneModels = this.getBackboneModels();
         this._validateModelArray(this._backboneModels);
@@ -38,7 +41,7 @@ const BackboneMixin = {
     },
 
     componentWillUnmount: function() {
-        this._isMounted = false;
+        this._backboneMixinIsMounted = false;
 
         this._unbind(this._backboneModels);
     },
@@ -85,7 +88,7 @@ const BackboneMixin = {
         // TODO(joel): more rigorous fix needed? -- for the following error:
         // "Invariant Violation: forceUpdate(...): Can only force an update on
         // mounted or mounting components."
-        if (this._isMounted) {
+        if (this._backboneMixinIsMounted) {
             this.forceUpdate();
         }
     },
