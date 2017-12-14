@@ -26,7 +26,11 @@
  * This binds *and* unbinds the events.
  */
 const BackboneMixin = {
+    _isMounted: false,
+
     componentDidMount: function() {
+        this._isMounted = true;
+
         this._backboneModels = this.getBackboneModels();
         this._validateModelArray(this._backboneModels);
 
@@ -34,6 +38,8 @@ const BackboneMixin = {
     },
 
     componentWillUnmount: function() {
+        this._isMounted = false;
+
         this._unbind(this._backboneModels);
     },
 
@@ -79,7 +85,7 @@ const BackboneMixin = {
         // TODO(joel): more rigorous fix needed? -- for the following error:
         // "Invariant Violation: forceUpdate(...): Can only force an update on
         // mounted or mounting components."
-        if (this.isMounted()) {
+        if (this._isMounted) {
             this.forceUpdate();
         }
     },
