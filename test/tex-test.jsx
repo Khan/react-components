@@ -32,6 +32,14 @@ describe("TeX", () => {
         assert(html.indexOf('q') === -1);
     });
 
+    it("handles \\color{} in the old mathjax-compatible way", () => {
+        const html = ReactDOMServer.renderToString(
+                <TeX>{"\\text{\\color{#f00} xyz}"}</TeX>
+        );
+        assert(html.indexOf(
+            '<span class="mord" style="color:#f00;">x</span>') !== -1);
+    });
+
     describe("MathJax", () => {
         beforeEach(function() {
             global.document = jsdom.jsdom();

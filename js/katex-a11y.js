@@ -174,7 +174,7 @@ var typeHandlers = {
         buildRegion(a11yStrings, function(a11yStrings) {
             buildA11yStrings(tree.value.base, a11yStrings);
             a11yStrings.push("with");
-            buildA11yStrings(tree.value.accent, a11yStrings);
+            buildA11yStrings(tree.value.label, a11yStrings);
             a11yStrings.push("on top");
         });
     },
@@ -227,10 +227,17 @@ var typeHandlers = {
         });
     },
 
-    // inner
+    inner: function(tree, a11yStrings) {
+        buildA11yStrings(tree.value, a11yStrings);
+    },
 
     katex: function(tree, a11yStrings) {
         a11yStrings.push("KaTeX");
+    },
+
+    kern: function(tree, a11yStrings) {
+        // No op: we don't attempt to present kerning information
+        // to the screen reader.
     },
 
     leftright: function(tree, a11yStrings) {
@@ -241,7 +248,7 @@ var typeHandlers = {
         });
     },
 
-    llap: function(tree, a11yStrings) {
+    lap: function(tree, a11yStrings) {
         buildA11yStrings(tree.value.body, a11yStrings);
     },
 
@@ -275,6 +282,10 @@ var typeHandlers = {
 
     punct: function(tree, a11yStrings) {
         buildString(tree.value, "punct", a11yStrings);
+    },
+
+    raisebox: function(tree, a11yStrings) {
+        buildA11yStrings(tree.value, a11yStrings);
     },
 
     rel: function(tree, a11yStrings) {
@@ -452,8 +463,13 @@ var flattenStrings = function(a11yStrings, results) {
 };
 
 var parseMath = function(text) {
-    // NOTE: `katex` is a global, should be included using require
-    return katex.__parse(text);
+    // NOTE: `katex` is a global. We assume it has been imported somehow.
+    //
+    // colorIsTextColor is an option added in KaTeX 0.9.0 for backward
+    // compatibility. It makes \color parse like \textcolor. We use it
+    // in the KA webapp, and need it here because the tests are written
+    // assuming it is set.
+    return katex.__parse(text, { colorIsTextColor: true });
 };
 
 var render = function(text, a11yNode) {
