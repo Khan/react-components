@@ -79,6 +79,7 @@ const srOnly = {
 const TeX = React.createClass({
     propTypes: {
         children: React.PropTypes.node,
+        katexOptions: React.PropTypes.any,
         onClick: React.PropTypes.func,
         onRender: React.PropTypes.func,
         style: React.PropTypes.any,
@@ -88,6 +89,15 @@ const TeX = React.createClass({
 
     getDefaultProps: function() {
         return {
+            katexOptions: {
+                // There was a breaking change in the behavior of \color{}
+                // in KaTeX 0.8.0. KA content relies on the old behavior
+                // so we set this option to retain that old behavior even
+                // though it is not purely compatible with LaTeX.
+                // See https://github.com/Khan/KaTeX/blob/master/README.md
+                // for details on this option.
+                colorIsTextColor: true
+            },
             // Called after math is rendered or re-rendered
             onRender: function() {},
             onClick: null,
@@ -178,7 +188,8 @@ const TeX = React.createClass({
         let katexHtml = null;
         try {
             katexHtml = {
-                __html: katex.renderToString(this.props.children),
+                __html: katex.renderToString(this.props.children,
+                                             this.props.katexOptions),
             };
         } catch (e) {
             /* jshint -W103 */
