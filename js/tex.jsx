@@ -5,15 +5,18 @@
 /* global katex, MathJax, Khan */
 // TODO(joel) - require MathJax / katex so they don't have to be global
 
-const PureRenderMixin = require('react-addons-pure-render-mixin');
-const React = require('react');
-const ReactDOM = require('react-dom');
+const PureRenderMixin = require("react-addons-pure-render-mixin");
+const React = require("react");
+const ReactDOM = require("react-dom");
 
-const katexA11y = require('./katex-a11y.js');
+const katexA11y = require("./katex-a11y.js");
 
 let pendingScripts = [];
 let pendingCallbacks = [];
 let needsProcess = false;
+
+// For creating unique element ids required by the aria-describedby attribute
+let describedByIdCounter = 0;
 
 const process = (script, callback) => {
     pendingScripts.push(script);
@@ -24,14 +27,13 @@ const process = (script, callback) => {
     }
 };
 
-const loadMathJax = (callback) => {
+const loadMathJax = callback => {
     if (typeof MathJax !== "undefined") {
         callback();
     } else if (typeof Khan !== "undefined" && Khan.mathJaxLoaded) {
         Khan.mathJaxLoaded.then(callback);
     } else {
-        throw new Error(
-            "MathJax wasn't loaded before it was needed by <TeX/>");
+        throw new Error("MathJax wasn't loaded before it was needed by <TeX/>");
     }
 };
 
@@ -39,7 +41,7 @@ const doProcess = () => {
     loadMathJax(() => {
         MathJax.Hub.Queue(function() {
             const oldElementScripts = MathJax.Hub.elementScripts;
-            MathJax.Hub.elementScripts = (element) => pendingScripts;
+            MathJax.Hub.elementScripts = element => pendingScripts;
 
             try {
                 return MathJax.Hub.Process(null, () => {
@@ -79,6 +81,7 @@ const srOnly = {
 const TeX = React.createClass({
     propTypes: {
         children: React.PropTypes.node,
+        katexOptions: React.PropTypes.any,
         onClick: React.PropTypes.func,
         onRender: React.PropTypes.func,
         style: React.PropTypes.any,
@@ -88,6 +91,15 @@ const TeX = React.createClass({
 
     getDefaultProps: function() {
         return {
+            katexOptions: {
+                // There was a breaking change in the behavior of \color{}
+                // in KaTeX 0.8.0. KA content relies on the old behavior
+                // so we set this option to retain that old behavior even
+                // though it is not purely compatible with LaTeX.
+                // See https://github.com/Khan/KaTeX/blob/master/README.md
+                // for details on this option.
+                colorIsTextColor: true,
+            },
             // Called after math is rendered or re-rendered
             onRender: function() {},
             onClick: null,
@@ -175,45 +187,71 @@ const TeX = React.createClass({
     },
 
     render: function() {
+        // First, try to render the math content with KaTeX.
+        // If this fails, we ignore the KaTeX error and just render
+        // an empty span. Later, componentDidUpdate() will notice
+        // and will use MathJAX instead.
         let katexHtml = null;
         try {
             katexHtml = {
-                __html: katex.renderToString(this.props.children),
+                __html: katex.renderToString(
+                    this.props.children,
+                    this.props.katexOptions,
+                ),
             };
         } catch (e) {
             /* jshint -W103 */
             if (e.__proto__ !== katex.ParseError.prototype) {
-            /* jshint +W103 */
+                /* jshint +W103 */
                 throw e;
             }
         }
 
+        // If we successfully parsed with KaTeX, then try parse the
+        // same math text to an english rendering that can be read
+        // by screen readers. Our katexA11y module is out of date and
+        // not well maintained, so it can not always transform math
+        // into readable english. We ignore any exceptions it throws.
         let katexA11yHtml = null;
+        let describedById = null;
         if (katexHtml) {
             try {
                 katexA11yHtml = {
                     __html: katexA11y.renderString(this.props.children),
                 };
+                describedById = `katex-${++describedByIdCounter}`;
             } catch (e) {
                 // Nothing
             }
         }
 
-        return <span
-            style={this.props.style}
-            onClick={this.props.onClick}
-        >
-            <span ref="mathjax" />
-            <span
-                ref="katex"
-                dangerouslySetInnerHTML={katexHtml}
-                aria-hidden={!!katexHtml && !!katexA11yHtml}
-            />
-            <span
-                dangerouslySetInnerHTML={katexA11yHtml}
-                style={srOnly}
-            />
-        </span>;
+        return (
+            <span style={this.props.style} onClick={this.props.onClick}>
+                {/* MathJAX output goes here if KaTeX parsing fails */}
+                <span ref="mathjax" />
+                {/*
+                  * KaTeX output goes here. If we successfully converted the
+                  * math to readable english, then we hide all of this from
+                  * screen readers with aria-hidden.
+                  */}
+                <span
+                    ref="katex"
+                    dangerouslySetInnerHTML={katexHtml}
+                    aria-hidden={!!katexA11yHtml}
+                    aria-describedby={describedById}
+                />
+                {/*
+                  * If we generated readable english text, it goes here.
+                  * The srOnly styles will prevent it from being displayed
+                  * visually.
+                  */}
+                <span
+                    dangerouslySetInnerHTML={katexA11yHtml}
+                    id={describedById}
+                    style={srOnly}
+                />
+            </span>
+        );
     },
 });
 

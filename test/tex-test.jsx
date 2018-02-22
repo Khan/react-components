@@ -12,7 +12,7 @@ describe("TeX", () => {
 
         assert(html.indexOf('<span class="katex">') !== -1);
         assert(html.indexOf('aria-hidden="true"') !== -1);
-        assert(html.indexOf('q') !== -1);
+        assert(html.indexOf("q") !== -1);
     });
 
     it("doesn't hide the KaTeX when it fails to generate a11y text", () => {
@@ -20,7 +20,7 @@ describe("TeX", () => {
 
         assert(html.indexOf('<span class="katex">') !== -1);
         assert(html.indexOf('aria-hidden="false"') !== -1);
-        assert(html.indexOf('∀') !== -1);
+        assert(html.indexOf("∀") !== -1);
     });
 
     it("renders but doesn't show anything if the KaTeX fails", () => {
@@ -29,7 +29,17 @@ describe("TeX", () => {
         const html = ReactDOMServer.renderToString(<TeX>q%</TeX>);
 
         assert(html.indexOf('<span class="katex">') === -1);
-        assert(html.indexOf('q') === -1);
+        assert(html.indexOf("q") === -1);
+    });
+
+    it("handles \\color{} in the old mathjax-compatible way", () => {
+        const html = ReactDOMServer.renderToString(
+            <TeX>{"\\text{\\color{#f00} xyz}"}</TeX>,
+        );
+        assert(
+            html.indexOf('<span class="mord" style="color:#f00;">x</span>') !==
+                -1,
+        );
     });
 
     describe("MathJax", () => {
@@ -49,7 +59,7 @@ describe("TeX", () => {
             const callbacks = [];
             global.Khan = {
                 mathJaxLoaded: {
-                    then: (callback) => callbacks.push(callback),
+                    then: callback => callbacks.push(callback),
                 },
             };
 
@@ -61,7 +71,9 @@ describe("TeX", () => {
                 setTimeout(() => {
                     // Make sure that KaTeX didn't render.
                     assert.equal(
-                        elem.innerHTML.indexOf('<span class="katex">'), -1);
+                        elem.innerHTML.indexOf('<span class="katex">'),
+                        -1,
+                    );
 
                     // Make sure that a MathJax callback was registered.
                     assert.equal(callbacks.length, 1);

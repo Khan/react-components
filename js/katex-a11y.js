@@ -134,9 +134,9 @@ var buildString = function(str, type, a11yStrings) {
     var ret;
 
     if (type === "open") {
-        ret = (str in openMap ? openMap[str] : stringMap[str] || str);
+        ret = str in openMap ? openMap[str] : stringMap[str] || str;
     } else if (type === "close") {
-        ret = (str in closeMap ? closeMap[str] : stringMap[str] || str);
+        ret = str in closeMap ? closeMap[str] : stringMap[str] || str;
     } else if (type === "bin") {
         ret = binMap[str] || str;
     } else if (type === "rel") {
@@ -154,10 +154,12 @@ var buildString = function(str, type, a11yStrings) {
     // If the text to add is a number and there is already a string
     // in the list and the last string is a number then we should
     // combine them into a single number
-    if (/^\d+$/.test(ret) && a11yStrings.length > 0 &&
-            /^\d+$/.test(a11yStrings[a11yStrings.length - 1])) {
+    if (
+        /^\d+$/.test(ret) &&
+        a11yStrings.length > 0 &&
+        /^\d+$/.test(a11yStrings[a11yStrings.length - 1])
+    ) {
         a11yStrings[a11yStrings.length - 1] += ret;
-
     } else if (ret) {
         a11yStrings.push(ret);
     }
@@ -174,7 +176,7 @@ var typeHandlers = {
         buildRegion(a11yStrings, function(a11yStrings) {
             buildA11yStrings(tree.value.base, a11yStrings);
             a11yStrings.push("with");
-            buildA11yStrings(tree.value.accent, a11yStrings);
+            buildA11yStrings(tree.value.label, a11yStrings);
             a11yStrings.push("on top");
         });
     },
@@ -227,10 +229,17 @@ var typeHandlers = {
         });
     },
 
-    // inner
+    inner: function(tree, a11yStrings) {
+        buildA11yStrings(tree.value, a11yStrings);
+    },
 
     katex: function(tree, a11yStrings) {
         a11yStrings.push("KaTeX");
+    },
+
+    kern: function(tree, a11yStrings) {
+        // No op: we don't attempt to present kerning information
+        // to the screen reader.
     },
 
     leftright: function(tree, a11yStrings) {
@@ -241,7 +250,7 @@ var typeHandlers = {
         });
     },
 
-    llap: function(tree, a11yStrings) {
+    lap: function(tree, a11yStrings) {
         buildA11yStrings(tree.value.body, a11yStrings);
     },
 
@@ -275,6 +284,10 @@ var typeHandlers = {
 
     punct: function(tree, a11yStrings) {
         buildString(tree.value, "punct", a11yStrings);
+    },
+
+    raisebox: function(tree, a11yStrings) {
+        buildA11yStrings(tree.value, a11yStrings);
     },
 
     rel: function(tree, a11yStrings) {
@@ -350,7 +363,7 @@ var typeHandlers = {
                 if (typeof supValue === "object" && supValue.length === 1) {
                     newPower = powerMap[supValue[0].value];
 
-                // This is the case where it's a string in the value property
+                    // This is the case where it's a string in the value property
                 } else {
                     newPower = powerMap[supValue];
                 }
@@ -389,13 +402,13 @@ var buildA11yStrings = function(tree, a11yStrings) {
     if (typeof tree === "string") {
         buildString(tree, "normal", a11yStrings);
 
-    // Handle arrays
+        // Handle arrays
     } else if (tree.constructor === Array) {
         for (var i = 0; i < tree.length; i++) {
             buildA11yStrings(tree[i], a11yStrings);
         }
 
-    // Everything else is assumed to be an object...
+        // Everything else is assumed to be an object...
     } else {
         if (!tree.type || !(tree.type in typeHandlers)) {
             throw new Error("KaTeX a11y un-recognized type: " + tree.type);
@@ -452,8 +465,13 @@ var flattenStrings = function(a11yStrings, results) {
 };
 
 var parseMath = function(text) {
-    // NOTE: `katex` is a global, should be included using require
-    return katex.__parse(text);
+    // NOTE: `katex` is a global. We assume it has been imported somehow.
+    //
+    // colorIsTextColor is an option added in KaTeX 0.9.0 for backward
+    // compatibility. It makes \color parse like \textcolor. We use it
+    // in the KA webapp, and need it here because the tests are written
+    // assuming it is set.
+    return katex.__parse(text, {colorIsTextColor: true});
 };
 
 var render = function(text, a11yNode) {
