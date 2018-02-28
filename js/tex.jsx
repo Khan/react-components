@@ -27,6 +27,12 @@ const process = (script, callback) => {
     }
 };
 
+const unProcess = script => {
+    const scriptIndex = pendingScripts.indexOf(script);
+    pendingScripts.splice(scriptIndex, 1);
+    pendingCallbacks.splice(scriptIndex, 1);
+};
+
 const loadMathJax = callback => {
     if (typeof MathJax !== "undefined") {
         callback();
@@ -119,10 +125,12 @@ const TeX = React.createClass({
         const text = this.props.children;
 
         this.setScriptText(text);
-        process(this.script, () => this.props.onRender(this._root));
+        this.process(() => this.props.onRender(this._root));
     },
 
     componentDidUpdate: function(prevProps, prevState) {
+        this.maybeUnprocess();
+
         // If we already rendered katex in the render function, we don't
         // need to render anything here.
         if (this.refs.katex.childElementCount > 0) {
@@ -151,17 +159,19 @@ const TeX = React.createClass({
                         return jax.Text(newText, this.props.onRender);
                     } else {
                         this.setScriptText(newText);
-                        process(this.script, this.props.onRender);
+                        this.process(this.props.onRender);
                     }
                 });
             });
         } else {
             this.setScriptText(newText);
-            process(this.script, this.props.onRender);
+            this.process(this.props.onRender);
         }
     },
 
     componentWillUnmount: function() {
+        this.maybeUnprocess();
+
         if (this.script) {
             loadMathJax(() => {
                 const jax = MathJax.Hub.getJaxFor(this.script);
@@ -169,6 +179,25 @@ const TeX = React.createClass({
                     jax.Remove();
                 }
             });
+        }
+    },
+
+    process: function(callback) {
+        this.hasProcessed = false;
+        process(this.script, () => {
+            this.hasProcessed = true;
+            callback && callback();
+        });
+    },
+
+    maybeUnprocess: function() {
+        // Sometimes, we end up rendering this component with some MathJax-only
+        // math before very quickly switching over to some other math, before
+        // MathJax has had a time to render. We want to remove the previously
+        // queued render so that we don't accidentally render some math that we
+        // don't want displayed.
+        if (this.script && !this.hasProcessed) {
+            unProcess(this.script);
         }
     },
 
