@@ -95,6 +95,15 @@ const TeX = React.createClass({
 
     mixins: [PureRenderMixin],
 
+    // TODO(joshuan): Once we are using React 16.3+,
+    // migrate to getDerivedStateFromProps
+    getInitialState: function() {
+        return {
+            mounted: false,
+            katexHtml: this.getKatexHtml(this.props),
+        };
+    },
+
     getDefaultProps: function() {
         return {
             katexOptions: {
@@ -115,6 +124,12 @@ const TeX = React.createClass({
     componentDidMount: function() {
         this._root = ReactDOM.findDOMNode(this);
 
+        // Needed so that the initial client render matches SSR.
+        // eslint-disable-next-line react/no-did-mount-set-state
+        this.setState({
+            mounted: true,
+        });
+
         if (this.refs.katex.childElementCount > 0) {
             // If we already rendered katex in the render function, we don't
             // need to render anything here.
@@ -126,6 +141,41 @@ const TeX = React.createClass({
 
         this.setScriptText(text);
         this.process(() => this.props.onRender(this._root));
+    },
+
+    // TODO(joshuan): If you are updating to React 16.3+, migrate to
+    // getDerivedStateFromProps
+    componentWillReceiveProps: function(nextProps) {
+        if (
+            nextProps.children !== this.props.children ||
+            JSON.stringify(nextProps.katexOptions) !==
+                JSON.stringify(this.props.katexOptions)
+        ) {
+            this.setState({
+                katexHtml: this.getKatexHtml(nextProps),
+            });
+        }
+    },
+
+    getKatexHtml(props) {
+        // Try to render the math content with KaTeX.
+        // If this fails, componentDidUpdate() will notice and
+        // use MathJAX instead.
+        try {
+            return {
+                __html: katex.renderToString(
+                    props.children,
+                    props.katexOptions,
+                ),
+            };
+        } catch (e) {
+            /* jshint -W103 */
+            if (e.__proto__ !== katex.ParseError.prototype) {
+                /* jshint +W103 */
+                throw e;
+            }
+            return null;
+        }
     },
 
     componentDidUpdate: function(prevProps, prevState) {
@@ -216,25 +266,7 @@ const TeX = React.createClass({
     },
 
     render: function() {
-        // First, try to render the math content with KaTeX.
-        // If this fails, we ignore the KaTeX error and just render
-        // an empty span. Later, componentDidUpdate() will notice
-        // and will use MathJAX instead.
-        let katexHtml = null;
-        try {
-            katexHtml = {
-                __html: katex.renderToString(
-                    this.props.children,
-                    this.props.katexOptions,
-                ),
-            };
-        } catch (e) {
-            /* jshint -W103 */
-            if (e.__proto__ !== katex.ParseError.prototype) {
-                /* jshint +W103 */
-                throw e;
-            }
-        }
+        const {katexHtml} = this.state;
 
         // If we successfully parsed with KaTeX, then try parse the
         // same math text to an english rendering that can be read
@@ -248,7 +280,12 @@ const TeX = React.createClass({
                 katexA11yHtml = {
                     __html: katexA11y.renderString(this.props.children),
                 };
-                describedById = `katex-${++describedByIdCounter}`;
+                // The server and the client will not necessarily use the same
+                // ID, and the initial client markup must match the server
+                // markup. Thus, we only add an ID once we've rendered once.
+                if (this.state.mounted) {
+                    describedById = `katex-${++describedByIdCounter}`;
+                }
             } catch (e) {
                 // Nothing
             }
