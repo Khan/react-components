@@ -16,7 +16,9 @@
 
 const React = require('react');
 const ReactDOM = require('react-dom');
-const ReactTransitionGroup = require('react-addons-transition-group');
+const createReactClass = require("create-react-class");
+const PropTypes = require("prop-types");
+const TransitionGroup = require('react-transition-group').TransitionGroup;
 
 const TICK = 17;
 
@@ -116,14 +118,14 @@ function hasClass(element, className) {
     }
 }
 
-const TimeoutTransitionGroupChild = React.createClass({
+const TimeoutTransitionGroupChild = createReactClass({
     propTypes: {
-        children: React.PropTypes.node,
-        enter: React.PropTypes.bool,
-        enterTimeout: React.PropTypes.number.isRequired,
-        name: React.PropTypes.string.isRequired,
-        leave: React.PropTypes.bool,
-        leaveTimeout: React.PropTypes.number.isRequired,
+        children: PropTypes.node,
+        enter: PropTypes.bool,
+        enterTimeout: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        leave: PropTypes.bool,
+        leaveTimeout: PropTypes.number.isRequired,
     },
 
     componentWillMount: function() {
@@ -210,13 +212,13 @@ const TimeoutTransitionGroupChild = React.createClass({
     },
 });
 
-const TimeoutTransitionGroup = React.createClass({
+const TimeoutTransitionGroup = createReactClass({
     propTypes: {
-        enterTimeout: React.PropTypes.number.isRequired,
-        leaveTimeout: React.PropTypes.number.isRequired,
-        transitionName: React.PropTypes.string.isRequired,
-        transitionEnter: React.PropTypes.bool,
-        transitionLeave: React.PropTypes.bool,
+        enterTimeout: PropTypes.number.isRequired,
+        leaveTimeout: PropTypes.number.isRequired,
+        transitionName: PropTypes.string.isRequired,
+        transitionEnter: PropTypes.bool,
+        transitionLeave: PropTypes.bool,
     },
 
     getDefaultProps: function() {
@@ -242,10 +244,7 @@ const TimeoutTransitionGroup = React.createClass({
 
     render: function() {
         return (
-            <ReactTransitionGroup
-                transitionName={this.props.transitionName}
-                transitionEnter={this.props.transitionEnter}
-                transitionLeave={this.props.transitionLeave}
+            <TransitionGroup
                 childFactory={this._wrapChild}
             />
         );

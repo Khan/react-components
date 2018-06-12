@@ -3,7 +3,8 @@
 const assert = require("assert");
 const jsdom = require("jsdom");
 const React = require("react");
-const TestUtils = require("react-addons-test-utils");
+const TestUtils = require("react-dom/test-utils");
+const createReactClass = require("create-react-class");
 
 const LayeredComponentMixin = require("../js/layered-component-mixin.jsx");
 
@@ -15,7 +16,7 @@ describe("LayeredComponentMixin", function() {
     });
 
     it("should render the layer outside of the render area", function() {
-        const Layer = React.createClass({
+        const Layer = createReactClass({
             mixins: [LayeredComponentMixin],
 
             renderLayer: function() {
@@ -38,7 +39,7 @@ describe("LayeredComponentMixin", function() {
     });
 
     it("should render the layer in a div", function() {
-        const Layer = React.createClass({
+        const Layer = createReactClass({
             mixins: [LayeredComponentMixin],
 
             renderLayer: function() {
@@ -64,7 +65,7 @@ describe("LayeredComponentMixin", function() {
     });
 
     it("should allow empty layers", function() {
-        const EmptyLayer = React.createClass({
+        const EmptyLayer = createReactClass({
             mixins: [LayeredComponentMixin],
 
             renderLayer: function() {

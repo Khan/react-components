@@ -45,7 +45,7 @@ describe("TeX", () => {
     describe("MathJax", () => {
         beforeEach(function() {
             global.document = jsdom.jsdom();
-            global.window = document.parentWindow;
+            global.window = document.defaultView;
         });
 
         afterEach(function() {

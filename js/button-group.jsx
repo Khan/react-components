@@ -19,19 +19,21 @@
 
 const React = require('react');
 const ReactDOM = require("react-dom");
+const createReactClass = require("create-react-class");
+const PropTypes = require("prop-types");
 const styles = require('./styles.js');
 const css = require("aphrodite").css;
 
-const ButtonGroup = React.createClass({
+const ButtonGroup = createReactClass({
     propTypes: {
-        value: React.PropTypes.any,
-        buttons: React.PropTypes.arrayOf(React.PropTypes.shape({
-            value: React.PropTypes.any.isRequired,
-            content: React.PropTypes.node,
-            title: React.PropTypes.string,
+        value: PropTypes.any,
+        buttons: PropTypes.arrayOf(PropTypes.shape({
+            value: PropTypes.any.isRequired,
+            content: PropTypes.node,
+            title: PropTypes.string,
         })).isRequired,
-        onChange: React.PropTypes.func.isRequired,
-        allowEmpty: React.PropTypes.bool,
+        onChange: PropTypes.func.isRequired,
+        allowEmpty: PropTypes.bool,
     },
 
     getDefaultProps: function() {

@@ -42,20 +42,22 @@
 
 const React = require("react");
 const ReactDOM = require("react-dom");
+const createReactClass = require("create-react-class");
+const PropTypes = require("prop-types");
 
 const zIndex = 10;
 
-const Triangle = React.createClass({
+const Triangle = createReactClass({
     propTypes: {
-        color: React.PropTypes.string.isRequired,
-        left: React.PropTypes.number.isRequired,
-        "top": React.PropTypes.number.isRequired,
-        width: React.PropTypes.number.isRequired,
-        height: React.PropTypes.number.isRequired,
-        horizontalDirection: React.PropTypes.oneOf(
+        color: PropTypes.string.isRequired,
+        left: PropTypes.number.isRequired,
+        "top": PropTypes.number.isRequired,
+        width: PropTypes.number.isRequired,
+        height: PropTypes.number.isRequired,
+        horizontalDirection: PropTypes.oneOf(
             ["left", "right"]
         ).isRequired,
-        verticalDirection: React.PropTypes.oneOf(
+        verticalDirection: PropTypes.oneOf(
             ["top", "bottom"]
         ).isRequired,
     },
@@ -97,20 +99,20 @@ const Triangle = React.createClass({
     },
 });
 
-const TooltipArrow = React.createClass({
+const TooltipArrow = createReactClass({
     propTypes: {
-        position: React.PropTypes.string,
-        visibility: React.PropTypes.string,
-        left: React.PropTypes.number,
-        "top": React.PropTypes.number,
-        color: React.PropTypes.string.isRequired,  // a css color
-        border: React.PropTypes.string.isRequired,  // a css color
-        width: React.PropTypes.number.isRequired,
-        height: React.PropTypes.number.isRequired,
-        horizontalDirection: React.PropTypes.oneOf(
+        position: PropTypes.string,
+        visibility: PropTypes.string,
+        left: PropTypes.number,
+        "top": PropTypes.number,
+        color: PropTypes.string.isRequired,  // a css color
+        border: PropTypes.string.isRequired,  // a css color
+        width: PropTypes.number.isRequired,
+        height: PropTypes.number.isRequired,
+        horizontalDirection: PropTypes.oneOf(
             ["left", "right"]
         ).isRequired,
-        verticalDirection: React.PropTypes.oneOf(
+        verticalDirection: PropTypes.oneOf(
             ["top", "bottom"]
         ).isRequired,
     },
@@ -203,25 +205,25 @@ const HORIZONTAL_ALIGNMNENTS = {
 };
 
 
-const Tooltip = React.createClass({
+const Tooltip = createReactClass({
     propTypes: {
-        show: React.PropTypes.bool.isRequired,
-        className: React.PropTypes.string,
-        arrowSize: React.PropTypes.number,
-        borderColor: React.PropTypes.string,
-        verticalPosition: React.PropTypes.oneOf(
+        show: PropTypes.bool.isRequired,
+        className: PropTypes.string,
+        arrowSize: PropTypes.number,
+        borderColor: PropTypes.string,
+        verticalPosition: PropTypes.oneOf(
             Object.keys(VERTICAL_CORNERS)
         ),
-        horizontalPosition: React.PropTypes.oneOf(
+        horizontalPosition: PropTypes.oneOf(
             Object.keys(HORIZONTAL_CORNERS)
         ),
-        horizontalAlign: React.PropTypes.oneOf(
+        horizontalAlign: PropTypes.oneOf(
             Object.keys(HORIZONTAL_ALIGNMNENTS)
         ),
-        children: React.PropTypes.arrayOf(
-            React.PropTypes.element
+        children: PropTypes.arrayOf(
+            PropTypes.element
         ).isRequired,
-        targetContainerStyle: React.PropTypes.any,  // style object
+        targetContainerStyle: PropTypes.any,  // style object
     },
 
     getDefaultProps: function() {

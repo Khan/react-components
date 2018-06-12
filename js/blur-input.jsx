@@ -1,4 +1,6 @@
 const React = require("react");
+const createReactClass = require("create-react-class");
+const PropTypes = require("prop-types");
 
 /* You know when you want to propagate input to a parent...
  * but then that parent does something with the input...
@@ -12,12 +14,12 @@ const React = require("react");
  * Enough melodrama. Its an input that only sends changes
  * to its parent on blur.
  */
-const BlurInput = React.createClass({
+const BlurInput = createReactClass({
     propTypes: {
-        className: React.PropTypes.string,
-        style: React.PropTypes.any,
-        value: React.PropTypes.string.isRequired,
-        onChange: React.PropTypes.func.isRequired,
+        className: PropTypes.string,
+        style: PropTypes.any,
+        value: PropTypes.string.isRequired,
+        onChange: PropTypes.func.isRequired,
     },
     getInitialState: function() {
         return {value: this.props.value};

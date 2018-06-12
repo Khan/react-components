@@ -11,10 +11,12 @@
  */
 
 const React = require("react");
+const createReactClass = require("create-react-class");
+const PropTypes = require("prop-types");
 
-const WindowDrag = React.createClass({
+const WindowDrag = createReactClass({
     propTypes: {
-        children: React.PropTypes.node,
+        children: PropTypes.node,
     },
 
     getInitialState: function() {

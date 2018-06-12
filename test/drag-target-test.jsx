@@ -4,7 +4,7 @@ const jsdom = require("jsdom");
 const assert = require("assert");
 const React = require("react");
 const ReactDOM = require("react-dom");
-const TestUtils = require("react-addons-test-utils");
+const TestUtils = require("react-dom/test-utils");
 
 const DragTarget = require('../js/drag-target.jsx');
 

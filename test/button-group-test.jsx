@@ -4,7 +4,7 @@ const jsdom = require("jsdom");
 const assert = require("assert");
 const React = require("react");
 const ReactDOM = require("react-dom");
-const TestUtils = require("react-addons-test-utils");
+const TestUtils = require("react-dom/test-utils");
 const ButtonGroup = require("../js/button-group.jsx");
 
 describe("ButtonGroup", function() {

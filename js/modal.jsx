@@ -21,6 +21,8 @@
 
 const aphrodite = require("aphrodite");
 const React = require("react");
+const createReactClass = require("create-react-class");
+const PropTypes = require("prop-types");
 
 const css = aphrodite.css;
 const StyleSheet = aphrodite.StyleSheet;
@@ -50,24 +52,24 @@ const styles = StyleSheet.create({
     },
 });
 
-const Modal = React.createClass({
+const Modal = createReactClass({
     propTypes: {
-        children: React.PropTypes.node,
+        children: PropTypes.node,
 
-        className: React.PropTypes.string,
+        className: PropTypes.string,
 
         // Close the modal when esc is pressed? Defaults to true.
-        keyboard: React.PropTypes.bool,
+        keyboard: PropTypes.bool,
 
-        onClose: React.PropTypes.func,
+        onClose: PropTypes.func,
 
         // TODO(joel) reimplement
         // Bootstrap modal's backdrop argument: Includes a modal-backdrop
         // element. Alternatively, specify static for a backdrop which doesn't
         // close the modal on click. Defaults to true.
-        backdrop: React.PropTypes.oneOfType([
-            React.PropTypes.bool,
-            React.PropTypes.string,
+        backdrop: PropTypes.oneOfType([
+            PropTypes.bool,
+            PropTypes.string,
         ]),
     },
 

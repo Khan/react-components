@@ -2,7 +2,9 @@
 
 const jsdom = require("jsdom");
 const React = require("react");
-const TestUtils = require("react-addons-test-utils");
+const TestUtils = require("react-dom/test-utils");
+const createReactClass = require("create-react-class");
+const PropTypes = require("prop-types");
 
 const WindowDrag = require('../js/window-drag.jsx');
 
@@ -11,10 +13,10 @@ describe('WindowDrag', function() {
         global.document = jsdom.jsdom();
         global.window = document.defaultView;
 
-        const WindowNotifier = React.createClass({
+        const WindowNotifier = createReactClass({
             propTypes: {
-                didMount: React.PropTypes.func.isRequired,
-                willUnmount: React.PropTypes.func.isRequired,
+                didMount: PropTypes.func.isRequired,
+                willUnmount: PropTypes.func.isRequired,
             },
             componentDidMount: function() {
                 this.props.didMount();

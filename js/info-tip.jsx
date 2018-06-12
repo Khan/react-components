@@ -1,5 +1,7 @@
 const {StyleSheet, css} = require("aphrodite");
 const React = require('react');
+const createReactClass = require('create-react-class');
+const PropTypes = require('prop-types');
 
 const colors = {
     grayLight: '#aaa',
@@ -89,9 +91,9 @@ const questionMark = 'data:image/png;base64,' +
     'gx99kue5GRp/gIOZuZGvNpTNwjD8oliANU+qqqKu6/TQBdymN57AHjzBT+B6Jx79BRgA' +
     'vc49kQA4yxgAAAAASUVORK5CYII=';
 
-const InfoTip = React.createClass({
+const InfoTip = createReactClass({
     propTypes: {
-        children: React.PropTypes.node,
+        children: PropTypes.node,
     },
 
     getInitialState: function() {

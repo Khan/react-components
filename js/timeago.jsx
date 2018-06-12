@@ -13,14 +13,16 @@
  */
 
 const React = require("react");
+const createReactClass = require("create-react-class");
+const PropTypes = require("prop-types");
 const SetIntervalMixin = require("./set-interval-mixin.jsx");
 const moment = require("moment");
 
 // TODO(joel) i18n
-const TimeAgo = React.createClass({
+const TimeAgo = createReactClass({
     propTypes: {
-        refreshMillis: React.PropTypes.number,
-        time: React.PropTypes.any.isRequired,
+        refreshMillis: PropTypes.number,
+        time: PropTypes.any.isRequired,
     },
     mixins: [SetIntervalMixin],
     componentDidMount: function() {

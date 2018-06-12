@@ -6,8 +6,7 @@ const $_ = require("../js/i18n.jsx");
 
 const maybeJoin = function(renderable) {
     // lolol
-    const markup = ReactDOMServer.renderToStaticMarkup(
-        React.DOM.div(null, renderable));
+    const markup = ReactDOMServer.renderToStaticMarkup(<div>{renderable}</div>);
     assert.equal(markup.slice(0, 5), "<div>");
     assert.equal(markup.slice(-6), "</div>");
     return markup.slice(5, -6);

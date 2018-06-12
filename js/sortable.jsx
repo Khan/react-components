@@ -1,10 +1,12 @@
 const React = require('react');
 const ReactDOM = require("react-dom");
+const createReactClass = require("create-react-class");
+const PropTypes = require("prop-types");
 
-const PT = React.PropTypes;
+const PT = PropTypes;
 
 // Takes an array of components to sort
-const SortableArea = React.createClass({
+const SortableArea = createReactClass({
     propTypes: {
         className: PT.string,
         components: PT.arrayOf(PT.node).isRequired,
@@ -125,7 +127,7 @@ const SortableArea = React.createClass({
 });
 
 // An individual sortable item
-const SortableItem = React.createClass({
+const SortableItem = createReactClass({
     propTypes: {
         area: PT.shape({
             onDragEnter: PT.func.isRequired,

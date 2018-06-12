@@ -23,15 +23,17 @@
 // * only respond to certain types of drags (only images for instance)!
 
 const React = require('react');
+const createReactClass = require('create-react-class');
+const PropTypes = require('prop-types');
 
-const DragTarget = React.createClass({
+const DragTarget = createReactClass({
     propTypes: {
         // All props not listed here are forwarded to the root element without
         // modification.
-        onDrop: React.PropTypes.func.isRequired,
-        component: React.PropTypes.any,  // component type
-        shouldDragHighlight: React.PropTypes.func,
-        style: React.PropTypes.any,
+        onDrop: PropTypes.func.isRequired,
+        component: PropTypes.any,  // component type
+        shouldDragHighlight: PropTypes.func,
+        style: PropTypes.any,
     },
     getDefaultProps: function() {
         return {

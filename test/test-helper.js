@@ -6,6 +6,9 @@
 // Perhaps a bug in React?
 const jsdom = require("jsdom");
 
+// Polyfill `requestAnimationFrame` to appease React.
+require("raf/polyfill");
+
 global.document = jsdom.jsdom();
 global.window = document.defaultView;
 global.navigator = {userAgent: 'node.js'};

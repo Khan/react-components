@@ -8,6 +8,8 @@
 const PureRenderMixin = require("react-addons-pure-render-mixin");
 const React = require("react");
 const ReactDOM = require("react-dom");
+const createReactClass = require("create-react-class");
+const PropTypes = require("prop-types");
 
 const katexA11y = require("./katex-a11y.js");
 
@@ -84,13 +86,13 @@ const srOnly = {
     width: "1px",
 };
 
-const TeX = React.createClass({
+const TeX = createReactClass({
     propTypes: {
-        children: React.PropTypes.node,
-        katexOptions: React.PropTypes.any,
-        onClick: React.PropTypes.func,
-        onRender: React.PropTypes.func,
-        style: React.PropTypes.any,
+        children: PropTypes.node,
+        katexOptions: PropTypes.any,
+        onClick: PropTypes.func,
+        onRender: PropTypes.func,
+        style: PropTypes.any,
     },
 
     mixins: [PureRenderMixin],
