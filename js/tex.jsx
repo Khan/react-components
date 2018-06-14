@@ -179,43 +179,45 @@ const TeX = React.createClass({
     },
 
     componentDidUpdate: function(prevProps, prevState) {
-        this.maybeUnprocess();
+        if (this.props.children !== prevProps.children) {
+            this.maybeUnprocess();
 
-        // If we already rendered katex in the render function, we don't
-        // need to render anything here.
-        if (this.refs.katex.childElementCount > 0) {
-            if (this.script) {
-                // If we successfully rendered KaTeX, check if there's
-                // lingering MathJax from the last render, and if so remove it.
-                loadMathJax(() => {
-                    const jax = MathJax.Hub.getJaxFor(this.script);
-                    if (jax) {
-                        jax.Remove();
-                    }
-                });
+            // If we already rendered katex in the render function, we don't
+            // need to render anything here.
+            if (this.refs.katex.childElementCount > 0) {
+                if (this.script) {
+                    // If we successfully rendered KaTeX, check if there's
+                    // lingering MathJax from the last render, and if so remove it.
+                    loadMathJax(() => {
+                        const jax = MathJax.Hub.getJaxFor(this.script);
+                        if (jax) {
+                            jax.Remove();
+                        }
+                    });
+                }
+
+                this.props.onRender();
+                return;
             }
 
-            this.props.onRender();
-            return;
-        }
+            const newText = this.props.children;
 
-        const newText = this.props.children;
-
-        if (this.script) {
-            loadMathJax(() => {
-                MathJax.Hub.Queue(() => {
-                    const jax = MathJax.Hub.getJaxFor(this.script);
-                    if (jax) {
-                        return jax.Text(newText, this.props.onRender);
-                    } else {
-                        this.setScriptText(newText);
-                        this.process(this.props.onRender);
-                    }
+            if (this.script) {
+                loadMathJax(() => {
+                    MathJax.Hub.Queue(() => {
+                        const jax = MathJax.Hub.getJaxFor(this.script);
+                        if (jax) {
+                            return jax.Text(newText, this.props.onRender);
+                        } else {
+                            this.setScriptText(newText);
+                            this.process(this.props.onRender);
+                        }
+                    });
                 });
-            });
-        } else {
-            this.setScriptText(newText);
-            this.process(this.props.onRender);
+            } else {
+                this.setScriptText(newText);
+                this.process(this.props.onRender);
+            }
         }
     },
 
