@@ -6,7 +6,7 @@
 // NOTE(jeresig): We need to keep this file as pure ES5 to avoid import
 // problems into webapp.
 /* eslint-disable no-var */
-/* global katex */
+const katex = require("katex");
 
 var stringMap = {
     "(": "left parenthesis",
