@@ -2,8 +2,7 @@
 /**
  * For math rendered using KaTex and/or MathJax. Use me like <TeX>2x + 3</TeX>.
  */
-/* global MathJax, Khan */
-// TODO(joel) - require MathJax / katex so they don't have to be global
+/* global MathJax */
 
 const PureRenderMixin = require("react-addons-pure-render-mixin");
 const React = require("react");
@@ -39,10 +38,24 @@ const unProcess = script => {
 const loadMathJax = callback => {
     if (typeof MathJax !== "undefined") {
         callback();
-    } else if (typeof Khan !== "undefined" && Khan.mathJaxLoaded) {
-        Khan.mathJaxLoaded.then(callback);
     } else {
-        throw new Error("MathJax wasn't loaded before it was needed by <TeX/>");
+        /**
+         * We can either...
+         *
+         * A) Reach up and out of `third_party` folder into our core webapp
+         * code to include this `load-mathjax` file that, well, loads MathJax
+         * or...
+         *
+         * B) Move this file into the KateX package next to `load-mathjax` and
+         * then update everything that calls for this file to point at that
+         * path instead.
+         *
+         * There is no easy or obvious solution.  I am choosing A.
+         *
+         * - Jesse
+         */
+        const loadMathJax = require("../../../../javascript/katex-package/load-mathjax.js");
+        loadMathJax.then(callback);
     }
 };
 
@@ -98,15 +111,6 @@ const TeX = createReactClass({
 
     mixins: [PureRenderMixin],
 
-    // TODO(joshuan): Once we are using React 16.3+,
-    // migrate to getDerivedStateFromProps
-    getInitialState: function() {
-        return {
-            mounted: false,
-            katexHtml: this.getKatexHtml(this.props),
-        };
-    },
-
     getDefaultProps: function() {
         return {
             katexOptions: {
@@ -121,6 +125,15 @@ const TeX = createReactClass({
             // Called after math is rendered or re-rendered
             onRender: function() {},
             onClick: null,
+        };
+    },
+
+    // TODO(joshuan): Once we are using React 16.3+,
+    // migrate to getDerivedStateFromProps
+    getInitialState: function() {
+        return {
+            mounted: false,
+            katexHtml: this.getKatexHtml(this.props),
         };
     },
 
@@ -157,27 +170,6 @@ const TeX = createReactClass({
             this.setState({
                 katexHtml: this.getKatexHtml(nextProps),
             });
-        }
-    },
-
-    getKatexHtml(props) {
-        // Try to render the math content with KaTeX.
-        // If this fails, componentDidUpdate() will notice and
-        // use MathJAX instead.
-        try {
-            return {
-                __html: katex.renderToString(
-                    props.children,
-                    props.katexOptions,
-                ),
-            };
-        } catch (e) {
-            /* jshint -W103 */
-            if (e.__proto__ !== katex.ParseError.prototype) {
-                /* jshint +W103 */
-                throw e;
-            }
-            return null;
         }
     },
 
@@ -234,6 +226,27 @@ const TeX = createReactClass({
                     jax.Remove();
                 }
             });
+        }
+    },
+
+    getKatexHtml(props) {
+        // Try to render the math content with KaTeX.
+        // If this fails, componentDidUpdate() will notice and
+        // use MathJAX instead.
+        try {
+            return {
+                __html: katex.renderToString(
+                    props.children,
+                    props.katexOptions,
+                ),
+            };
+        } catch (e) {
+            /* jshint -W103 */
+            if (e.__proto__ !== katex.ParseError.prototype) {
+                /* jshint +W103 */
+                throw e;
+            }
+            return null;
         }
     },
 
