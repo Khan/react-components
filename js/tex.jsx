@@ -171,11 +171,24 @@ const TeX = createReactClass({
                 ),
             };
         } catch (e) {
-            /* jshint -W103 */
-            if (e.__proto__ !== katex.ParseError.prototype) {
-                /* jshint +W103 */
-                throw e;
-            }
+            // By catching the exception here and returning null
+            // we will fall back to asyncronously rendering with
+            // MathJAX.
+            //
+            // NOTE: formerly we only returned null if the error
+            // was a parse error from Katex and re-threw any other errors.
+            // But https://khanacademy.atlassian.net/browse/CP-879 and
+            // https://khanacademy.atlassian.net/browse/CP-1742 were caused
+            // by regular TypeError exceptions in Katex, so we might as
+            // well fall back to MathJAX in that case as well. (The Katex
+            // bug is fixed in the latest version and will stop happening
+            // when we upgrade webapp to use Katex 1.0.)
+            //
+            // TODO: We could use Raven.captureMessage() to send a message
+            // to Sentry when these errors occur if we want to get serious
+            // about eliminating them. Such a message should include
+            // window.location, props.children (the string of katex source)
+            // and the error itself.
             return null;
         }
     },
