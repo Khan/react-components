@@ -161,6 +161,7 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
                 <li><a href="#timeout-transition-group">Timeout Transition Group</a></li>
                 <li><a href="#backbone-mixin">Backbone Mixin</a></li>
                 <li><a href="#window-drag">Window Drag</a></li>
+                <li><a href="#copy-button">Copy to clipboard button</a></li>
             </ul>
             </div>
         </nav>
@@ -255,6 +256,12 @@ avoid breaking backwards compatibility unless absolutely necessary.</pre>
         {{ depends([]) }}
         <p>Detect drags into and out of the page.</p>
         {% code_example "window-drag.jsx" %}
+
+        <h3 id="copy-button">Copy to clipboard button</h3>
+        {{ stability("experimental") }}
+        {{ depends([]) }}
+        <p>Copies input, textarea or other text content to clipboard.</p>
+        {% code_example "copy-button.jsx" %}
 
         <h3 id="timeout-transition-group">Timeout Transition Group</h3>
         {{ stability("unstable") }}
